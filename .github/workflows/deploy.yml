@@ -1,0 +1,21 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ "main" ] # Se déclenche quand tu push sur main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: |
+          cd /home/debian/projet/Kairoscope/
+          git pull origin main
+          docker compose up -d --build --remove-orphans
+          docker image prune -f # Nettoie les vieilles images

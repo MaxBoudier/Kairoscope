@@ -1,0 +1,71 @@
+services:
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: emergency_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./webapp/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - kairoscope-net
+
+  ai:
+    build: ./ai
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@database:5432/emergency_db
+      - DB_HOST=database
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_NAME=emergency_db
+      - DB_PORT=5432
+    depends_on:
+      - database
+    volumes:
+      - ./ai:/app
+    networks:
+      - kairoscope-net
+
+  api:
+    build: ./webapp/api
+    ports:
+      - "8081:80"
+    environment:
+      DATABASE_URL: "postgresql://admin:admin@database:5432/emergency_db?serverVersion=15&charset=utf8"
+      APP_ENV: dev
+      APP_DEBUG: 1
+      SYMFONY_TRUSTED_HOSTS: '^localhost$'
+    volumes:
+      - ./webapp/api:/var/www/html
+      - vendor_data:/var/www/html/vendor
+    depends_on:
+      - database
+    networks:
+      - kairoscope-net
+    command: sh -c "composer install && apache2-foreground"
+
+  front:
+    build: ./webapp/front
+    ports:
+      - "80:5173"
+    volumes:
+      - ./webapp/front:/app
+      - /app/node_modules
+    depends_on:
+      - api
+    networks:
+      - kairoscope-net
+    command: sh -c "npm install && npm run dev -- --host"
+
+networks:
+  kairoscope-net:
+    driver: bridge
+
+volumes:
+  db_data:
+  vendor_data:

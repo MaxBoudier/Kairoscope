@@ -1,0 +1,9 @@
+/vendor/
+/var/
+.env
+.env.local
+.git/
+.idea/
+.vscode/
+docker-compose.yml
+Dockerfile

@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pandas
+numpy
+psycopg2-binary
+lightning
+pytorch-forecasting
+tensorboard
+google-genai
+requests
+geopy
+websockets

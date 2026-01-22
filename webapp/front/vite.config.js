@@ -1,0 +1,29 @@
+import path from "path"
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    watch: {
+      usePolling: true,
+    },
+    allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0', '172.19.0.1', 'kairoscope.maxboudier.fr'],
+    hmr: {
+      // On retire le port 8080 pour que le HMR utilise le port du serveur (5173)
+      // clientPort doit correspondre au port exposé par Docker (8080)
+      clientPort: 8080,
+    },
+  },
+})
