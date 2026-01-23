@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackendStatus from "@/components/Debug/BackendStatus";
 import { Button } from "@/components/ui/button";
 
 const Home = () => {
@@ -28,6 +29,10 @@ const Home = () => {
         <Button onClick={() => navigate('/register')} variant="outline" size="lg">
           Créer un compte
         </Button>
+      </div>
+
+      <div className="w-full mt-8">
+        <BackendStatus />
       </div>
     </div>
   );
