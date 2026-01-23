@@ -51,3 +51,6 @@ build/
 
 # Docker
 docker-compose.yml
+
+# Generated files by generate_history.py
+history*.csv

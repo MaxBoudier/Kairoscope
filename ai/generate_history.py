@@ -8,7 +8,7 @@ import sys
 import os
 
 # DB Configuration - Fallback to defaults if not in settings or env
-DB_HOST = os.environ.get("DB_HOST", "kairoscope.maxboudier.fr")
+DB_HOST = os.environ.get("DB_HOST", "localhost")
 DB_PORT = os.environ.get("DB_PORT", "5432")
 DB_NAME = os.environ.get("DB_NAME", "emergency_db")
 DB_USER = os.environ.get("DB_USER", "admin")
@@ -125,6 +125,12 @@ def main():
     
     # Filter valid range just in case
     df_result = df_result.loc[args.start_date:end_date]
+
+    # Export to CSV before DB
+    csv_filename = f"history_{args.restaurant_id}_{args.start_date}_{end_date}.csv"
+    # Save in the same directory as the script or where it's running
+    print(f"Exporting history to CSV: {csv_filename}")
+    df_result.to_csv(csv_filename)
 
     export_to_db(df_result, args.restaurant_id)
 
