@@ -54,7 +54,12 @@ services:
     command: sh -c "composer install --no-dev --optimize-autoloader && apache2-foreground"
 
   front:
-    build: ./webapp/front
+    build:
+      context: ./webapp/front
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+        VITE_WS_URL: ${VITE_WS_URL}
     ports:
       - "80:80" # Nginx runs on 80 inside container
     # No volumes needed for code in prod (baked into image)
