@@ -35,7 +35,7 @@ services:
   api:
     build: ./webapp/api
     ports:
-      - "8081:8081"
+      - "8081:80"
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}?serverVersion=15&charset=utf8"
       APP_ENV: prod
