@@ -11,7 +11,8 @@ const RegisterForm = () => {
         pseudo: '',
         nom_gerant: '',
         prenom_gerant: '',
-        code_settings: ''
+        code_settings: '',
+        registration_code: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);

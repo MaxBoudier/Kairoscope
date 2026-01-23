@@ -79,7 +79,15 @@ class SecurityController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
+        $registrationCode = $data['registration_code'] ?? null;
 
+        // Validation du code de sécurité secret (défini dans .env.local)
+        // Si la variable n'est pas définie, on bloque par sécurité
+        $expectedSecret = $_ENV['REGISTRATION_SECRET'] ?? null;
+        
+        if (!$expectedSecret || $registrationCode !== $expectedSecret) {
+            return $this->json(['error' => 'Code de sécurité invalide ou non configuré.'], 403);
+        }
         if (!$email || !$password) {
             return $this->json(['error' => 'Email et mot de passe requis.'], 400);
         }

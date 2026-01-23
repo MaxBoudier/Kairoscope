@@ -51,8 +51,6 @@ const Dashboard = () => {
         </h2>
       </div>
 
-      <DashboardStats />
-
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 h-full">
         <RevenueChart />
         <NotificationSidebar notificationsData={notificationsData} onDelete={handleDeleteNotification} />
