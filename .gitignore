@@ -48,3 +48,6 @@ dist/
 build/
 *.egg-info/
 *.lightning_logs/
+
+# Docker
+docker-compose.yml
