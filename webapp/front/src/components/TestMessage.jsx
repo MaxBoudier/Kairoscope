@@ -15,7 +15,7 @@ const TestMessage = () => {
       try {
         setLoading(true);
 
-        const response = await fetch('http://localhost:8081/test');
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/test`);
 
         if (!response.ok) {
           throw new Error('Erreur lors de la récupération du message');

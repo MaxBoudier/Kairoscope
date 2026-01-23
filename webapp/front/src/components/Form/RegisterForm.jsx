@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ 
-        email: '', 
+    const [credentials, setCredentials] = useState({
+        email: '',
         password: '',
         pseudo: '',
         nom_gerant: '',
@@ -18,7 +18,7 @@ const RegisterForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
+
         // Pour le code_settings, on limite à 4 chiffres
         if (name === 'code_settings') {
             const numericValue = value.replace(/\D/g, '').slice(0, 4);
@@ -34,7 +34,7 @@ const RegisterForm = () => {
         setError(null);
 
         try {
-            const response = await fetch('http://localhost:8081/api/public/register-first', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/public/register-first`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(credentials),

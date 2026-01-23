@@ -29,7 +29,7 @@ const RevenueChart = () => {
         setPredictions([]);
         setProgress({ step: 0, total: 0, message: 'Initialisation...', step_name: '' });
 
-        const ws = new WebSocket('ws://localhost:8000/ws/predict');
+        const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}/predict`);
         socketRef.current = ws;
 
         ws.onopen = () => {

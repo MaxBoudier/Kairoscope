@@ -7,7 +7,7 @@ function UserList() {
 
     const fetchUsers = async () => {
         try {
-            const res = await fetchWithAuth("http://localhost:8081/admin/utilisateur");
+            const res = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL}/admin/utilisateur`);
             if (!res.ok) throw new Error("Erreur réseau");
 
             const data = await res.json();

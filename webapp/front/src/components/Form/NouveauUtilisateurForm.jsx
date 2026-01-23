@@ -15,7 +15,7 @@ function NouveauUtilisateurForm() {
     setSuccess(false);
 
     try {
-      const res = await fetch("http://localhost:8081/admin/utilisateur/new", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/admin/utilisateur/new`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nom, prenom }),

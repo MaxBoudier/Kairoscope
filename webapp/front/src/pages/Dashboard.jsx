@@ -10,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchNotificationsData = async () => {
       try {
-        const response = await fetchWithAuth('http://localhost:8081/api/notifications');
+        const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/notifications`);
 
         if (response.ok) {
           const data = await response.json();
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
   const handleDeleteNotification = async (id) => {
     try {
-      const response = await fetchWithAuth(`http://localhost:8081/api/notifications/${id}`, {
+      const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/notifications/${id}`, {
         method: 'DELETE',
       });
 

@@ -13,10 +13,10 @@ const ProtectedRoute = ({ children }) => {
 
         const checkAuth = async () => {
             try {
-                const response = await fetch('http://localhost:8081/api/me', {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/me`, {
                     credentials: 'include'
                 });
-                
+
                 if (response.ok) {
                     const userData = await response.json();
                     // Stocker les données utilisateur

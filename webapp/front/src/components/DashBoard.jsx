@@ -11,7 +11,7 @@ const Dashboard = () => {
     // Initialize WebSocket connection
     const connectWebSocket = () => {
       setSocketStatus('connecting');
-      const ws = new WebSocket('ws://localhost:8000/ws/predict');
+      const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}/predict`);
       socketRef.current = ws;
 
       ws.onopen = () => {

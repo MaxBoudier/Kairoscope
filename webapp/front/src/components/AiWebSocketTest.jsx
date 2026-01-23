@@ -13,7 +13,7 @@ const AiWebSocketTest = () => {
     const connect = () => {
         if (socket) return;
 
-        const ws = new WebSocket('ws://localhost:8000/ws/predict');
+        const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}/predict`);
 
         ws.onopen = () => {
             console.log('Connected to AI WebSocket');
