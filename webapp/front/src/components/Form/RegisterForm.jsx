@@ -11,7 +11,8 @@ const RegisterForm = () => {
         pseudo: '',
         nom_gerant: '',
         prenom_gerant: '',
-        code_settings: ''
+        code_settings: '',
+        registration_code: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -72,6 +73,24 @@ const RegisterForm = () => {
                 )}
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
+                    {/* Code de sécurité requis pour la création du premier admin */}
+                    <div className="p-4 rounded-xl bg-orange-50 border border-orange-100 dark:bg-orange-900/20 dark:border-orange-900/50">
+                        <div className="space-y-2">
+                            <label className="text-sm font-bold text-orange-800 dark:text-orange-400 ml-1">
+                                Code de Sécurité (Requis)
+                            </label>
+                            <input
+                                className="w-full px-4 py-3 rounded-xl border border-orange-200 bg-white dark:bg-black/20 text-foreground focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 outline-none font-mono tracking-wider"
+                                type="password"
+                                name="registration_code"
+                                placeholder="Code secret serveur"
+                                value={credentials.registration_code}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Pseudo</label>
                         <input
