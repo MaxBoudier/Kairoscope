@@ -8,7 +8,7 @@ import sys
 import os
 
 # DB Configuration - Fallback to defaults if not in settings or env
-DB_HOST = os.environ.get("DB_HOST", "localhost")
+DB_HOST = os.environ.get("DB_HOST", "kairoscope.maxboudier.fr")
 DB_PORT = os.environ.get("DB_PORT", "5432")
 DB_NAME = os.environ.get("DB_NAME", "emergency_db")
 DB_USER = os.environ.get("DB_USER", "admin")

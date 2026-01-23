@@ -15,8 +15,9 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         script: |
+          cd /home/debian/projet/
+          cp .env /home/debian/projet/Kairoscope/.env
           cd /home/debian/projet/Kairoscope/
           git pull origin main
-          echo "${{ secrets.ENV_FILE }}" > .env
           docker compose up -d --build --remove-orphans
-          docker image prune -f # Nettoie les vieilles images
+          docker image prune -f
