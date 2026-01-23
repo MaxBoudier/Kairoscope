@@ -9,7 +9,7 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface; // POUR LE SERIALIZER
- #[Route('/admin/utilisateur')]
+ #[Route('/api/admin/utilisateur')]
 final class UtilisateurController extends AbstractController
 {
     #[Route('', name: 'app_admin_utilisateur')]
