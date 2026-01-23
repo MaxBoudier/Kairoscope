@@ -13,7 +13,7 @@ use App\Entity\RestaurantData;
 
 final class SettingsController extends AbstractController
 {
-    #[Route('/settings', name: 'app_settings')]
+    #[Route('/api/settings', name: 'app_settings')]
     public function index(#[CurrentUser] ?User $user): JsonResponse
     {
         if (!$user) {
@@ -48,7 +48,7 @@ final class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/settings/update', name: 'app_settings_update', methods: ['POST'])]
+    #[Route('/api/settings/update', name: 'app_settings_update', methods: ['POST'])]
     public function update(
         Request $request,
         EntityManagerInterface $entityManager,
