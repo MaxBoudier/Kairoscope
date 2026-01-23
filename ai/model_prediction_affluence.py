@@ -251,20 +251,38 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
     combined = combined.sort_values(["restaurant_id", "date"]).reset_index(drop=True)
     combined["time_idx"] = range(len(combined))
     
-    # 5. Predict
-    print("Generating predictions...")
+    # --- 5. Predict (Standard Kairoscope) ---
+    print("Generating predictions (Kairoscope)...")
     
     new_prediction_data = combined
     raw_predictions = model.predict(new_prediction_data, mode="raw", return_x=True)
     
     preds = raw_predictions.output.prediction[0] 
-    # Quantiles for QuantileLoss are typically [0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98]
-    # Index 3 is the median (P50)
-    # Index 1 is P10, Index 5 is P90
     median_preds = preds[:, 3].detach().cpu().numpy()
     lower_preds = preds[:, 1].detach().cpu().numpy()
     upper_preds = preds[:, 5].detach().cpu().numpy()
+
+    # --- 6. Predict (Non-Kairoscope / Baseline) ---
+    print("Generating predictions (Non-Kairoscope)...")
     
+    # Create baseline future data with SIP=0
+    future_df_no_kairo = future_df.copy()
+    future_df_no_kairo["sip"] = 0.0
+    
+    # Merge for baseline
+    combined_no_kairo = pd.concat([context_df[cols], future_df_no_kairo[cols]], ignore_index=True)
+    combined_no_kairo = combined_no_kairo.sort_values(["restaurant_id", "date"]).reset_index(drop=True)
+    combined_no_kairo["time_idx"] = range(len(combined_no_kairo))
+    
+    # Predict baseline
+    raw_predictions_no_kairo = model.predict(combined_no_kairo, mode="raw", return_x=True)
+    preds_no_kairo = raw_predictions_no_kairo.output.prediction[0]
+    
+    median_preds_no_kairo = preds_no_kairo[:, 3].detach().cpu().numpy()
+    lower_preds_no_kairo = preds_no_kairo[:, 1].detach().cpu().numpy()
+    upper_preds_no_kairo = preds_no_kairo[:, 5].detach().cpu().numpy()
+    
+    # --- 7. Compile Results ---
     results_df = future_df[["date", "day_of_week", "tmax", "sip"]].copy()
     
     if "events" in future_df.columns:
@@ -272,15 +290,23 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
     else:
         results_df["events"] = [[] for _ in range(len(results_df))]
         
+    # Kairoscope Results
     results_df["predicted_affluence"] = median_preds
     results_df["conf_low"] = lower_preds
     results_df["conf_high"] = upper_preds
     
+    # Non-Kairoscope Results
+    results_df["predicted_affluence_no_kairo"] = median_preds_no_kairo
+    results_df["conf_low_no_kairo"] = lower_preds_no_kairo
+    results_df["conf_high_no_kairo"] = upper_preds_no_kairo
+    
     # Clip confidence bounds to 0
     results_df["conf_low"] = results_df["conf_low"].clip(lower=0)
     results_df["conf_high"] = results_df["conf_high"].clip(lower=0)
+    results_df["conf_low_no_kairo"] = results_df["conf_low_no_kairo"].clip(lower=0)
+    results_df["conf_high_no_kairo"] = results_df["conf_high_no_kairo"].clip(lower=0)
     
-    # Calculate Uncertainty Metrics
+    # Calculate Uncertainty Metrics (based on Kairoscope prediction)
     results_df["uncertainty_range"] = results_df["conf_high"] - results_df["conf_low"]
     
     # Relative uncertainty (avoid division by zero)
@@ -300,7 +326,7 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
     print("\n" + "="*40)
     print(f"PREDICTIONS ({start_future} - {end_future})")
     print("="*40)
-    print(results_df[["date", "day_of_week", "predicted_affluence", "conf_low", "conf_high", "confidence_score"]])
+    print(results_df[["date", "day_of_week", "predicted_affluence", "predicted_affluence_no_kairo", "confidence_score"]])
     
     # No longer saving to CSV
     # results_df.to_csv(settings.PREDICTIONS_FILE_PATH, index=False)

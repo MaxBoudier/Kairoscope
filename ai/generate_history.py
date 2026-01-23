@@ -58,7 +58,7 @@ def export_to_db(df, restaurant_id):
         wspd = int(round(row.get('wspd', 0)))
         day_of_week = row.get('day_of_week')
         is_weekend = bool(row.get('is_weekend', 0))
-        influence = int(row.get('affluence', 0))
+        affluence = int(row.get('affluence', 0))
         pourcentage_occupation = int(row.get('occupancy_rate', 0))
         is_complet = bool(row.get('is_full', 0))
 
@@ -66,7 +66,7 @@ def export_to_db(df, restaurant_id):
             cursor.execute(query, (
                 date_historique, holiday_name, is_holiday, is_school_vacations, vacation_name,
                 weather_code, tmax, tmin, prcd, wspd, day_of_week, is_weekend,
-                influence, pourcentage_occupation, is_complet, restaurant_id
+                affluence, pourcentage_occupation, is_complet, restaurant_id
             ))
         except Exception as e:
             print(f"Error inserting row {index}: {e}")
