@@ -40,4 +40,4 @@ Le succès de ce PoC sera évalué sur les points suivants :
 Le projet "Kairoscope" représente une initiative stratégique en matière d'OSINT, dont l'objectif est d'optimiser la prédiction commerciale au sein des commerces de proximité. Par l'intégration et l'analyse de données internes et externes, il est conçu pour fournir aux restaurateurs une vision proactive, favorisant ainsi une gestion améliorée et l'identification de nouvelles opportunités.
 Ce PoC constitue le fondement d'un futur outil d'aide à la décision.
 
-maxime lpb
+maxime lpb jjj
