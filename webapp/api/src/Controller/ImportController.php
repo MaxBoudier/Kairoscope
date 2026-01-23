@@ -85,15 +85,15 @@ class ImportController extends AbstractController
             }
 
             if (isset($row['affluence'])) $history->setAffluence((int)$row['affluence']);
-            if (isset($row['pourcentage_occupation'])) $history->setPourcentageOccupation((int)$row['pourcentage_occupation']);
-            if (isset($row['is_complet'])) $history->setIsComplet(filter_var($row['is_complet'], FILTER_VALIDATE_BOOLEAN));
+            if (isset($row['occupancy_rate'])) $history->setOccupancyRate((float)$row['occupancy_rate']);
+            if (isset($row['is_full'])) $history->setIsFull((bool)$row['is_full']);
             
             // Weather
             if (isset($row['weather_code'])) $history->setWeatherCode((int)$row['weather_code']);
-            if (isset($row['tmax'])) $history->setTmax((int)$row['tmax']);
-            if (isset($row['tmin'])) $history->setTmin((int)$row['tmin']);
-            if (isset($row['prcd'])) $history->setPrcd((int)$row['prcd']);
-            if (isset($row['wspd'])) $history->setWspd((int)$row['wspd']);
+            if (isset($row['tmax'])) $history->setTmax((float)$row['tmax']);
+            if (isset($row['tmin'])) $history->setTmin((float)$row['tmin']);
+            if (isset($row['prcp'])) $history->setPrcp((float)$row['prcp']);
+            if (isset($row['wspd'])) $history->setWspd((float)$row['wspd']);
 
             // Calendar
             if (isset($row['holiday_name'])) $history->setHolidayName($row['holiday_name']);

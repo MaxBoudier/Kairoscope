@@ -36,16 +36,16 @@ class HistoriqueAffluence
     private ?int $weather_code = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $tmax = null;
+    private ?float $tmax = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $tmin = null;
+    private ?float $tmin = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $prcd = null;
+    private ?float $prcp = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $wspd = null;
+    private ?float $wspd = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $day_of_week = null;
@@ -57,10 +57,10 @@ class HistoriqueAffluence
     private ?int $affluence = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $pourcentage_occupation = null;
+    private ?float $occupancy_rate = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $is_complet = null;
+    private ?bool $is_full = null;
 
     public function getId(): ?int
     {
@@ -151,48 +151,48 @@ class HistoriqueAffluence
         return $this;
     }
 
-    public function getTmax(): ?int
+    public function getTmax(): ?float
     {
         return $this->tmax;
     }
 
-    public function setTmax(?int $tmax): static
+    public function setTmax(?float $tmax): static
     {
         $this->tmax = $tmax;
 
         return $this;
     }
 
-    public function getTmin(): ?int
+    public function getTmin(): ?float
     {
         return $this->tmin;
     }
 
-    public function setTmin(?int $tmin): static
+    public function setTmin(?float $tmin): static
     {
         $this->tmin = $tmin;
 
         return $this;
     }
 
-    public function getPrcd(): ?int
+    public function getPrcp(): ?float
     {
-        return $this->prcd;
+        return $this->prcp;
     }
 
-    public function setPrcd(?int $prcd): static
+    public function setPrcp(?float $prcp): static
     {
-        $this->prcd = $prcd;
+        $this->prcp = $prcp;
 
         return $this;
     }
 
-    public function getWspd(): ?int
+    public function getWspd(): ?float
     {
         return $this->wspd;
     }
 
-    public function setWspd(?int $wspd): static
+    public function setWspd(?float $wspd): static
     {
         $this->wspd = $wspd;
 
@@ -235,26 +235,26 @@ class HistoriqueAffluence
         return $this;
     }
 
-    public function getPourcentageOccupation(): ?int
+    public function getOccupancyRate(): ?float
     {
-        return $this->pourcentage_occupation;
+        return $this->occupancy_rate;
     }
 
-    public function setPourcentageOccupation(?int $pourcentage_occupation): static
+    public function setOccupancyRate(?float $occupancy_rate): static
     {
-        $this->pourcentage_occupation = $pourcentage_occupation;
+        $this->occupancy_rate = $occupancy_rate;
 
         return $this;
     }
 
-    public function isComplet(): ?bool
+    public function isFull(): ?bool
     {
-        return $this->is_complet;
+        return $this->is_full;
     }
 
-    public function setIsComplet(?bool $is_complet): static
+    public function setIsFull(?bool $is_full): static
     {
-        $this->is_complet = $is_complet;
+        $this->is_full = $is_full;
 
         return $this;
     }
