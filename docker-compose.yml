@@ -35,7 +35,7 @@ services:
   api:
     build: ./webapp/api
     ports:
-      - "8081:80"
+      - "8081:8081"
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}?serverVersion=15&charset=utf8"
       APP_ENV: prod
@@ -62,7 +62,7 @@ services:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
         VITE_WS_URL: ${VITE_WS_URL}
     ports:
-      - "80:8081" # Nginx runs on 80 inside container
+      - "80:80" # Nginx runs on 80 inside container
     # No volumes needed for code in prod (baked into image)
     # volumes:
     #   - ./webapp/front:/app
