@@ -39,8 +39,8 @@ services:
       DATABASE_URL: "postgresql://admin:admin@database:5432/emergency_db?serverVersion=15&charset=utf8"
       APP_ENV: dev
       APP_DEBUG: 1
-      SYMFONY_TRUSTED_HOSTS: '^kairoscope\.maxboudier\.fr$'
-      CORS_ALLOW_ORIGIN: '^https?://kairoscope\.maxboudier\.fr$'
+      CORS_ALLOW_ORIGIN: '^https?://(localhost|kairoscope\.maxboudier\.fr)(:[0-9]+)?$'
+      SYMFONY_TRUSTED_HOSTS: '^(localhost|127\.0\.0\.1|kairoscope\.maxboudier\.fr)$'
     volumes:
       - ./webapp/api:/var/www/html
       - vendor_data:/var/www/html/vendor
