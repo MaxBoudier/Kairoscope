@@ -23,7 +23,15 @@ final class SettingsController extends AbstractController
         $restaurant = $user->getRestaurant();
 
         if (!$restaurant) {
-            return $this->json(['message' => 'Aucun restaurant associé'], 404);
+            return $this->json([
+                'id' => null,
+                'nom' => '',
+                'ville' => '',
+                'adresse' => '',
+                'codePostal' => '',
+                'maxNbCouvert' => 0,
+                'isTerrasse' => false,
+            ]);
         }
         
         $restaurantData = $restaurant->getRestaurantData();
@@ -34,6 +42,7 @@ final class SettingsController extends AbstractController
             'ville' => $restaurant->getVille(),
             'adresse' => $restaurant->getAdresse(),
             'codePostal' => $restaurant->getCodePostal(),
+            'typeRestaurant' => $restaurant->getTypeRestaurant(),
             'maxNbCouvert' => $restaurantData?->getMaxNbCouvert() ?? 0,
             'isTerrasse' => $restaurantData?->isTerrasse() ?? false,
         ]);
@@ -45,17 +54,41 @@ final class SettingsController extends AbstractController
         EntityManagerInterface $entityManager,
         #[CurrentUser] ?User $user
     ): JsonResponse {
+        error_log('SettingsController: Update called');
         if (!$user) {
+            error_log('SettingsController: No user matched');
             return $this->json(['message' => 'Unauthorized'], 401);
         }
 
         $restaurant = $user->getRestaurant();
 
+        // Create restaurant if it doesn't exist
         if (!$restaurant) {
-            return $this->json(['message' => 'Aucun restaurant associé'], 404);
+            $restaurant = new \App\Entity\Restaurant();
+            $restaurant->setRestaurantUser($user);
+            $restaurant->setNom('');     // Initialize with defaults to avoid null violations if partial update
+            $restaurant->setVille('');
+            $restaurant->setAdresse('');
+            $restaurant->setCodePostal('');
+            $restaurant->setTypeRestaurant('default'); // Required field
+            
+            $restaurantData = new RestaurantData();
+            $restaurantData->setRestaurant($restaurant);
+            $restaurantData->setMaxNbCouvert(0);
+            $restaurantData->setIsTerrasse(false);
+            $restaurant->setRestaurantData($restaurantData);
+            
+            $entityManager->persist($restaurant);
+            $entityManager->persist($restaurantData);
         }
 
         $data = json_decode($request->getContent(), true);
+
+        if (!$data) {
+            error_log('SettingsController: Invalid JSON or empty body');
+            return $this->json(['message' => 'Invalid JSON or empty body'], 400);
+        }
+        error_log('SettingsController: Received data: ' . print_r($data, true));
 
         // Update Restaurant basic info
         if (isset($data['nom'])) {
@@ -69,6 +102,9 @@ final class SettingsController extends AbstractController
         }
         if (isset($data['codePostal'])) {
             $restaurant->setCodePostal($data['codePostal']);
+        }
+        if (isset($data['typeRestaurant'])) {
+            $restaurant->setTypeRestaurant($data['typeRestaurant']);
         }
 
         // Update RestaurantData (create if not exists)
@@ -97,6 +133,7 @@ final class SettingsController extends AbstractController
                 'ville' => $restaurant->getVille(),
                 'adresse' => $restaurant->getAdresse(),
                 'codePostal' => $restaurant->getCodePostal(),
+                'typeRestaurant' => $restaurant->getTypeRestaurant(),
                 'maxNbCouvert' => $restaurantData->getMaxNbCouvert(),
                 'isTerrasse' => $restaurantData->isTerrasse(),
             ]

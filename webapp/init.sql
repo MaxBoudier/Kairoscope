@@ -145,7 +145,7 @@ CREATE TABLE public.restaurant (
     adresse character varying(255) NOT NULL,
     code_postal character varying(255) NOT NULL,
     restaurant_user_id integer NOT NULL,
-    type_restaurant character varying(255) NOT NULL
+    type_restaurant character varying(255) DEFAULT NULL::character varying
 );
 
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { fetchWithAuth } from '@/lib/api';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,7 @@ const RestaurantInfoForm = ({ initialData }) => {
         maxNbCouvert: 0,
         isTerrasse: false
     });
+    const [status, setStatus] = useState({ type: '', message: '' });
 
     useEffect(() => {
         if (initialData) {
@@ -43,23 +45,24 @@ const RestaurantInfoForm = ({ initialData }) => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8081/settings/update', {
+            const response = await fetchWithAuth('http://localhost:8081/settings/update', {
                 method: 'POST',
-                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-                // Could verify with a toast here
-                console.log("Info saved");
+                setStatus({ type: 'success', message: 'Informations enregistrées avec succès !' });
             } else {
-                console.error("Error saving info");
+                const errorData = await response.json().catch(() => ({}));
+                setStatus({ type: 'error', message: errorData.message || 'Erreur lors de l\'enregistrement (' + response.status + ')' });
             }
         } catch (error) {
             console.error(error);
+            setStatus({ type: 'error', message: 'Erreur de connexion.' });
         } finally {
             setIsLoading(false);
+            setTimeout(() => setStatus({ type: '', message: '' }), 3000);
         }
     };
 
@@ -115,6 +118,14 @@ const RestaurantInfoForm = ({ initialData }) => {
                         </Button>
                     </div>
                 </CardContent>
+                {status.message && (
+                    <div className={`p-4 rounded-b-lg border-t text-sm font-medium ${status.type === 'success'
+                        ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400 border-green-200 dark:border-green-900'
+                        : 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 border-red-200 dark:border-red-900'
+                        }`}>
+                        {status.message}
+                    </div>
+                )}
             </Card>
         </form>
     );

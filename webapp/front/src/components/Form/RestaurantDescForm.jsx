@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { fetchWithAuth } from '@/lib/api';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +13,9 @@ const RestaurantDescForm = ({ initialData }) => {
         ville: "",
         adresse: "",
         codePostal: "",
+        typeRestaurant: "",
     });
+    const [status, setStatus] = useState({ type: '', message: '' });
 
     useEffect(() => {
         if (initialData) {
@@ -21,6 +24,7 @@ const RestaurantDescForm = ({ initialData }) => {
                 ville: initialData.ville || "",
                 adresse: initialData.adresse || "",
                 codePostal: initialData.codePostal || "",
+                typeRestaurant: initialData.typeRestaurant || "",
             });
         }
     }, [initialData]);
@@ -38,23 +42,24 @@ const RestaurantDescForm = ({ initialData }) => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8081/settings/update', {
+            const response = await fetchWithAuth('http://localhost:8081/settings/update', {
                 method: 'POST',
-                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-                // Could verify with a toast here
-                console.log("Description saved");
+                setStatus({ type: 'success', message: 'Description enregistrée avec succès !' });
             } else {
-                console.error("Error saving description");
+                const errorData = await response.json().catch(() => ({}));
+                setStatus({ type: 'error', message: errorData.message || 'Erreur lors de l\'enregistrement (' + response.status + ')' });
             }
         } catch (error) {
             console.error(error);
+            setStatus({ type: 'error', message: 'Erreur de connexion.' });
         } finally {
             setIsLoading(false);
+            setTimeout(() => setStatus({ type: '', message: '' }), 3000);
         }
     };
 
@@ -109,6 +114,17 @@ const RestaurantDescForm = ({ initialData }) => {
                                 className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                             />
                         </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="typeRestaurant" className="text-foreground dark:text-slate-200">Type de Cuisine</Label>
+                            <Input
+                                id="typeRestaurant"
+                                name="typeRestaurant"
+                                value={formData.typeRestaurant}
+                                onChange={handleChange}
+                                placeholder="ex: Italien, Fast Food, Gastronomique..."
+                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                            />
+                        </div>
                     </div>
                     <div className="flex justify-end pt-4">
                         <Button
@@ -123,6 +139,14 @@ const RestaurantDescForm = ({ initialData }) => {
                             )}
                         </Button>
                     </div>
+                    {status.message && (
+                        <div className={`mt-4 p-4 rounded-md text-sm font-medium ${status.type === 'success'
+                            ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400 border border-green-200 dark:border-green-900'
+                            : 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-900'
+                            }`}>
+                            {status.message}
+                        </div>
+                    )}
                 </CardContent>
             </Card>
         </form>

@@ -35,7 +35,7 @@ class RestaurantData
         return $this->restaurant;
     }
 
-    public function setRestaurant(restaurant $restaurant): static
+    public function setRestaurant(Restaurant $restaurant): static
     {
         $this->restaurant = $restaurant;
 
