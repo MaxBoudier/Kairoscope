@@ -17,6 +17,7 @@ jobs:
         script: |
           cd /home/debian/projet/
           cp .env /home/debian/projet/Kairoscope/.env
+          cp docker-compose.yml /home/debian/projet/Kairoscope/docker-compose.yml
           cd /home/debian/projet/Kairoscope/
           git pull origin main
           docker compose up -d --build --remove-orphans
