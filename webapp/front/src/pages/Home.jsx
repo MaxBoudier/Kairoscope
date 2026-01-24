@@ -6,11 +6,12 @@ import { Button } from "@/components/ui/button";
 const Home = () => {
   const navigate = useNavigate();
 
+  /* Redirect logic removed to allow access to Home page */
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      navigate('/dashboard');
-    }
+    // const user = localStorage.getItem('user');
+    // if (user) {
+    //   navigate('/dashboard');
+    // }
   }, [navigate]);
 
   return (

@@ -12,7 +12,13 @@ const LoginForm = () => {
         if (location.state?.successMessage) {
             setSuccessMessage(location.state.successMessage);
         }
-    }, [location]);
+
+        // Auto-redirect if already logged in
+        const user = localStorage.getItem('user');
+        if (user) {
+            navigate('/dashboard');
+        }
+    }, [location, navigate]);
 
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +71,7 @@ const LoginForm = () => {
                     firstname: data.firstname || 'Utilisateur',
                     lastname: data.lastname || ''
                 }));
-                navigate('/');
+                navigate('/dashboard');
             } else {
                 alert("Identifiants incorrects");
             }

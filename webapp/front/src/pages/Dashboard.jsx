@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
 import DashboardStats from '@/components/Dashboard/DashboardStats';
 import RevenueChart from '@/components/Dashboard/PredictionChart';
 import NotificationSidebar from '@/components/Dashboard/NotificationSidebar';
@@ -6,6 +8,7 @@ import EventSection from '@/components/Dashboard/EventSection';
 import { fetchWithAuth } from '@/lib/api';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [notificationsData, setNotificationsData] = useState(null);
 
   useEffect(() => {
