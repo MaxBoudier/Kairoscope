@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 const LoginForm = () => {
 
     const navigate = useNavigate(); // Initialise le hook
+    const location = useLocation();
+    const [successMessage, setSuccessMessage] = useState(null);
+
+    useEffect(() => {
+        if (location.state?.successMessage) {
+            setSuccessMessage(location.state.successMessage);
+        }
+    }, [location]);
 
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [isLoading, setIsLoading] = useState(false);
@@ -83,6 +91,15 @@ const LoginForm = () => {
                     <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-dark dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent">Bienvenue</h2>
                     <p className="text-gray-500 dark:text-slate-400 mt-2 text-sm">Connectez-vous à votre espace</p>
                 </div>
+
+                {successMessage && (
+                    <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-600 dark:text-green-400 text-sm flex items-center gap-3">
+                        <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {successMessage}
+                    </div>
+                )}
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="space-y-2">

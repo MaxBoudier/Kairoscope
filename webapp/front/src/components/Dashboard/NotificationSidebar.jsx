@@ -23,7 +23,7 @@ const NotificationSidebar = ({ notificationsData, onDelete }) => {
     };
 
     return (
-        <Card className="col-span-3 border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 h-full">
+        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 h-full">
             <CardHeader>
                 <CardTitle className="text-card-foreground dark:text-slate-100 flex items-center gap-2">
                     <Bell className="h-5 w-5" /> Notifications

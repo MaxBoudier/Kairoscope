@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardStats from '@/components/Dashboard/DashboardStats';
 import RevenueChart from '@/components/Dashboard/PredictionChart';
 import NotificationSidebar from '@/components/Dashboard/NotificationSidebar';
+import EventSection from '@/components/Dashboard/EventSection';
 import { fetchWithAuth } from '@/lib/api';
 
 const Dashboard = () => {
@@ -51,9 +52,17 @@ const Dashboard = () => {
         </h2>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 h-full">
-        <RevenueChart />
-        <NotificationSidebar notificationsData={notificationsData} onDelete={handleDeleteNotification} />
+      <div className="flex flex-col gap-4 h-full">
+        {/* Top Row: Events & Notifications */}
+        <div className="grid gap-4 md:grid-cols-2 h-1/2">
+          <EventSection />
+          <NotificationSidebar notificationsData={notificationsData} onDelete={handleDeleteNotification} />
+        </div>
+
+        {/* Bottom Row: Chart (Full Width) */}
+        <div className="h-1/2">
+          <RevenueChart />
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import TestMessage from './components/TestMessage';
 import RegisterForm from './components/Form/RegisterForm';
-import NouveauUtilisateurForm from './components/Form/NouveauUtilisateurForm';
 import UserList from './components/UserList';
 import LoginForm from './components/Form/LoginForm';
 import Navbar from './components/Navbar';
@@ -29,7 +28,6 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/test" element={<TestMessage />} />
           <Route path="/test-ai" element={<AiWebSocketTest />} />
-          <Route path="/admin/utilisateur/new" element={<NouveauUtilisateurForm />} />
           <Route path="/admin/utilisateur" element={<UserList />} />
           <Route path="/settings" element={<RestaurantSettings />} />
           <Route path="*" element={<h1>404 - Page non trouvée</h1>} />
