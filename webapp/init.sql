@@ -77,13 +77,13 @@ CREATE TABLE public.historique_affluence (
     weather_code integer,
     tmax integer,
     tmin integer,
-    prcd integer,
+    prcp double precision,
     wspd integer,
     day_of_week character varying(255) DEFAULT NULL::character varying,
     is_weekend boolean,
     affluence integer,
-    pourcentage_occupation integer,
-    is_complet boolean,
+    occupancy_rate double precision,
+    is_full boolean,
     restaurant_id integer NOT NULL
 );
 
