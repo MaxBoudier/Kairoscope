@@ -139,5 +139,26 @@ final class SettingsController extends AbstractController
             ]
         ]);
     }
+    #[Route('/api/settings/verify-pin', name: 'app_settings_verify_pin', methods: ['POST'])]
+    public function verifyPin(Request $request, #[CurrentUser] ?User $user): JsonResponse
+    {
+        if (!$user) {
+            return $this->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $data = json_decode($request->getContent(), true);
+        $pin = $data['pin'] ?? null;
+
+        if (!$pin) {
+            return $this->json(['message' => 'PIN code is required'], 400);
+        }
+
+        // Loose comparison since DB column might be string but JSON sends string "1234"
+        if ($user->getCodeSettings() == $pin) {
+             return $this->json(['success' => true]);
+        }
+
+        return $this->json(['success' => false, 'message' => 'Code PIN incorrect'], 403);
+    }
 }   
 

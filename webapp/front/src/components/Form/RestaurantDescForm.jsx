@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Save } from 'lucide-react';
 
 const RestaurantDescForm = ({ initialData }) => {
@@ -76,60 +77,80 @@ const RestaurantDescForm = ({ initialData }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="nom" className="text-foreground dark:text-slate-200">Nom du Restaurant</Label>
-                            <Input
-                                id="nom"
-                                name="nom"
-                                value={formData.nom}
-                                onChange={handleChange}
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
-                            />
+                            {!initialData ? (
+                                <Skeleton className="w-full h-10 rounded-md" />
+                            ) : (
+                                <Input
+                                    id="nom"
+                                    name="nom"
+                                    value={formData.nom}
+                                    onChange={handleChange}
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                />
+                            )}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="ville" className="text-foreground dark:text-slate-200">Ville</Label>
-                            <Input
-                                id="ville"
-                                name="ville"
-                                value={formData.ville}
-                                onChange={handleChange}
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
-                            />
+                            {!initialData ? (
+                                <Skeleton className="w-full h-10 rounded-md" />
+                            ) : (
+                                <Input
+                                    id="ville"
+                                    name="ville"
+                                    value={formData.ville}
+                                    onChange={handleChange}
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                />
+                            )}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="adresse" className="text-foreground dark:text-slate-200">Adresse</Label>
-                            <Input
-                                id="adresse"
-                                name="adresse"
-                                value={formData.adresse}
-                                onChange={handleChange}
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
-                            />
+                            {!initialData ? (
+                                <Skeleton className="w-full h-10 rounded-md" />
+                            ) : (
+                                <Input
+                                    id="adresse"
+                                    name="adresse"
+                                    value={formData.adresse}
+                                    onChange={handleChange}
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                />
+                            )}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="codePostal" className="text-foreground dark:text-slate-200">Code Postal</Label>
-                            <Input
-                                id="codePostal"
-                                name="codePostal"
-                                value={formData.codePostal}
-                                onChange={handleChange}
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
-                            />
+                            {!initialData ? (
+                                <Skeleton className="w-full h-10 rounded-md" />
+                            ) : (
+                                <Input
+                                    id="codePostal"
+                                    name="codePostal"
+                                    value={formData.codePostal}
+                                    onChange={handleChange}
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                />
+                            )}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="typeRestaurant" className="text-foreground dark:text-slate-200">Type de Cuisine</Label>
-                            <Input
-                                id="typeRestaurant"
-                                name="typeRestaurant"
-                                value={formData.typeRestaurant}
-                                onChange={handleChange}
-                                placeholder="ex: Italien, Fast Food, Gastronomique..."
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
-                            />
+                            {!initialData ? (
+                                <Skeleton className="w-full h-10 rounded-md" />
+                            ) : (
+                                <Input
+                                    id="typeRestaurant"
+                                    name="typeRestaurant"
+                                    value={formData.typeRestaurant}
+                                    onChange={handleChange}
+                                    placeholder="ex: Italien, Fast Food, Gastronomique..."
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                />
+                            )}
                         </div>
                     </div>
                     <div className="flex justify-end pt-4">
                         <Button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={isLoading || !initialData}
                             className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 px-6 rounded-lg shadow-md transition-all hover:scale-105 dark:bg-gradient-to-r dark:from-violet-600 dark:to-indigo-600 dark:hover:from-violet-500 dark:hover:to-indigo-500 dark:text-white dark:shadow-violet-500/20"
                         >
                             {isLoading ? "Enregistrement..." : (

@@ -49,6 +49,8 @@ class SecurityController extends AbstractController
             'roles' => $user->getRoles(),
             'firstname' => $user->getPrenomGerant(),
             'lastname' => $user->getNomGerant(),
+            'pseudo' => $user->getPseudo(),
+            'code_settings' => $user->getCodeSettings(),
         ]);
     }
 
@@ -104,5 +106,51 @@ class SecurityController extends AbstractController
             'message' => 'Premier administrateur créé avec succès',
             'email' => $user->getUserIdentifier()
         ], 201);
+    }
+
+    #[Route('/api/user/update', name: 'api_user_update', methods: ['POST'])]
+    public function updateProfile(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher,
+        #[CurrentUser] ?User $user
+    ): JsonResponse {
+        if (!$user) {
+            return $this->json(['error' => 'Non authentifié'], 401);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        if (isset($data['pseudo'])) {
+            $user->setPseudo($data['pseudo']);
+        }
+        if (isset($data['nom_gerant'])) {
+            $user->setNomGerant($data['nom_gerant']);
+        }
+        if (isset($data['prenom_gerant'])) {
+            $user->setPrenomGerant($data['prenom_gerant']);
+        }
+        if (isset($data['email'])) {
+            $user->setEmail($data['email']);
+        }
+        if (isset($data['code_settings'])) {
+            $user->setCodeSettings($data['code_settings']);
+        }
+
+        if (!empty($data['password'])) {
+            $user->setPassword($passwordHasher->hashPassword($user, $data['password']));
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'message' => 'Profil mis à jour avec succès',
+            'user' => [
+                'id' => $user->getId(),
+                'email' => $user->getUserIdentifier(),
+                'firstname' => $user->getPrenomGerant(),
+                'lastname' => $user->getNomGerant(),
+            ]
+        ]);
     }
 }

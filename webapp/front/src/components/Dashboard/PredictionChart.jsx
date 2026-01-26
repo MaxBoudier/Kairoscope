@@ -59,6 +59,7 @@ const RevenueChart = () => {
                             return {
                                 ...item,
                                 predicted_affluence: Math.round(item.predicted_affluence),
+                                predicted_affluence_no_kairo: Math.round(item.predicted_affluence_no_kairo || 0),
                                 displayDate: date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric" })
                             };
                         });
@@ -171,6 +172,10 @@ const RevenueChart = () => {
                                         <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
                                         <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
                                     </linearGradient>
+                                    <linearGradient id="colorNoKairo" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#94a3b8" stopOpacity={0} />
+                                    </linearGradient>
                                 </defs>
                                 <XAxis
                                     dataKey="displayDate"
@@ -199,6 +204,20 @@ const RevenueChart = () => {
                                     }}
                                     itemStyle={{ color: '#fff' }}
                                     labelStyle={{ color: '#94a3b8' }}
+                                    formatter={(value, name) => {
+                                        if (name === 'predicted_affluence') return [value, 'Prévision Kairoscope'];
+                                        if (name === 'predicted_affluence_no_kairo') return [value, 'Prévision Classique'];
+                                        return [value, name];
+                                    }}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="predicted_affluence_no_kairo"
+                                    stroke="#94a3b8"
+                                    strokeWidth={2}
+                                    fillOpacity={1}
+                                    fill="url(#colorNoKairo)"
+                                    animationDuration={1500}
                                 />
                                 <Area
                                     type="monotone"

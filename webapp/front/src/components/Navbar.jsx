@@ -118,7 +118,7 @@ const Navbar = () => {
 
                                             <div
                                                 className="flex items-center px-4 py-3 cursor-pointer text-sm text-slate-700 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors"
-                                                onClick={() => { navigate('/settings'); setIsOpen(false); }}
+                                                onClick={() => { navigate('/settings/security'); setIsOpen(false); }}
                                             >
                                                 <Settings size={16} className="mr-3" />
                                                 Paramètres
@@ -228,7 +228,7 @@ const Navbar = () => {
 
                                     <div
                                         className="flex items-center px-4 py-3 cursor-pointer text-sm text-slate-700 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors"
-                                        onClick={() => { navigate('/settings'); setIsOpen(false); }}
+                                        onClick={() => { navigate('/settings/security'); setIsOpen(false); }}
                                     >
                                         <Settings size={16} className="mr-3" />
                                         Paramètres

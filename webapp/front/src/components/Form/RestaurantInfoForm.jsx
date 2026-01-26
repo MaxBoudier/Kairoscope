@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Save } from 'lucide-react';
 
 const RestaurantInfoForm = ({ initialData }) => {
@@ -78,14 +79,18 @@ const RestaurantInfoForm = ({ initialData }) => {
                 <CardContent className="space-y-6">
                     <div className="space-y-2 max-w-xs">
                         <Label htmlFor="maxNbCouvert" className="text-foreground dark:text-slate-200">Nombre maximum de couverts</Label>
-                        <Input
-                            id="maxNbCouvert"
-                            name="maxNbCouvert"
-                            type="number"
-                            value={formData.maxNbCouvert}
-                            onChange={handleChange}
-                            className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
-                        />
+                        {!initialData ? (
+                            <Skeleton className="w-full h-10 rounded-md" />
+                        ) : (
+                            <Input
+                                id="maxNbCouvert"
+                                name="maxNbCouvert"
+                                type="number"
+                                value={formData.maxNbCouvert}
+                                onChange={handleChange}
+                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                            />
+                        )}
                     </div>
 
                     <Separator className="bg-border dark:bg-indigo-500/20" />
@@ -97,17 +102,21 @@ const RestaurantInfoForm = ({ initialData }) => {
                                 Activez si votre établissement dispose d'une terrasse.
                             </p>
                         </div>
-                        <Switch
-                            checked={formData.isTerrasse}
-                            onCheckedChange={handleSwitchChange}
-                            className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=checked]:bg-violet-600 dark:data-[state=unchecked]:bg-slate-700"
-                        />
+                        {!initialData ? (
+                            <Skeleton className="w-12 h-6 rounded-full" />
+                        ) : (
+                            <Switch
+                                checked={formData.isTerrasse}
+                                onCheckedChange={handleSwitchChange}
+                                className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=checked]:bg-violet-600 dark:data-[state=unchecked]:bg-slate-700"
+                            />
+                        )}
                     </div>
 
                     <div className="flex justify-end pt-4">
                         <Button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={isLoading || !initialData}
                             className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 px-6 rounded-lg shadow-md transition-all hover:scale-105 dark:bg-gradient-to-r dark:from-violet-600 dark:to-indigo-600 dark:hover:from-violet-500 dark:hover:to-indigo-500 dark:text-white dark:shadow-violet-500/20"
                         >
                             {isLoading ? "Enregistrement..." : (
