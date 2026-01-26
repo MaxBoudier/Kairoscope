@@ -7,16 +7,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\User;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/api/notifications', name: 'api_notifications_')]
 class NotificationController extends AbstractController
 {
     #[Route('', name: 'index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): JsonResponse
+    public function index(#[CurrentUser] ?User $user, EntityManagerInterface $entityManager): JsonResponse
     {
         // Récupérer l'utilisateur connecté (le gérant)
-        $user = $this->getUser();
-        
         if (!$user) {
             return new JsonResponse(['error' => 'Non authentifié'], 401);
         }
