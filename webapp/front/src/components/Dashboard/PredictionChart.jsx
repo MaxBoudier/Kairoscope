@@ -113,7 +113,7 @@ const RevenueChart = () => {
     };
 
     return (
-        <Card className="col-span-4 border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
+        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
             <CardHeader className="flex flex-row items-center justify-between">
                 <div>
                     <CardTitle className="text-card-foreground dark:text-slate-100">Aperçu de l'affluence (IA)</CardTitle>
@@ -139,7 +139,7 @@ const RevenueChart = () => {
             </CardHeader>
             <CardContent className="pl-2">
                 {predictions.length === 0 ? (
-                    <div className="py-8 flex flex-col items-center justify-center space-y-4 h-[350px]">
+                    <div className="py-8 flex flex-col items-center justify-center space-y-4 h-[250px]">
                         {socketStatus === 'error' ? (
                             <div className="flex flex-col items-center gap-2">
                                 <p className="text-red-500 text-sm">Service IA indisponible</p>
@@ -163,7 +163,7 @@ const RevenueChart = () => {
                         )}
                     </div>
                 ) : (
-                    <div className="h-[350px] w-full">
+                    <div className="h-[250px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={predictions}>
                                 <defs>

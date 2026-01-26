@@ -50,6 +50,12 @@ build/
 *.lightning_logs/
 
 # Docker
+.docker/
+Dockerfile*
+docker-compose.yml
+
+
+# Docker
 docker-compose.yml
 
 # Generated files by generate_history.py

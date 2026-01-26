@@ -21,9 +21,8 @@ export default defineConfig({
     },
     allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0', '172.19.0.1', 'kairoscope.maxboudier.fr'],
     hmr: {
-      // On retire le port 8080 pour que le HMR utilise le port du serveur (5173)
-      // clientPort doit correspondre au port exposé par Docker (8080)
-      clientPort: 8080,
+      // Le port doit correspondre au port exposé par Docker (80)
+      clientPort: 80,
     },
   },
 })

@@ -88,7 +88,6 @@ class SecurityController extends AbstractController
         if (!$expectedSecret || $registrationCode !== $expectedSecret) {
             return $this->json(['error' => 'Code de sécurité invalide ou non configuré.'], 403);
         }
-
         if (!$email || !$password) {
             return $this->json(['error' => 'Email et mot de passe requis.'], 400);
         }

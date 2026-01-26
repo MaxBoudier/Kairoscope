@@ -42,8 +42,11 @@ const RegisterForm = () => {
             });
 
             if (response.ok) {
-                alert("Premier administrateur créé ! Vous pouvez maintenant vous connecter.");
-                navigate('/login');
+                navigate('/login', {
+                    state: {
+                        successMessage: "Premier administrateur créé ! Vous pouvez maintenant vous connecter."
+                    }
+                });
             } else {
                 const data = await response.json();
                 setError(data.error || "Erreur lors de la création.");
@@ -156,6 +159,7 @@ const RegisterForm = () => {
                         />
                     </div>
 
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Code PIN (4 chiffres)</label>
                         <input
@@ -170,6 +174,20 @@ const RegisterForm = () => {
                             required
                         />
                     </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground ml-1">Code de sécurité (Requis pour l'initialisation)</label>
+                        <input
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            type="password"
+                            name="registration_code"
+                            placeholder="Code secret administrateur"
+                            value={credentials.registration_code}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
 
                     <div className="pt-2">
                         <button
