@@ -26,7 +26,6 @@ html {
   padding: 0;
   color: var(--ink);
   background-color: var(--dark);
-  min-height: 100vh;
 }
 
 .home-page-container::before {
@@ -100,7 +99,7 @@ html {
   font-weight: 700;
   font-size: 18px;
   color: #111;
-  background: linear-gradient(135deg, var(--accent), #7fffd4);
+  /* background: linear-gradient(135deg, var(--accent), #7fffd4); */
   overflow: hidden;
 }
 

@@ -8,27 +8,8 @@ const Home = () => {
   return (
     <div className="home-page-container">
       <section className="page">
-        <nav>
-          <div className="brand">
-            <div className="logo">
-              <img src="/Images/logo.png" alt="Logo Kairoscope" />
-            </div>
-            <div className="brand-text">
-              <span>Kairoscope</span>
-              <small>Le 6e sens de votre commerce</small>
-            </div>
-          </div>
-          <div className="onglets">
-            <a href="#projet">Le Projet</a>
-            <a href="#membres">Les Membres</a>
-            <a href="#fonctionnement">Le Fonctionnement</a>
-            <a href="#contact">Contact</a>
-          </div>
-          <div className="buttons">
-            <button className="login" onClick={() => navigate('/login')}>Se connecter</button>
-            <button className="register" onClick={() => navigate('/register')}>Découvrir</button>
-          </div>
-        </nav>
+
+
 
         <header className="hero" id="projet">
           <div className="hero-content">
