@@ -276,9 +276,9 @@ class DatasetManager:
 
         query = f"""
             SELECT date_historique, holiday_name, is_holiday, is_school_vacations, vacation_name,
-                   weather_code, tmax, tmin, prcd as prcp, wspd, day_of_week, is_weekend,
-                   influence as affluence, pourcentage_occupation as occupancy_rate, is_complet as is_full, restaurant_id
-            FROM historique_influence
+                   weather_code, tmax, tmin, prcp, wspd, day_of_week, is_weekend,
+                   affluence,  occupancy_rate,  is_full, restaurant_id
+            FROM historique_affluence
             WHERE restaurant_id = {restaurant_id}
             ORDER BY date_historique ASC
         """

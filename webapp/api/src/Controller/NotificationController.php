@@ -20,18 +20,12 @@ class NotificationController extends AbstractController
         if (!$user) {
             return new JsonResponse(['error' => 'Non authentifié'], 401);
         }
+        //Exemple si vous avez une relation User -> Restaurant -> Notification
+        $restaurant = $user->getRestaurant(); 
+        $notifications = $restaurant ? $restaurant->getNotifications() : [];
 
-        // On suppose que l'utilisateur est un gérant de restaurant
-        // TODO: Adapter selon votre logique métier si nécessaire
-        // Ici on récupère les notifications liées au restaurant de l'utilisateur
-        // (Logique simplifiée pour l'exemple, à adapter selon vos relations)
-        
-        // Exemple si vous avez une relation User -> Restaurant -> Notification
-        // $restaurant = $user->getRestaurant(); 
-        // $notifications = $restaurant ? $restaurant->getNotifications() : [];
-
-        // Pour l'instant, on renvoie une liste vide pour éviter l'erreur 404
-        // et on laisse le soin d'implémenter la vraie récupération
+        //Pour l'instant, on renvoie une liste vide pour éviter l'erreur 404
+        //et on laisse le soin d'implémenter la vraie récupération
         $notifications = [];
 
         return $this->json($notifications);
