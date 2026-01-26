@@ -13,23 +13,24 @@ const Home = () => {
   }, [navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-70px)] bg-gray-50 dark:bg-neutral-900 text-slate-900 dark:text-slate-100 p-8">
-      <h1 className="text-4xl md:text-6xl font-bold mb-6 text-center bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-        Bienvenue sur Kairoscope
-      </h1>
-      <p className="text-xl md:text-2xl mb-8 text-center text-slate-600 dark:text-slate-400 max-w-2xl">
-        L'outil de prédiction d'affluence nouvelle génération pour les restaurateurs.
-      </p>
-
-      <div className="flex gap-4">
-        <Button onClick={() => navigate('/login')} size="lg" className="bg-primary hover:bg-primary/90">
-          Se connecter
-        </Button>
-        <Button onClick={() => navigate('/register')} variant="outline" size="lg">
-          Créer un compte
-        </Button>
-      </div>
+   
+   <div>
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+     <h1  >                          Kairoscope</h1>
+      <p>Le projet **Kairoscope** est une initiative visant à développer un modèle *d'intelligence artificielle* innovant pour la prédiction de séries temporelles. 
+       Ce projet sera réalisé sur une période intensive de deux semaines dans le cadre du **Défi Chal'Enge**.
+       L'objectif principal est de créer un **outil de prédiction** qui soit à la fois plus précis et plus contextuel que les modèles traditionnels.
+       Pour ce faire, le modèle n'utilisera pas seulement les données historiques internes, mais y ajoutera des informations pertinentes issues de l'OSINT (Open Source Intelligence), telles que l'actualité, les événements locaux ou l'activité sur les réseaux sociaux.</p>
     </div>
+
+
+    <a href ="https://youtu.be/dQw4w9WgXcQ?si=Ps3t93QaAAvNxwDX"  target="_blank" > Cliquer par pitié</a>
+    
+
+   
+    <p> fais parti du <a href="https://lecnam.net/accueil" title="Le Cnam" target="_blank" > cnam</a></p> 
+
+  </div>
   );
 };
 
