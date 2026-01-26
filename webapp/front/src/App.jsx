@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import { Button } from "@/components/ui/button"
 import RestaurantSettings from './pages/Settings/RestaurantSettings';
 import AiWebSocketTest from './components/AiWebSocketTest';
+import WebSocketRawDebug from './pages/WebSocketRawDebug';
 
 function App() {
   // Le hook useLocation permet de savoir sur quelle page on est
@@ -28,6 +29,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/test" element={<TestMessage />} />
           <Route path="/test-ai" element={<AiWebSocketTest />} />
+          <Route path="/debug-ws" element={<WebSocketRawDebug />} />
           <Route path="/admin/utilisateur" element={<UserList />} />
           <Route path="/settings" element={<RestaurantSettings />} />
           <Route path="*" element={<h1>404 - Page non trouvée</h1>} />
