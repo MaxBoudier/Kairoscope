@@ -18,11 +18,11 @@ function App() {
   const location = useLocation();
   return (
     <>
-      {/* On n'affiche la Navbar que si on n'est PAS sur la page /login ni /register */}
-      {location.pathname !== '/login' && location.pathname !== '/register' && <Navbar />}
+      {/* On n'affiche la Navbar que si on n'est PAS sur la page /register */}
+      {location.pathname !== '/register' && <Navbar />}
 
       {/* Route pour le reste de l'application (Accueil) */}
-      <div className={location.pathname !== '/login' && location.pathname !== '/register' ? "pt-[70px]" : ""}>
+      <div className={location.pathname !== '/register' ? "pt-[70px]" : ""}>
         <Routes>
           {/* Route pour la page de connexion */}
           <Route path="/login" element={<LoginForm />} />

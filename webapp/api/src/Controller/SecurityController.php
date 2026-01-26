@@ -63,18 +63,12 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/api/public/register-first', name: 'api_register_first', methods: ['POST'])]
-    public function registerFirstUser(
+    public function registerUser(
         Request $request,
         UserRepository $userRepository,
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager
     ): JsonResponse {
-        $count = $userRepository->count([]);
-
-        // Sécurité : On ne permet cette action que s'il n'y a AUCUN utilisateur
-        if ($count > 0) {
-            return $this->json(['error' => 'L\'initialisation a déjà été effectuée.'], 403);
-        }
 
         $data = json_decode($request->getContent(), true);
         $email = $data['email'] ?? null;
