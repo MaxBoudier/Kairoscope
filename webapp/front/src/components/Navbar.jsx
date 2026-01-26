@@ -41,24 +41,45 @@ const Navbar = () => {
 
     if (isHomePage) {
         return (
-            <div className="home-page-container">
-                <nav className="">
-                    <div className="brand">
-                        <div className="logo">
-                            <img src="/Images/logo.png" alt="Logo Kairoscope" />
+            <div>
+                <nav className="sticky top-0 z-50 flex w-full items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-6 py-3 backdrop-blur-md font-['Space_Grotesk'] dark:border-white/12 dark:bg-[#080b10]/90 shadow-sm dark:shadow-none transition-colors duration-300 md:px-10">
+                    <div className="flex items-center gap-4">
+                        <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl text-[#111] font-bold text-lg bg-slate-100 dark:bg-transparent">
+                            <img src="/Images/logo.png" alt="Logo Kairoscope" className="block h-[70%] w-[70%] object-contain" />
                         </div>
-                        <div className="brand-text">
-                            <span>Kairoscope</span>
-                            <small>Le 6e sens de votre commerce</small>
+                        <div className="">
+                            <span className="block font-['Funnel_Display'] text-lg tracking-[0.5px] text-slate-900 dark:text-[#f5f7fb]">Kairoscope</span>
+                            <small className="text-slate-500 text-xs uppercase tracking-[1.2px] dark:text-[#b0b8c5]">Le 6e sens de votre commerce</small>
                         </div>
                     </div>
-                    <div className="onglets">
-                        <a href="#projet">Le Projet</a>
-                        <a href="#membres">Les Membres</a>
-                        <a href="#fonctionnement">Le Fonctionnement</a>
-                        <a href="#contact">Contact</a>
+                    <div className="flex flex-wrap gap-3.5 text-sm text-slate-500 dark:text-[#b0b8c5]">
+                        <a href="#projet" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-colors hover:text-slate-900 dark:hover:text-[#f5f7fb] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Le Projet</a>
+                        <a href="#membres" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-colors hover:text-slate-900 dark:hover:text-[#f5f7fb] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Les Membres</a>
+                        <a href="#fonctionnement" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-colors hover:text-slate-900 dark:hover:text-[#f5f7fb] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Le Fonctionnement</a>
+                        <a href="#contact" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-colors hover:text-slate-900 dark:hover:text-[#f5f7fb] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Contact</a>
                     </div>
-                    <div className="buttons flex items-center gap-4">
+                    <div className="flex items-center gap-4">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full text-slate-500 dark:text-[#b0b8c5] hover:text-lime-600 dark:hover:text-[#e8ff6a] hover:bg-transparent dark:hover:border-[#e8ff6a] border border-transparent transition-all">
+                                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                                    <span className="sr-only">Toggle theme</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => setTheme("light")}>
+                                    Light
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                                    Dark
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme("system")}>
+                                    System
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
                         <div className="relative" ref={dropdownRef}>
                             {user ? (
                                 <>
@@ -116,7 +137,7 @@ const Navbar = () => {
                             ) : (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <div className="w-[35px] h-[35px] bg-gray-50 dark:bg-neutral-800 rounded-full flex justify-center items-center border border-gray-200 dark:border-neutral-700 text-slate-500 dark:text-slate-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors">
+                                        <div className="w-[35px] h-[35px] bg-transparent border border-slate-200 dark:border-white/12 rounded-full flex justify-center items-center text-slate-500 dark:text-[#f5f7fb] cursor-pointer hover:border-lime-500 hover:text-lime-600 dark:hover:border-[#e8ff6a] dark:hover:text-[#e8ff6a] transition-all">
                                             <User size={20} />
                                         </div>
                                     </DropdownMenuTrigger>
