@@ -14,6 +14,7 @@ import WebSocketRawDebug from './pages/WebSocketRawDebug';
 function App() {
   // Le hook useLocation permet de savoir sur quelle page on est
   const location = useLocation();
+  const homeHtmlUrl = new URL('./pages/home.html', import.meta.url).href;
   return (
     <>
       {/* On n'affiche la Navbar que si on n'est PAS sur la page /login ni /register */}
@@ -25,7 +26,7 @@ function App() {
           {/* Route pour la page de connexion */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<iframe src={homeHtmlUrl} style={{width: '100%', height: '100vh', border: 'none'}} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/test" element={<TestMessage />} />
           <Route path="/test-ai" element={<AiWebSocketTest />} />

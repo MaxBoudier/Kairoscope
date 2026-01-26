@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import BackendStatus from "@/components/Debug/BackendStatus";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const Home = () => {
@@ -20,20 +19,25 @@ const Home = () => {
         Bienvenue sur Kairoscope
       </h1>
       <p className="text-xl md:text-2xl mb-8 text-center text-slate-600 dark:text-slate-400 max-w-2xl">
-        L'outil de prédiction d'affluence nouvelle génération pour les restaurateurs.
+        L'outil de prédiction d'affluence nouvelle génération pour les
+        restaurateurs.
       </p>
 
       <div className="flex gap-4">
-        <Button onClick={() => navigate('/login')} size="lg" className="bg-primary hover:bg-primary/90">
+        <Button
+          onClick={() => navigate("/login")}
+          size="lg"
+          className="bg-primary hover:bg-primary/90"
+        >
           Se connecter
         </Button>
-        <Button onClick={() => navigate('/register')} variant="outline" size="lg">
+        <Button
+          onClick={() => navigate("/register")}
+          variant="outline"
+          size="lg"
+        >
           Créer un compte
         </Button>
-      </div>
-
-      <div className="w-full mt-8">
-        <BackendStatus />
       </div>
     </div>
   );

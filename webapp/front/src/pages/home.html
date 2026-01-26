@@ -1,0 +1,346 @@
+﻿<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kairoscope page Landing</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="page">
+      <nav>
+        <div class="brand">
+          <div class="logo">
+            <img src="/Images/logo.png" alt="Logo Kairoscope" />
+          </div>
+          <div class="brand-text">
+            <span>Kairoscope</span>
+            <small>Le 6e sens de votre commerce</small>
+          </div>
+        </div>
+        <div class="onglets">
+          <a href="#projet">Le Projet</a>
+          <a href="#membres">Les Membres</a>
+          <a href="#fonctionnement">Le Fonctionnement</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="buttons">
+          <button class="login">Se connecter</button>
+          <button class="register">Découvrir</button>
+        </div>
+      </nav>
+
+      <header class="hero" id="projet">
+        <div class="hero-content">
+          <p class="eyebrow">Note de cadrage — Projet Kairoscope</p>
+          <h1>
+            Prédire l’affluence, expliquer le pourquoi.
+            <span>OSINT + séries temporelles pour une décision proactive.</span>
+          </h1>
+          <p class="lead">
+            Kairoscope intègre des données externes (actualités, événements
+            locaux, météo, réseaux sociaux) aux historiques internes pour
+            améliorer la prédiction de l’affluence. Un tableau de bord simple
+            compare la prévision classique à la prévision Kairoscope et explique
+            l’écart.
+          </p>
+          <p class="support">
+            Objectif : permettre aux commerces de proximité d’anticiper stocks,
+            personnel, promotions et trésorerie. Projet porté par Maxime
+            Boudier, étudiant CNAM ingénieur BDIA (2e année).
+          </p>
+          <div class="hero-cta">
+            <button class="primary">Voir la démo</button>
+            <button class="ghost">Lire la note</button>
+          </div>
+          <div class="hero-metrics">
+            <div>
+              <strong>J+1 → J+14</strong>
+              <span>Horizon de prédiction</span>
+            </div>
+            <div>
+              <strong>Double courbe</strong>
+              <span>Classique vs Kairoscope</span>
+            </div>
+            <div>
+              <strong>Alertes</strong>
+              <span>Notifications temps réel</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="card-header">
+            <span>Tableau de bord prédictif</span>
+            <span class="pulse"></span>
+          </div>
+          <div class="card-body">
+            <div class="card-row">
+              <div class="dot"></div>
+              <div>
+                <h3>Prévision enrichie</h3>
+                <p>OSINT intégré aux séries temporelles.</p>
+              </div>
+            </div>
+            <div class="card-row">
+              <div class="dot"></div>
+              <div>
+                <h3>Annotations claires</h3>
+                <p>Comprendre les pics et creux d’activité.</p>
+              </div>
+            </div>
+            <div class="card-row">
+              <div class="dot"></div>
+              <div>
+                <h3>Actions guidées</h3>
+                <p>Notifier l’équipe au moment opportun.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section strip" id="fonctionnement">
+        <div class="strip-item">
+          <span>01</span>
+          <p>Prédit les ventes et l’affluence à court terme (J+1 à J+14).</p>
+        </div>
+        <div class="strip-item">
+          <span>02</span>
+          <p>Montre la valeur de l’OSINT via deux courbes comparatives.</p>
+        </div>
+        <div class="strip-item">
+          <span>03</span>
+          <p>Explique le pourquoi grâce à des annotations sur le graphe.</p>
+        </div>
+        <div class="strip-item">
+          <span>04</span>
+          <p>Envoie des notifications en temps réel pour agir vite.</p>
+        </div>
+      </section>
+
+      <section class="section grid">
+        <article>
+          <h2>Contexte & valeur ajoutée</h2>
+          <p>
+            Les modèles traditionnels reposent sur l’historique interne.
+            Kairoscope enrichit la prédiction avec des facteurs externes pour
+            coller davantage à la réalité terrain.
+          </p>
+          <ul class="list">
+            <li>Actualités et événements locaux influençant l’affluence.</li>
+            <li>Météo, incidents et tendances sociales.</li>
+            <li>Signaux OSINT consolidés en un flux exploitable.</li>
+          </ul>
+          <button class="ghost">Découvrir la vision</button>
+        </article>
+        <article>
+          <h2>Actions métiers concrètes</h2>
+          <p>
+            Les prédictions et alertes Kairoscope guident les décisions
+            opérationnelles d’un restaurateur ou d’un commerce de proximité.
+          </p>
+          <ul class="list">
+            <li>Gestion des stocks pour éviter ruptures et gaspillages.</li>
+            <li>Planification du personnel selon les pics d’activité.</li>
+            <li>Marketing & promotions ciblées aux bons moments.</li>
+            <li>Menus spéciaux liés aux événements locaux.</li>
+            <li>Anticipation des flux de trésorerie.</li>
+          </ul>
+          <button class="ghost">Voir les actions</button>
+        </article>
+        <article>
+          <h2>Objectifs techniques</h2>
+          <p>
+            Un PoC centré sur l’expérience utilisateur et la qualité de la
+            prédiction.
+          </p>
+          <ul class="list">
+            <li>
+              Configuration : adresse du commerce + import CSV des ventes.
+            </li>
+            <li>Tableau de bord prédictif avec comparaison et annotations.</li>
+            <li>Flux “KairOS” listant météo, événements et actualités.</li>
+          </ul>
+          <button class="ghost">Voir le plan</button>
+        </article>
+      </section>
+
+      <section class="section grid" id="membres">
+        <article>
+          <h2>Portage du projet</h2>
+          <p>
+            Maxime Boudier, étudiant CNAM ingénieur BDIA (2e année), pilote le
+            cadrage, la vision produit et l’intégration OSINT.
+          </p>
+          <ul class="list">
+            <li>Note de cadrage et objectifs PoC.</li>
+            <li>Coordination des jalons et livrables.</li>
+            <li>Validation des hypothèses métier.</li>
+          </ul>
+          <button class="ghost">Voir le parcours</button>
+        </article>
+        <article>
+          <h2>Équipe data & IA</h2>
+          <p>
+            Modélisation des séries temporelles et mise en évidence de la valeur
+            ajoutée des données externes.
+          </p>
+          <ul class="list">
+            <li>Comparaison modèle classique vs Kairoscope.</li>
+            <li>Feature engineering sur les signaux OSINT.</li>
+            <li>Évaluation continue de la précision.</li>
+          </ul>
+          <button class="ghost">Méthodo data</button>
+        </article>
+        <article>
+          <h2>Terrain & expérience</h2>
+          <p>
+            Retours des commerçants pour s’assurer d’une application simple,
+            conviviale et réellement utile.
+          </p>
+          <ul class="list">
+            <li>Interviews et tests d’usage en conditions réelles.</li>
+            <li>Amélioration continue du tableau de bord.</li>
+            <li>Mesure de l’impact opérationnel.</li>
+          </ul>
+          <button class="ghost">Voir l’impact</button>
+        </article>
+      </section>
+
+      <section class="section carousel">
+        <div class="carousel-header">
+          <h2>Critères de succès</h2>
+          <p>Ce qui définit la réussite du PoC Kairoscope.</p>
+          <div class="carousel-tags">
+            <span>Intégration OSINT</span>
+            <span>Application conviviale</span>
+            <span>Vidéo promo impactante</span>
+            <span>Pitch commercial clair</span>
+          </div>
+        </div>
+        <div class="carousel-inner">
+          <input
+            class="carousel-input"
+            type="radio"
+            name="carousel"
+            id="slide-1"
+            checked
+          />
+          <input
+            class="carousel-input"
+            type="radio"
+            name="carousel"
+            id="slide-2"
+          />
+          <input
+            class="carousel-input"
+            type="radio"
+            name="carousel"
+            id="slide-3"
+          />
+          <input
+            class="carousel-input"
+            type="radio"
+            name="carousel"
+            id="slide-4"
+          />
+          <input
+            class="carousel-input"
+            type="radio"
+            name="carousel"
+            id="slide-5"
+          />
+          <input
+            class="carousel-input"
+            type="radio"
+            name="carousel"
+            id="slide-6"
+          />
+
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="slide">
+                <img src="/Images/banner.png" alt="Vision Kairoscope 01" />
+              </div>
+              <div class="slide">
+                <img src="/Images/banner.png" alt="Vision Kairoscope 02" />
+              </div>
+              <div class="slide">
+                <img src="/Images/banner.png" alt="Vision Kairoscope 03" />
+              </div>
+              <div class="slide">
+                <img src="/Images/banner.png" alt="Vision Kairoscope 04" />
+              </div>
+              <div class="slide">
+                <img src="/Images/banner.png" alt="Vision Kairoscope 05" />
+              </div>
+              <div class="slide">
+                <img src="/Images/banner.png" alt="Vision Kairoscope 06" />
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-nav">
+            <label class="carousel-arrow prev prev-1" for="slide-6"
+              >&#8592;</label
+            >
+            <label class="carousel-arrow prev prev-2" for="slide-1"
+              >&#8592;</label
+            >
+            <label class="carousel-arrow prev prev-3" for="slide-2"
+              >&#8592;</label
+            >
+            <label class="carousel-arrow prev prev-4" for="slide-3"
+              >&#8592;</label
+            >
+            <label class="carousel-arrow prev prev-5" for="slide-4"
+              >&#8592;</label
+            >
+            <label class="carousel-arrow prev prev-6" for="slide-5"
+              >&#8592;</label
+            >
+
+            <label class="carousel-arrow next next-1" for="slide-2"
+              >&#8594;</label
+            >
+            <label class="carousel-arrow next next-2" for="slide-3"
+              >&#8594;</label
+            >
+            <label class="carousel-arrow next next-3" for="slide-4"
+              >&#8594;</label
+            >
+            <label class="carousel-arrow next next-4" for="slide-5"
+              >&#8594;</label
+            >
+            <label class="carousel-arrow next next-5" for="slide-6"
+              >&#8594;</label
+            >
+            <label class="carousel-arrow next next-6" for="slide-1"
+              >&#8594;</label
+            >
+          </div>
+
+          <div class="carousel-dots">
+            <label class="carousel-dot" for="slide-1"></label>
+            <label class="carousel-dot" for="slide-2"></label>
+            <label class="carousel-dot" for="slide-3"></label>
+            <label class="carousel-dot" for="slide-4"></label>
+            <label class="carousel-dot" for="slide-5"></label>
+            <label class="carousel-dot" for="slide-6"></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="section cta" id="contact">
+        <div>
+          <h2>Prêt à lancer le PoC Kairoscope ?</h2>
+          <p>
+            Une initiative stratégique OSINT pour optimiser la prédiction
+            commerciale. Contacte l’équipe pour une démo, la note de cadrage
+            complète et un accompagnement sur mesure.
+          </p>
+        </div>
+        <button class="primary">Nous contacter</button>
+      </section>
+    </section>
+  </body>
+</html>
