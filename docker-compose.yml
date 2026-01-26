@@ -1,0 +1,63 @@
+services:
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: emergency_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./webapp/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432" # Kept exposed per user request
+    networks:
+      - kairoscope-net
+
+  ai:
+    build: ./ai
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@database:5432/emergency_db
+      - DB_HOST=database
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_NAME=emergency_db
+      - DB_PORT=5432
+    depends_on:
+      - database
+    networks:
+      - kairoscope-net
+
+  api:
+    build: ./webapp/api
+    ports:
+      - "8081:80"
+    environment:
+      DATABASE_URL: "postgresql://admin:admin@database:5432/emergency_db?serverVersion=15&charset=utf8"
+      APP_ENV: prod # Forced to PROD for safety
+      APP_DEBUG: 0
+    depends_on:
+      - database
+    networks:
+      - kairoscope-net
+    # No "command" override here -> uses Dockerfile CMD (apache2-foreground)
+
+  front:
+    build:
+      context: ./webapp/front
+      target: prod # Builds the Nginx version
+    ports:
+      - "80:80" # Nginx runs on 80 inside container
+    depends_on:
+      - api
+    networks:
+      - kairoscope-net
+    # No "command" override -> uses Dockerfile CMD (nginx)
+
+networks:
+  kairoscope-net:
+    driver: bridge
+
+volumes:
+  db_data: # vendor_data removed as it's not needed if we build the image with vendor inside

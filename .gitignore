@@ -50,7 +50,9 @@ build/
 *.lightning_logs/
 
 # Docker
-docker-compose.yml
+.docker/
+# Dockerfile* <- We want to track Dockerfiles now
+docker-compose.override.yml
 
 # Generated files by generate_history.py
 history*.csv
