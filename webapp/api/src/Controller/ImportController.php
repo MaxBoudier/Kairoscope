@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class ImportController extends AbstractController
 {
-    #[Route('/import/historical-affluence', name: 'api_import_historical_affluence', methods: ['POST'])]
+    #[Route('api/import/historical-affluence', name: 'api_import_historical_affluence', methods: ['POST'])]
     public function import(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] ?User $user): JsonResponse
     {
         error_log('ImportController: Import called');

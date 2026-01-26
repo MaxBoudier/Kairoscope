@@ -11,7 +11,7 @@ const RestaurantSettings = () => {
     useEffect(() => {
         const fetchRestaurantData = async () => {
             try {
-                const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL}/settings`);
+                const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/settings`);
                 if (response.ok) {
                     const data = await response.json();
                     setRestaurantData(data);

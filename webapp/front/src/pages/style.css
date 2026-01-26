@@ -20,7 +20,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+.home-page-container {
   font-family: "Space Grotesk", sans-serif;
   margin: 0;
   padding: 0;
@@ -29,28 +29,24 @@ body {
   min-height: 100vh;
 }
 
-body::before {
+.home-page-container::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
     linear-gradient(120deg, rgba(3, 6, 10, 0.7), rgba(10, 12, 16, 0.92)),
-    radial-gradient(
-      circle at top left,
+    radial-gradient(circle at top left,
       rgba(232, 255, 106, 0.2),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 20% 60%,
+      transparent 45%),
+    radial-gradient(circle at 20% 60%,
       rgba(88, 193, 255, 0.12),
-      transparent 50%
-    );
+      transparent 50%);
   opacity: 0.7;
   pointer-events: none;
   z-index: 1;
 }
 
-body::after {
+.home-page-container::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -65,7 +61,7 @@ body::after {
   z-index: 0;
 }
 
-body .page {
+.home-page-container .page {
   position: relative;
   z-index: 2;
   margin: 0 auto;
@@ -73,7 +69,7 @@ body .page {
   max-width: 1280px;
 }
 
-nav {
+.home-page-container nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -582,52 +578,52 @@ nav .buttons .register:hover {
   pointer-events: none;
 }
 
-#slide-1:checked ~ .carousel-viewport .carousel-track {
+#slide-1:checked~.carousel-viewport .carousel-track {
   transform: translateX(0);
 }
 
-#slide-2:checked ~ .carousel-viewport .carousel-track {
+#slide-2:checked~.carousel-viewport .carousel-track {
   transform: translateX(-100%);
 }
 
-#slide-3:checked ~ .carousel-viewport .carousel-track {
+#slide-3:checked~.carousel-viewport .carousel-track {
   transform: translateX(-200%);
 }
 
-#slide-4:checked ~ .carousel-viewport .carousel-track {
+#slide-4:checked~.carousel-viewport .carousel-track {
   transform: translateX(-300%);
 }
 
-#slide-5:checked ~ .carousel-viewport .carousel-track {
+#slide-5:checked~.carousel-viewport .carousel-track {
   transform: translateX(-400%);
 }
 
-#slide-6:checked ~ .carousel-viewport .carousel-track {
+#slide-6:checked~.carousel-viewport .carousel-track {
   transform: translateX(-500%);
 }
 
-#slide-1:checked ~ .carousel-nav .prev-1,
-#slide-2:checked ~ .carousel-nav .prev-2,
-#slide-3:checked ~ .carousel-nav .prev-3,
-#slide-4:checked ~ .carousel-nav .prev-4,
-#slide-5:checked ~ .carousel-nav .prev-5,
-#slide-6:checked ~ .carousel-nav .prev-6,
-#slide-1:checked ~ .carousel-nav .next-1,
-#slide-2:checked ~ .carousel-nav .next-2,
-#slide-3:checked ~ .carousel-nav .next-3,
-#slide-4:checked ~ .carousel-nav .next-4,
-#slide-5:checked ~ .carousel-nav .next-5,
-#slide-6:checked ~ .carousel-nav .next-6 {
+#slide-1:checked~.carousel-nav .prev-1,
+#slide-2:checked~.carousel-nav .prev-2,
+#slide-3:checked~.carousel-nav .prev-3,
+#slide-4:checked~.carousel-nav .prev-4,
+#slide-5:checked~.carousel-nav .prev-5,
+#slide-6:checked~.carousel-nav .prev-6,
+#slide-1:checked~.carousel-nav .next-1,
+#slide-2:checked~.carousel-nav .next-2,
+#slide-3:checked~.carousel-nav .next-3,
+#slide-4:checked~.carousel-nav .next-4,
+#slide-5:checked~.carousel-nav .next-5,
+#slide-6:checked~.carousel-nav .next-6 {
   opacity: 1;
   pointer-events: auto;
 }
 
-#slide-1:checked ~ .carousel-dots label[for="slide-1"],
-#slide-2:checked ~ .carousel-dots label[for="slide-2"],
-#slide-3:checked ~ .carousel-dots label[for="slide-3"],
-#slide-4:checked ~ .carousel-dots label[for="slide-4"],
-#slide-5:checked ~ .carousel-dots label[for="slide-5"],
-#slide-6:checked ~ .carousel-dots label[for="slide-6"] {
+#slide-1:checked~.carousel-dots label[for="slide-1"],
+#slide-2:checked~.carousel-dots label[for="slide-2"],
+#slide-3:checked~.carousel-dots label[for="slide-3"],
+#slide-4:checked~.carousel-dots label[for="slide-4"],
+#slide-5:checked~.carousel-dots label[for="slide-5"],
+#slide-6:checked~.carousel-dots label[for="slide-6"] {
   background: var(--accent);
   border-color: var(--accent);
 }
@@ -638,11 +634,9 @@ nav .buttons .register:hover {
   gap: 24px;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(
-    135deg,
-    rgba(232, 255, 106, 0.16),
-    rgba(127, 255, 212, 0.08)
-  );
+  background: linear-gradient(135deg,
+      rgba(232, 255, 106, 0.16),
+      rgba(127, 255, 212, 0.08));
   border-radius: 20px;
   padding: 32px;
   border: 1px solid var(--border);
@@ -662,9 +656,11 @@ nav .buttons .register:hover {
   0% {
     box-shadow: 0 0 0 0 rgba(232, 255, 106, 0.6);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(232, 255, 106, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(232, 255, 106, 0);
   }

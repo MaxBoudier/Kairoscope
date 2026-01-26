@@ -42,7 +42,7 @@ const RestaurantDescForm = ({ initialData }) => {
         setIsLoading(true);
 
         try {
-            const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL}/settings/update`, {
+            const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/settings/update`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),

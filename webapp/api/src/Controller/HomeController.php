@@ -11,8 +11,8 @@ use App\Entity\User;
 final class HomeController extends AbstractController
 {
 
-    #[Route('/api', name: 'app_root')]
-    #[Route('/api/home', name: 'app_home')]
+    #[Route('/', name: 'app_root')]
+    #[Route('/home', name: 'app_home')]
     public function index(): JsonResponse
     {
         return $this->json([

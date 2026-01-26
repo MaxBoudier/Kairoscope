@@ -32,7 +32,7 @@ const ImportCSV = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL}/import/historical-affluence`, {
+            const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/import/historical-affluence`, {
                 method: 'POST',
                 body: formData,
             });
