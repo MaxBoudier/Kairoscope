@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { LockKeyhole, ArrowLeft } from "lucide-react";
 import { fetchWithAuth } from '@/lib/api';
 
-const PinProtection = () => {
+const PinProtection = ({ onSuccess }) => {
     const [singlePin, setSinglePin] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +33,12 @@ const PinProtection = () => {
             if (response.ok) {
                 const data = await response.json();
                 if (data.success) {
-                    navigate('/settings');
+                    if (onSuccess) {
+                        onSuccess();
+                    } else {
+                        // Fallback if used as standalone routing (though plan is to remove route)
+                        navigate('/settings');
+                    }
                 } else {
                     setError("Code PIN incorrect");
                 }

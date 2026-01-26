@@ -8,7 +8,6 @@ import LoginForm from './components/Form/LoginForm';
 import Navbar from './components/Navbar';
 import { Button } from "@/components/ui/button"
 import RestaurantSettings from './pages/Settings/RestaurantSettings';
-import PinProtection from './pages/Settings/PinProtection';
 
 import AiWebSocketTest from './components/AiWebSocketTest';
 import WebSocketRawDebug from './pages/WebSocketRawDebug';
@@ -34,7 +33,6 @@ function App() {
           <Route path="/test-ai" element={<AiWebSocketTest />} />
           <Route path="/debug-ws" element={<WebSocketRawDebug />} />
           <Route path="/admin/utilisateur" element={<UserList />} />
-          <Route path="/settings/security" element={<PinProtection />} />
           <Route path="/settings" element={<RestaurantSettings />} />
           <Route path="*" element={<h1>404 - Page non trouvée</h1>} />
         </Routes>
