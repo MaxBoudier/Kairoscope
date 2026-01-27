@@ -54,4 +54,16 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Event[] Returns an array of all Event objects sorted by date
+     */
+    public function findAllEventsSorted(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.date_event', 'DESC') // Most recent/future first
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

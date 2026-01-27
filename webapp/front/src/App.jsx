@@ -13,6 +13,8 @@ import AiWebSocketTest from './components/AiWebSocketTest';
 import WebSocketRawDebug from './pages/WebSocketRawDebug';
 import BackendStatus from "@/components/Debug/BackendStatus";
 
+import EventsPage from './pages/Events/EventsPage';
+
 function App() {
   // Le hook useLocation permet de savoir sur quelle page on est
   const location = useLocation();
@@ -29,6 +31,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/events" element={<EventsPage />} />
           <Route path="/test" element={<TestMessage />} />
           <Route path="/test-ai" element={<AiWebSocketTest />} />
           <Route path="/debug-ws" element={<WebSocketRawDebug />} />
