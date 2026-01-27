@@ -94,7 +94,11 @@ def main():
         end_date = datetime.now().strftime("%Y-%m-%d")
         print(f"No end_date provided. Using today's date: {end_date}")
 
-    df_result = manager.create_dataset(date_start=args.start_date, date_end=end_date)
+    # 1. Create Base Dataset
+    df_base = manager.create_dataset(date_start=args.start_date, date_end=end_date)
+    
+    # 2. Add Affluence
+    df_result = manager.calculate_affluence(df_input=df_base)
     
     if df_result is None or df_result.empty:
         print("Error: calculate_affluence returned empty or None.")
