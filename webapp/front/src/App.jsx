@@ -24,7 +24,7 @@ function App() {
       {location.pathname !== '/register' && <Navbar />}
 
       {/* Route pour le reste de l'application (Accueil) */}
-      <div className={location.pathname !== '/register' ? "pt-[70px]" : ""}>
+      <div className={location.pathname !== '/register' ? "" : ""}>
         <Routes>
           {/* Route pour la page de connexion */}
           <Route path="/login" element={<LoginForm />} />

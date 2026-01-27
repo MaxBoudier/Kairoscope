@@ -25,6 +25,7 @@ export const fetchWithAuth = async (url, options = {}) => {
             console.warn("User not authenticated or session expired. Redirecting to login...");
             localStorage.removeItem('user');
             localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('restaurantId');
             window.location.href = '/login';
             // Returning a rejected promise to stop further processing in the caller
             return Promise.reject(new Error("Unauthorized"));

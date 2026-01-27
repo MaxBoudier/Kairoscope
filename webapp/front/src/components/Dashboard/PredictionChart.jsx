@@ -29,75 +29,101 @@ const RevenueChart = () => {
         setPredictions([]);
         setProgress({ step: 0, total: 0, message: 'Initialisation...', step_name: '' });
 
-        const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}/predict`);
-        socketRef.current = ws;
+        // Initialize fetch of restaurant ID if needed
+        const initializeConnection = async () => {
+            let restaurantId = localStorage.getItem('restaurantId');
 
-        ws.onopen = () => {
-            console.log('Connected to AI WebSocket');
-            setSocketStatus('connected');
-        };
-
-        ws.onmessage = (event) => {
-            try {
-                const data = JSON.parse(event.data);
-
-                if (data.status === 'steps') {
-                    setProgress({
-                        step: data.step,
-                        total: data.total_step,
-                        message: data.message,
-                        step_name: data.step_name
+            if (!restaurantId) {
+                try {
+                    // Import fetchWithAuth dynamically or use a simple fetch since we can't easily change top-level imports here without rewriting the whole file
+                    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+                    // Using fetch with credentials 'include' as a fallback to fetchWithAuth
+                    const response = await fetch(`${API_URL}/settings`, {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json' },
+                        credentials: 'include'
                     });
-                } else if (data.status === 'output') {
-                    if (data.payload) {
-                        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
-                        // Sync events to backend
-                        // Use fetchWithAuth if imported, or fetch with credentials
-                        // Since fetchWithAuth is in lib/api.js, let's try to import it or use fetch directly with token/session
-                        // We need to import fetchWithAuth, but I cannot easily add top-level import without replacing the whole file header.
-                        // I will use fetch directly with credentials: 'include'.
 
-                        fetch(`${API_URL}/events/sync`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json'
-                            },
-                            credentials: 'include',
-                            body: JSON.stringify(data.payload)
-                        }).then(res => {
-                            if (res.ok) console.log('Events synced successfully');
-                            else console.error('Failed to sync events', res.status);
-                        }).catch(err => console.error('Error syncing events:', err));
-
-                        // Format date for chart relative to today to ensure "live" feel
-                        const today = new Date();
-                        const formattedData = data.payload.map((item, index) => {
-                            const date = new Date(today);
-                            date.setDate(today.getDate() + index);
-
-                            return {
-                                ...item,
-                                predicted_affluence: Math.round(item.predicted_affluence),
-                                predicted_affluence_no_kairo: Math.round(item.predicted_affluence_no_kairo || 0),
-                                displayDate: date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric" })
-                            };
-                        });
-                        setPredictions(formattedData);
-
-                        // Cache the data
-                        localStorage.setItem('kairoscope_predictions', JSON.stringify(formattedData));
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.id) {
+                            restaurantId = data.id.toString();
+                            localStorage.setItem('restaurantId', restaurantId);
+                        }
                     }
+                } catch (e) {
+                    console.error("Failed to fetch restaurant ID for WS", e);
                 }
-            } catch (e) {
-                console.error('Error parsing WS message', e);
             }
+
+            const wsUrl = `${import.meta.env.VITE_WS_URL}/predict${restaurantId ? `?restaurantId=${restaurantId}` : ''}`;
+            const ws = new WebSocket(wsUrl);
+            socketRef.current = ws;
+
+            ws.onopen = () => {
+                console.log('Connected to AI WebSocket');
+                setSocketStatus('connected');
+            };
+
+            ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    if (data.status === 'steps') {
+                        setProgress({
+                            step: data.step,
+                            total: data.total_step,
+                            message: data.message,
+                            step_name: data.step_name
+                        });
+                    } else if (data.status === 'output') {
+                        if (data.payload) {
+                            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+
+                            fetch(`${API_URL}/events/sync`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                },
+                                credentials: 'include',
+                                body: JSON.stringify(data.payload)
+                            }).then(res => {
+                                if (res.ok) console.log('Events synced successfully');
+                                else console.error('Failed to sync events', res.status);
+                            }).catch(err => console.error('Error syncing events:', err));
+
+                            // Format date for chart relative to today to ensure "live" feel
+                            const today = new Date();
+                            const formattedData = data.payload.map((item, index) => {
+                                const date = new Date(today);
+                                date.setDate(today.getDate() + index);
+
+                                return {
+                                    ...item,
+                                    predicted_affluence: Math.round(item.predicted_affluence),
+                                    predicted_affluence_no_kairo: Math.round(item.predicted_affluence_no_kairo || 0),
+                                    displayDate: date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric" })
+                                };
+                            });
+                            setPredictions(formattedData);
+
+                            // Cache the data
+                            localStorage.setItem('kairoscope_predictions', JSON.stringify(formattedData));
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing WS message', e);
+                }
+            };
+
+            ws.onerror = () => setSocketStatus('error');
+            ws.onclose = () => {
+                if (socketStatus !== 'error') setSocketStatus('disconnected');
+            };
         };
 
-        ws.onerror = () => setSocketStatus('error');
-        ws.onclose = () => {
-            if (socketStatus !== 'error') setSocketStatus('disconnected');
-        };
+        initializeConnection();
     };
 
     useEffect(() => {
