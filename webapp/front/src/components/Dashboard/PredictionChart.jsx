@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
  */
 const RevenueChart = () => {
     const [socketStatus, setSocketStatus] = useState('disconnected');
-    const [progress, setProgress] = useState({ step: 0, total: 0, message: '', step_name: '' });
+    const [progress, setProgress] = useState({ step: 0, total: 0, message: '', step_name: '', showSpinner: false });
     const [predictions, setPredictions] = useState([]);
     const socketRef = useRef(null);
 
@@ -27,7 +27,7 @@ const RevenueChart = () => {
         // But if we want to "avoid reload", caching is key. 
         // If MANUAL reload, we should probably clear to show action.
         setPredictions([]);
-        setProgress({ step: 0, total: 0, message: 'Initialisation...', step_name: '' });
+        setProgress({ step: 0, total: 0, message: 'Initialisation...', step_name: '', showSpinner: false });
 
         // Initialize fetch of restaurant ID if needed
         const initializeConnection = async () => {
@@ -74,11 +74,23 @@ const RevenueChart = () => {
                             step: data.step,
                             total: data.total_step,
                             message: data.message,
-                            step_name: data.step_name
+                            step_name: data.step_name,
+                            showSpinner: false
                         });
+                    } else if (data.status === 'message') {
+                        setProgress(prev => ({
+                            ...prev,
+                            message: data.message,
+                            showSpinner: true
+                        }));
                     } else if (data.status === 'output') {
                         if (data.payload) {
                             const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+                            // Sync events to backend
+                            // Use fetchWithAuth if imported, or fetch with credentials
+                            // Since fetchWithAuth is in lib/api.js, let's try to import it or use fetch directly with token/session
+                            // We need to import fetchWithAuth, but I cannot easily add top-level import without replacing the whole file header.
+                            // I will use fetch directly with credentials: 'include'.
 
                             fetch(`${API_URL}/events/sync`, {
                                 method: 'POST',
@@ -194,18 +206,29 @@ const RevenueChart = () => {
                             </div>
                         ) : (
                             <>
-                                <div className="w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                    <div
-                                        className="bg-primary h-2 rounded-full transition-all duration-300 ease-out"
-                                        style={{ width: `${progress.total ? (progress.step / progress.total) * 100 : 0}%` }}
-                                    ></div>
-                                </div>
-                                <p className="text-xs text-muted-foreground animate-pulse text-center px-4">
-                                    {progress.message || "Connexion à l'oracle..."} <br />
-                                    <span className="text-[10px] opacity-70">
-                                        {progress.step_name} {progress.total > 0 && `(${Math.round((progress.step / progress.total) * 100)}%)`}
-                                    </span>
-                                </p>
+                                {progress.showSpinner ? (
+                                    <div className="flex flex-col items-center gap-3">
+                                        <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                                        <p className="text-sm text-muted-foreground animate-pulse text-center px-4">
+                                            {progress.message || "Traitement en cours..."}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                            <div
+                                                className="bg-primary h-2 rounded-full transition-all duration-300 ease-out"
+                                                style={{ width: `${progress.total ? (progress.step / progress.total) * 100 : 0}%` }}
+                                            ></div>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground animate-pulse text-center px-4">
+                                            {progress.message || "Connexion à l'oracle..."} <br />
+                                            <span className="text-[10px] opacity-70">
+                                                {progress.step_name} {progress.total > 0 && `(${Math.round((progress.step / progress.total) * 100)}%)`}
+                                            </span>
+                                        </p>
+                                    </>
+                                )}
                             </>
                         )}
                     </div>

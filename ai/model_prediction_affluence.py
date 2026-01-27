@@ -48,7 +48,8 @@ def train_tft_model(data=None, max_epochs=30, metrics_callback=None):
     data["tmax"] = data["tmax"].astype(float)
     data["prcp"] = data["prcp"].astype(float)
     
-    # Handle missing
+    # Handle infinite and missing
+    data = data.replace([np.inf, -np.inf], np.nan)
     data = data.fillna(0)
 
     print(f"Training data range: {data['date'].min()} to {data['date'].max()}")
@@ -93,7 +94,7 @@ def train_tft_model(data=None, max_epochs=30, metrics_callback=None):
                 # Construct the JSON-like dict the user requested
                 msg = {
                     "status": "steps",
-                    "message": "Prédiction Kairoscope du futur en cours...",
+                    "message": "Affinement du modèle Kairoscope en cours...",
                     "step_name": f"Etape {current_epoch} sur {total_epochs}",
                     "step": current_epoch,
                     "total_step": total_epochs
