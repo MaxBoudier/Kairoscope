@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CalendarDays, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -37,15 +38,19 @@ const EventSection = () => {
         }).format(date);
     };
 
+    const navigate = useNavigate();
+
     return (
         <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 h-full">
-            <CardHeader>
-                <CardTitle className="text-card-foreground dark:text-slate-100 flex items-center gap-2">
-                    <CalendarDays className="h-5 w-5" /> Événements à venir
-                </CardTitle>
-                <CardDescription className="text-muted-foreground dark:text-slate-400">
-                    {events.length} événement(s) à venir
-                </CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <div className="space-y-1">
+                    <CardTitle className="text-card-foreground dark:text-slate-100 flex items-center gap-2">
+                        <CalendarDays className="h-5 w-5" /> Événements à venir
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground dark:text-slate-400">
+                        {events.length} événement(s) à venir
+                    </CardDescription>
+                </div>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
@@ -88,8 +93,8 @@ const EventSection = () => {
                             </div>
                         ))
                     )}
-                    <Button variant="outline" className="w-full text-xs h-8">
-                        Voir le calendrier
+                    <Button variant="ghost" className="w-full text-xs h-8 hover:bg-transparent hover:text-primary transition-colors" onClick={() => navigate('/events')}>
+                        Voir tous les événements →
                     </Button>
                 </div>
             </CardContent>

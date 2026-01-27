@@ -35,6 +35,28 @@ class EventController extends AbstractController
 
         return $this->json($data);
     }
+
+    #[Route('/all', name: 'api_events_all', methods: ['GET'])]
+    public function getAllEvents(EventRepository $eventRepository): JsonResponse
+    {
+        $events = $eventRepository->findAllEventsSorted();
+
+        $data = [];
+        foreach ($events as $event) {
+            $data[] = [
+                'id' => $event->getId(),
+                'nom' => $event->getNom(),
+                'categorie' => $event->getCategorie(),
+                'type_lieu' => $event->getTypeLieu(),
+                'affluence_estimee' => $event->getAffluenceEstimee(),
+                'distance_metres' => $event->getDistanceMetres(),
+                'horaire_debut' => $event->getHoraireDebut(),
+                'date_event' => $event->getDateEvent()?->format('Y-m-d'),
+            ];
+        }
+
+        return $this->json($data);
+    }
     #[Route('/sync', name: 'api_events_sync', methods: ['POST'])]
     public function syncEvents(\Symfony\Component\HttpFoundation\Request $request, EventRepository $eventRepository, \Doctrine\ORM\EntityManagerInterface $entityManager): JsonResponse
     {
