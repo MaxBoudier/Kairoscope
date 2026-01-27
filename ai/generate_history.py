@@ -94,31 +94,12 @@ def main():
         end_date = datetime.now().strftime("%Y-%m-%d")
         print(f"No end_date provided. Using today's date: {end_date}")
 
-    # Generate Data
-    # 1. Create base dataset (Weather, Holidays)
-    manager.create_dataset(date_start=args.start_date, date_end=end_date)
-    
-    # 2. Calculate Affluence (Features + Target)
-    # Using a temporary file for this specific generation or overriding default?
-    # For simplicity, we assume calculate_affluence uses the just created 'dpd_dataset.csv'
-    # and we can read the result from the default output or specify one.
-    # The manager methods save to files defined in settings. We will read the resulting dataframe.
-    
-    # 2. Calculate Affluence (Features + Target)
-    df_result = manager.calculate_affluence()
+    df_result = manager.create_dataset(date_start=args.start_date, date_end=end_date)
     
     if df_result is None or df_result.empty:
         print("Error: calculate_affluence returned empty or None.")
         sys.exit(1)
-
-    # Ensure date is index for filtering if needed, but calculate_affluence returns date as column usually or index?
-    # dataset_manager.py says: return df[output_columns].reset_index() -> date is a column (if it was index) or implies index is default range?
-    # Actually create_dataset sets index names "date". calculate_affluence resets it at the end?
-    # Line 249: return df[output_columns].reset_index()
-    # So 'date' (the index) becomes a column 'date' (if named) or 'index'. 
-    # create_dataset: df_main.index.name = "date"
-    # So reset_index() makes 'date' a column.
-    
+        
     # We need 'date' as index for the next lines in generate_history dealing with filtering?
     if 'date' in df_result.columns:
         df_result.set_index('date', inplace=True)
@@ -132,7 +113,7 @@ def main():
     print(f"Exporting history to CSV: {csv_filename}")
     df_result.to_csv(csv_filename)
 
-    export_to_db(df_result, args.restaurant_id)
+    # export_to_db(df_result, args.restaurant_id)
 
 if __name__ == "__main__":
     main()
