@@ -50,6 +50,26 @@ const RevenueChart = () => {
                     });
                 } else if (data.status === 'output') {
                     if (data.payload) {
+                        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+                        // Sync events to backend
+                        // Use fetchWithAuth if imported, or fetch with credentials
+                        // Since fetchWithAuth is in lib/api.js, let's try to import it or use fetch directly with token/session
+                        // We need to import fetchWithAuth, but I cannot easily add top-level import without replacing the whole file header.
+                        // I will use fetch directly with credentials: 'include'.
+
+                        fetch(`${API_URL}/events/sync`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify(data.payload)
+                        }).then(res => {
+                            if (res.ok) console.log('Events synced successfully');
+                            else console.error('Failed to sync events', res.status);
+                        }).catch(err => console.error('Error syncing events:', err));
+
                         // Format date for chart relative to today to ensure "live" feel
                         const today = new Date();
                         const formattedData = data.payload.map((item, index) => {

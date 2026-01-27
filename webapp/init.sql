@@ -41,8 +41,13 @@ ALTER TABLE public.doctrine_migration_versions OWNER TO admin;
 
 CREATE TABLE public.event (
     id integer NOT NULL,
-    date_event timestamp(0) without time zone NOT NULL,
-    event character varying(255) NOT NULL,
+    nom character varying(255) NOT NULL,
+    categorie character varying(255) DEFAULT NULL,
+    type_lieu character varying(255) DEFAULT NULL,
+    affluence_estimee integer DEFAULT NULL,
+    distance_metres integer DEFAULT NULL,
+    horaire_debut character varying(10) DEFAULT NULL,
+    date_event timestamp(0) without time zone DEFAULT NULL,
     restaurant_id integer NOT NULL
 );
 

@@ -22,6 +22,7 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('user');
+        localStorage.removeItem('kairoscope_predictions');
         sessionStorage.removeItem('settingsUnlocked');
         navigate('/login');
     };

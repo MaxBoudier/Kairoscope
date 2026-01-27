@@ -66,18 +66,22 @@ const EventSection = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <h4 className="text-sm font-semibold leading-none text-foreground dark:text-slate-200">
-                                            {event.title}
+                                            {event.nom}
                                         </h4>
-                                        <div className="flex items-center gap-2 text-xs text-muted-foreground dark:text-slate-400">
-                                            <span className="capitalize">{formatDate(event.date)}</span>
-                                            {event.location && (
-                                                <>
-                                                    <span>•</span>
+                                        <div className="flex flex-col gap-1 text-xs text-muted-foreground dark:text-slate-400">
+                                            <div className="flex items-center gap-2">
+                                                <span className="capitalize">{formatDate(event.date_event)}</span>
+                                                {event.horaire_debut && <span>à {event.horaire_debut}</span>}
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                {event.categorie && <span className="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">{event.categorie}</span>}
+                                                {event.distance_metres && (
                                                     <span className="flex items-center gap-1">
-                                                        <MapPin className="h-3 w-3" /> {event.location}
+                                                        <MapPin className="h-3 w-3" /> {event.distance_metres}m
                                                     </span>
-                                                </>
-                                            )}
+                                                )}
+                                                {event.affluence_estimee && <span>(~{event.affluence_estimee} pers.)</span>}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

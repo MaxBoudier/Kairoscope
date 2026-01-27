@@ -35,8 +35,13 @@ final class EventFactory extends PersistentObjectFactory
     {
         return [
             'restaurant' => RestaurantFactory::random(),
+            'nom' => self::faker()->text(50),
+            'categorie' => self::faker()->randomElement(['FAMILLE', 'CONCERT', 'FESTIVAL']),
+            'type_lieu' => self::faker()->randomElement(['INTERIEUR', 'EXTERIEUR']),
+            'affluence_estimee' => self::faker()->numberBetween(100, 5000),
+            'distance_metres' => self::faker()->numberBetween(0, 1000),
+            'horaire_debut' => self::faker()->time('H:i'),
             'date_event' => self::faker()->dateTime(),
-            'event' => self::faker()->text(255),
         ];
     }
 
