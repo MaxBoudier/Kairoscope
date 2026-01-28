@@ -48,7 +48,7 @@ const EventSection = ({ events = [] }) => {
     const displayedEvents = futureEvents.slice(0, 10); // Show more since it's scrollable
 
     return (
-        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
+        <Card className="w-full border-border bg-card shadow-md dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
             <CardHeader className="py-3 px-4 border-b border-border dark:border-indigo-500/20 flex flex-row items-center justify-between">
                 <div className="flex items-center gap-2">
                     <CardTitle className="text-sm font-medium text-card-foreground dark:text-slate-100 flex items-center gap-2">

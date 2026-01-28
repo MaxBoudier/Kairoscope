@@ -54,7 +54,7 @@ const DashboardStats = ({ data }) => {
             {stats.map((stat, index) => {
                 const Icon = stat.icon;
                 return (
-                    <Card key={index} className="border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 hover:shadow-md transition-shadow">
+                    <Card key={index} className="border-border bg-card shadow-md dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 hover:shadow-xl transition-shadow">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium text-muted-foreground dark:text-slate-400">
                                 {stat.title}
