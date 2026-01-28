@@ -183,7 +183,7 @@ const RevenueChart = ({ onDataLoaded }) => {
         <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
             <CardHeader className="flex flex-row items-center justify-between">
                 <div>
-                    <CardTitle className="text-card-foreground dark:text-slate-100">Aperçu de l'affluence (IA)</CardTitle>
+                    <CardTitle className="text-card-foreground dark:text-slate-100">Courbe de prédiction Kairoscope</CardTitle>
                     <CardDescription className="text-muted-foreground dark:text-slate-400">
                         Prédictions d'affluence pour les prochains jours.
                     </CardDescription>

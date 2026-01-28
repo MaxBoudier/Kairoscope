@@ -109,7 +109,7 @@ const Home = () => {
           <div className="rounded-[20px] border border-slate-200 bg-white/60 p-[22px] shadow-xl backdrop-blur-[16px] dark:border-white/12 dark:bg-[rgba(16,20,28,0.75)] dark:shadow-[0_30px_80px_rgba(6,10,16,0.65)] transition-colors duration-300">
             <div className="mb-[18px] flex items-center justify-between text-[13px] uppercase tracking-[1.4px] text-slate-500 dark:text-[#b0b8c5]">
               <span>Tableau de bord prédictif</span>
-              <span className="h-2.5 w-2.5 animate-[pulse_1.8s_infinite] rounded-full bg-cyan-500 shadow-[0_0_0_rgba(34,211,238,0.6)] dark:bg-[#22d3ee] dark:shadow-[0_0_0_rgba(34,211,238,0.6)]"></span>
+              <span className="h-2.5 w-2.5 animate-[pulse_1.8s_infinite] rounded-full bg-linear-to-r from-emerald-400 to-lime-400 shadow-[0_0_0_rgba(52,211,153,0.6)] dark:bg-linear-to-r dark:from-[#7fffd4] dark:to-[#e8ff6a] dark:text-slate-900 dark:shadow-[0_0_0_rgba(127,255,212,0.6)]"></span>
             </div>
             <div className="grid gap-4">
               <div className="grid grid-cols-[20px_1fr] items-start gap-3">
@@ -138,7 +138,7 @@ const Home = () => {
         </header>
 
         {/* Carousel */}
-        <section className="group relative mt-[90px] scroll-mt-[120px]">
+        <section className="group relative mt-[90px] scroll-mt-[120px]" id="fonctionnement">
           <div className="relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-[22px] shadow-lg dark:border-white/12 dark:bg-[rgba(17,22,32,0.95)]">
             <div className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-100 shadow-xl dark:border-white/12 dark:bg-[#0b0f14] dark:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
               <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
@@ -153,7 +153,7 @@ const Home = () => {
                       </p>
                       <ul className="list-none space-y-2.5 p-0">
                         {slide.list.map((item, j) => (
-                          <li key={j} className="relative pl-[18px] text-sm text-slate-600 dark:text-[#b0b8c5] leading-relaxed before:absolute before:left-0 before:top-[0.45em] before:h-2 before:w-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-500 dark:before:from-[#22d3ee] dark:before:to-[#60a5fa]">
+                          <li key={j} className="relative pl-[18px] text-sm text-slate-600 dark:text-[#b0b8c5] leading-relaxed before:absolute before:left-0 before:top-[0.45em] before:h-2 before:w-2 before:rounded-full before:bg-linear-to-br before:from-emerald-400 before:to-lime-400 dark:before:from-[#7fffd4] dark:before:to-[#e8ff6a]">
                             {item}
                           </li>
                         ))}
@@ -161,7 +161,7 @@ const Home = () => {
                       {slide.hasVideo && (
                         <button
                           onClick={() => setShowVideo(true)}
-                          className="mt-6 flex items-center gap-2 rounded-full bg-cyan-500 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-cyan-600 hover:shadow-lg dark:bg-[#22d3ee] dark:text-slate-900 dark:hover:bg-[#60a5fa]"
+                          className="mt-6 flex items-center gap-2 rounded-full bg-linear-to-r from-emerald-400 to-lime-400 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:brightness-110 dark:bg-linear-to-r dark:from-[#7fffd4] dark:to-[#e8ff6a] dark:text-slate-900"
                         >
                           <Play className="h-4 w-4 fill-current" />
                           Lancer la vidéo
@@ -193,7 +193,7 @@ const Home = () => {
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
-                  className={`h-2.5 w-2.5 rounded-full border border-slate-300 dark:border-white/12 transition-all cursor-pointer ${currentSlide === i ? 'bg-cyan-500 border-cyan-500 dark:bg-[#22d3ee] dark:border-[#22d3ee]' : ''}`}
+                  className={`h-2.5 w-2.5 rounded-full border border-slate-300 dark:border-white/12 transition-all cursor-pointer ${currentSlide === i ? 'bg-linear-to-r from-emerald-400 to-lime-400 border-emerald-400 dark:from-[#7fffd4] dark:to-[#e8ff6a] dark:border-[#7fffd4]' : ''}`}
                 />
               ))}
             </div>
@@ -209,24 +209,24 @@ const Home = () => {
               role: "Chef de projet - Data Engineer",
               school: "Ingénieur Sciences des Données et IA au CNAM (2e année)",
               desc: "Maxime porte la vision globale de Kairoscope et pilote l’intégration de l'intelligence artificielle ainsi que l'OSINT au sein de la solution.",
-              tasks: ["Définition de la vision produit", "Intégration des données externes (OSINT)", "Cadrage du PoC et roadmap", "Coordination de l’équipe"],
-              linkedin: "https://www.linkedin.com/in/maxime-boudier/"
+              tasks: ["Définition de la vision produit", "Intégration des données externes (OSINT)", "Construction du modèle d'intelligence artificielle", "Cadrage du PoC et roadmap", "Coordination de l’équipe"],
+              linkedin: "https://www.linkedin.com/in/boudier-maxime/"
             },
             {
               name: "Arthur Cielsar",
               role: "Développeur full-stack",
               school: "Licence Informatique Générale au CNAM (3e année)",
-              desc: "Arthur est en charge du développement front-end et back-end de l’application Kairoscope.",
+              desc: "Arthur est en charge du développement front-end et back-end de l’application Kairoscope. Il est également en charge de la mise en place de la base de données et de la gestion des utilisateurs.",
               tasks: ["Développement de l’interface utilisateur", "Architecture back-end", "Connexion aux sources de données", "Mise en place des premières briques IA"],
-              linkedin: "#"
+              linkedin: "https://www.linkedin.com/in/arthur-cieslar-9246792aa/"
             },
             {
               name: "Mahé Joninon",
               role: "Étude de marché, pitch & produit",
-              school: "Licence Informatique Générale au CNAM",
-              desc: "Mahé travaille sur la structuration du projet côté marché, communication et expérience utilisateur.",
-              tasks: ["Étude de marché & positionnement", "Préparation des pitchs jury / investisseurs", "Rédaction des supports (PDF, slides, scripts)", "Conception et développement de la landing page", "Branding & image du projet"],
-              linkedin: "#"
+              school: "Licence Informatique Générale au CNAM (1ère année)",
+              desc: "Mahé travaille sur la structuration du projet côté marché, communication et expérience utilisateur. Il est également en charge de la mise en place de la landing page.",
+              tasks: ["Étude de marché & positionnement", "Préparation des pitchs jury / investisseurs", "Rédaction des supports (PDF, slides, scripts)", "Conception et développement de la landing page"],
+              linkedin: "https://www.linkedin.com/in/mahe-joninon-a344183a9/"
             },
             {
               name: "Julie Demetriadis",
@@ -234,7 +234,7 @@ const Home = () => {
               school: "Étudiante à l’EGC",
               desc: "Julie apporte une vision business au projet et travaille sur la validation terrain de Kairoscope auprès des restaurateurs.",
               tasks: ["Étude de marché & segmentation clients", "Interviews de restaurateurs", "Tests d’usage en conditions réelles", "Analyse de la valeur perçue", "Recommandations business"],
-              linkedin: "#"
+              linkedin: "https://www.linkedin.com/in/julie-demetriadis-b64096331/"
             }
           ].map((member, index) => (
             <article key={index} className="flex flex-col rounded-[20px] border border-slate-200 bg-white/80 p-[26px] shadow-lg backdrop-blur-[12px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl dark:border-white/12 dark:bg-[rgba(16,20,28,0.75)] dark:shadow-[0_20px_50px_rgba(3,5,8,0.4)] dark:hover:border-[#e8ff6a]/35 dark:hover:shadow-[0_28px_70px_rgba(3,5,8,0.55)]">
