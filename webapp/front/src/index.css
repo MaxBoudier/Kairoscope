@@ -145,7 +145,7 @@
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
 
-  --ring: 243.4 75.4% 58.6%;
+  --ring: 199 89% 48%;
 }
 
 @utility container {
@@ -190,7 +190,7 @@ select:-webkit-autofill:focus {
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
 }
-}
+
 
 /* Custom Blue Scrollbar */
 ::-webkit-scrollbar {

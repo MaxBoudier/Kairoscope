@@ -62,8 +62,8 @@ const PinProtection = ({ onSuccess }) => {
             <Card className="w-full max-w-md shadow-lg border-border/40 bg-card/50 backdrop-blur-sm">
                 <CardHeader className="space-y-1 text-center">
                     <div className="flex justify-center mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                            <LockKeyhole className="w-8 h-8 text-primary" />
+                        <div className="p-3 rounded-full bg-emerald-400/10">
+                            <LockKeyhole className="w-8 h-8 text-emerald-400" />
                         </div>
                     </div>
                     <CardTitle className="text-2xl font-bold tracking-tight">Accès restreint</CardTitle>
@@ -82,7 +82,7 @@ const PinProtection = ({ onSuccess }) => {
                                 placeholder="Code PIN"
                                 value={singlePin}
                                 onChange={handlePinChange}
-                                className="text-center text-lg tracking-widest"
+                                className="text-center text-lg tracking-widest border-input focus-visible:ring-emerald-400 focus-visible:border-emerald-400"
                                 autoFocus
                             />
                             {error && (
@@ -94,7 +94,7 @@ const PinProtection = ({ onSuccess }) => {
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-2">
                         <Button
-                            className="w-full"
+                            className="w-full bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] text-slate-900 hover:shadow-emerald-400/30 hover:shadow-lg border-0"
                             type="submit"
                             disabled={!singlePin || isLoading}
                         >

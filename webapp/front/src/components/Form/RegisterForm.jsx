@@ -62,7 +62,7 @@ const RegisterForm = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-background transition-colors duration-200">
             <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-card backdrop-blur-xl border border-border transform transition-all hover:scale-[1.01]">
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">Initialisation</h2>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] bg-clip-text text-transparent">Initialisation</h2>
                     <p className="text-muted-foreground mt-2 text-sm">Créez le premier administrateur pour commencer</p>
                 </div>
 
@@ -80,7 +80,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Pseudo</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="text"
                             name="pseudo"
                             placeholder="Admin"
@@ -93,7 +93,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Nom du gérant</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="text"
                             name="nom_gerant"
                             placeholder="Dupont"
@@ -106,7 +106,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Prénom du gérant</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="text"
                             name="prenom_gerant"
                             placeholder="Jean"
@@ -119,7 +119,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Email administrateur</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="email"
                             name="email"
                             placeholder="admin@kairoscope.com"
@@ -132,7 +132,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Définir un mot de passe</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="password"
                             name="password"
                             placeholder="••••••••"
@@ -146,7 +146,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Code PIN (4 chiffres)</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none text-center tracking-widest text-xl"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none text-center tracking-widest text-xl"
                             type="text"
                             inputMode="numeric"
                             name="code_settings"
@@ -161,7 +161,7 @@ const RegisterForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground ml-1">Code de sécurité (Requis pour l'initialisation)</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-primary transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="password"
                             name="registration_code"
                             placeholder="Code secret administrateur"
@@ -176,10 +176,10 @@ const RegisterForm = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className={`w-full py-3.5 px-4 rounded-xl font-bold text-primary-foreground shadow-lg transition-all duration-300 transform
+                            className={`w-full py-3.5 px-4 rounded-xl font-bold text-slate-900 shadow-lg transition-all duration-300 transform
                                 ${isLoading
                                     ? 'bg-muted cursor-not-allowed opacity-70'
-                                    : 'bg-primary hover:bg-primary/90 hover:shadow-primary/30 hover:-translate-y-0.5 active:scale-[0.98]'
+                                    : 'bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] hover:shadow-emerald-400/30 hover:-translate-y-0.5 active:scale-[0.98]'
                                 }`}
                         >
                             {isLoading ? (

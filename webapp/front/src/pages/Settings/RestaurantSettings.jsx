@@ -71,7 +71,7 @@ const RestaurantSettings = () => {
 
     return (
         <div className="container mx-auto py-10 px-4 max-w-4xl">
-            <h1 className="text-4xl font-bold text-primary dark:bg-gradient-to-r dark:from-violet-400 dark:to-indigo-400 dark:bg-clip-text dark:text-transparent mb-8">
+            <h1 className="text-4xl font-bold text-primary dark:bg-gradient-to-r dark:from-blue-400 dark:to-cyan-400 dark:bg-clip-text dark:text-transparent mb-8">
                 Paramètres
             </h1>
 
