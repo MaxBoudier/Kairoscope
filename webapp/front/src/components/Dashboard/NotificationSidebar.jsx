@@ -23,7 +23,7 @@ const NotificationSidebar = ({ notificationsData, onDelete }) => {
     };
 
     return (
-        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 h-full">
+        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-emerald-500/20 h-full">
             <CardHeader>
                 <CardTitle className="text-card-foreground dark:text-slate-100 flex items-center gap-2">
                     <Bell className="h-5 w-5" /> Notifications
@@ -44,7 +44,7 @@ const NotificationSidebar = ({ notificationsData, onDelete }) => {
                         notifications.map((notif, index) => (
                             <div key={notif.id || index} className="group flex items-start justify-between gap-4 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-colors">
                                 <div className="flex items-start gap-4">
-                                    <div className="mt-1 p-2 rounded-full bg-slate-100 dark:bg-slate-900 text-blue-500">
+                                    <div className="mt-1 p-2 rounded-full bg-slate-100 dark:bg-slate-900 text-emerald-500">
                                         <Info className="h-4 w-4" />
                                     </div>
                                     <div className="space-y-1">

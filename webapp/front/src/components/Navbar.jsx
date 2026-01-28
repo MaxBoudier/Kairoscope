@@ -55,14 +55,14 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-3.5 text-sm text-slate-500 dark:text-[#b0b8c5]">
-                        <a href="#projet" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Projet</a>
-                        <a href="#fonctionnement" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Vidéo et Fonctionnement</a>
-                        <a href="#membres" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Equipe</a>
+                        <a href="#projet" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Projet</a>
+                        <a href="#fonctionnement" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Vidéo et Fonctionnement</a>
+                        <a href="#membres" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Equipe</a>
                     </div>
                     <div className="flex items-center gap-4">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full text-slate-500 dark:text-[#b0b8c5] hover:text-cyan-600 dark:hover:text-[#22d3ee] hover:bg-transparent dark:hover:border-[#22d3ee] border border-transparent transition-all">
+                                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full text-slate-500 dark:text-[#b0b8c5] hover:text-emerald-600 dark:hover:text-[#7fffd4] hover:bg-transparent dark:hover:border-[#7fffd4] border border-transparent transition-all">
                                     <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                                     <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                                     <span className="sr-only">Toggle theme</span>
@@ -85,10 +85,10 @@ const Navbar = () => {
                             {user ? (
                                 <>
                                     <div
-                                        className="flex items-center gap-3 px-4 py-1.5 rounded-full cursor-pointer bg-gray-50 dark:bg-neutral-800 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-neutral-700"
+                                        className="flex items-center gap-3 px-4 py-1.5 rounded-full cursor-pointer bg-gray-50 dark:bg-neutral-800 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-neutral-700"
                                         onClick={() => setIsOpen(!isOpen)}
                                     >
-                                        <div className="w-[35px] h-[35px] bg-blue-50 dark:bg-slate-700 rounded-full flex justify-center items-center border border-gray-200 dark:border-neutral-600 text-blue-500 dark:text-blue-400">
+                                        <div className="w-[35px] h-[35px] bg-emerald-50 dark:bg-slate-700 rounded-full flex justify-center items-center border border-gray-200 dark:border-neutral-600 text-emerald-600 dark:text-emerald-400">
                                             <User size={20} />
                                         </div>
                                         <span className="text-sm font-medium">
@@ -138,7 +138,7 @@ const Navbar = () => {
                             ) : (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <div className="w-[35px] h-[35px] bg-transparent border border-slate-200 dark:border-white/12 rounded-full flex justify-center items-center text-slate-500 dark:text-[#f5f7fb] cursor-pointer hover:border-cyan-500 hover:text-cyan-600 dark:hover:border-[#22d3ee] dark:hover:text-[#22d3ee] transition-all">
+                                        <div className="w-[35px] h-[35px] bg-transparent border border-slate-200 dark:border-white/12 rounded-full flex justify-center items-center text-slate-500 dark:text-[#f5f7fb] cursor-pointer hover:border-emerald-500 hover:text-emerald-600 dark:hover:border-[#7fffd4] dark:hover:text-[#7fffd4] transition-all">
                                             <User size={20} />
                                         </div>
                                     </DropdownMenuTrigger>
@@ -195,10 +195,10 @@ const Navbar = () => {
                     {user ? (
                         <>
                             <div
-                                className="flex items-center gap-3 px-4 py-1.5 rounded-full cursor-pointer bg-gray-50 dark:bg-neutral-800 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-neutral-700"
+                                className="flex items-center gap-3 px-4 py-1.5 rounded-full cursor-pointer bg-gray-50 dark:bg-neutral-800 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-neutral-700"
                                 onClick={() => setIsOpen(!isOpen)}
                             >
-                                <div className="w-[35px] h-[35px] bg-blue-50 dark:bg-slate-700 rounded-full flex justify-center items-center border border-gray-200 dark:border-neutral-600 text-blue-500 dark:text-blue-400">
+                                <div className="w-[35px] h-[35px] bg-emerald-50 dark:bg-slate-700 rounded-full flex justify-center items-center border border-gray-200 dark:border-neutral-600 text-emerald-600 dark:text-emerald-400">
                                     <User size={20} />
                                 </div>
                                 <span className="text-sm font-medium">

@@ -59,7 +59,7 @@ const EventsPage = () => {
                 </div>
             </div>
 
-            <Card className="border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
+            <Card className="border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-emerald-500/20">
                 <CardHeader>
                     <CardTitle>Liste des événements</CardTitle>
                     <CardDescription>
@@ -95,12 +95,12 @@ const EventsPage = () => {
                                             <td className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap capitalize">
                                                 {formatDate(event.date_event)}
                                             </td>
-                                            <td className="px-6 py-4 font-semibold text-primary dark:text-indigo-400">
+                                            <td className="px-6 py-4 font-semibold text-primary dark:text-emerald-400">
                                                 {event.nom}
                                             </td>
                                             <td className="px-6 py-4">
                                                 {event.categorie ? (
-                                                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                                    <span className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-emerald-900/30 dark:text-emerald-300">
                                                         {event.categorie}
                                                     </span>
                                                 ) : '-'}

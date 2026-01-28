@@ -62,7 +62,7 @@ const RegisterForm = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-background transition-colors duration-200">
             <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-card backdrop-blur-xl border border-border transform transition-all hover:scale-[1.01]">
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] bg-clip-text text-transparent">Initialisation</h2>
+                    <h2 className="text-3xl font-bold bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] bg-clip-text text-transparent">Initialisation</h2>
                     <p className="text-muted-foreground mt-2 text-sm">Créez le premier administrateur pour commencer</p>
                 </div>
 
@@ -179,7 +179,7 @@ const RegisterForm = () => {
                             className={`w-full py-3.5 px-4 rounded-xl font-bold text-slate-900 shadow-lg transition-all duration-300 transform
                                 ${isLoading
                                     ? 'bg-muted cursor-not-allowed opacity-70'
-                                    : 'bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] hover:shadow-emerald-400/30 hover:-translate-y-0.5 active:scale-[0.98]'
+                                    : 'bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] hover:shadow-emerald-400/30 hover:-translate-y-0.5 active:scale-[0.98]'
                                 }`}
                         >
                             {isLoading ? (

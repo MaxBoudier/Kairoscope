@@ -2,23 +2,38 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [ "main" ] # Se déclenche quand tu push sur main
+    branches: [ "main" ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy via SSH
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        script: |
-          cd /home/debian/projet/
-          cp .env /home/debian/projet/Kairoscope/.env
-          cp docker-compose.yml /home/debian/projet/Kairoscope/docker-compose.yml
-          cd /home/debian/projet/Kairoscope/
-          git pull origin main
-          docker compose up -d --build --remove-orphans
-          docker image prune -f
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            # Créer le dossier s'il n'existe pas
+            mkdir -p /home/${{ secrets.USERNAME }}/projet/Kairoscope
+            cd /home/${{ secrets.USERNAME }}/projet/Kairoscope
+            
+            # Initialiser git si ce n'est pas fait (premier déploiement)
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/MaxBoudier/Kairoscope.git .
+            fi
+
+            # Récupérer la dernière version
+            git fetch origin
+            git reset --hard origin/main
+
+            # Écrire le fichier .env à partir du Secret GitHub
+            echo "${{ secrets.PROD_ENV_FILE }}" > .env
+
+            # Lancer Docker Compose (Build force la reconstruction pour prendre en compte les nouveaux args)
+            # --remove-orphans nettoie les conteneurs obsolètes
+            docker compose up -d --build --remove-orphans
+
+            # Nettoyage des images inutilisées pour économiser de l'espace disque
+            docker image prune -f

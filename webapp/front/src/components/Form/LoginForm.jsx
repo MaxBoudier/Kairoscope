@@ -94,7 +94,7 @@ const LoginForm = () => {
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
             <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-white/80 dark:bg-slate-950/60 backdrop-blur-xl border border-white/20 dark:border-emerald-400/30 transform transition-all hover:scale-[1.01]">
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] bg-clip-text text-transparent">Bienvenue</h2>
+                    <h2 className="text-3xl font-bold bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] bg-clip-text text-transparent">Bienvenue</h2>
                     <p className="text-gray-500 dark:text-slate-400 mt-2 text-sm">Connectez-vous à votre espace</p>
                 </div>
 
@@ -139,7 +139,7 @@ const LoginForm = () => {
                             className={`w-full py-3.5 px-4 rounded-xl font-bold text-white shadow-lg transition-all duration-300 transform
                                 ${isLoading
                                     ? 'bg-gray-400 cursor-not-allowed opacity-70'
-                                    : 'bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] hover:shadow-emerald-400/30 hover:-translate-y-0.5 active:scale-[0.98] text-slate-900 dark:text-slate-900'
+                                    : 'bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] hover:shadow-emerald-400/30 hover:-translate-y-0.5 active:scale-[0.98] text-slate-900 dark:text-slate-900'
                                 }`}
                         >
                             {isLoading ? (

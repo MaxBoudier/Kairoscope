@@ -37,8 +37,8 @@ services:
       - "8081:80"
     environment:
       DATABASE_URL: "postgresql://admin:admin@database:5432/emergency_db?serverVersion=15&charset=utf8"
-      APP_ENV: dev
-      APP_DEBUG: 1
+      APP_ENV: prod
+      APP_DEBUG: 0
       CORS_ALLOW_ORIGIN: '^https?://(localhost|kairoscope\.maxboudier\.fr)(:[0-9]+)?$'
       SYMFONY_TRUSTED_HOSTS: '^(localhost|127\.0\.0\.1|kairoscope\.maxboudier\.fr)$'
     volumes:
@@ -48,20 +48,21 @@ services:
       - database
     networks:
       - kairoscope-net
-    command: sh -c "composer install && apache2-foreground"
+    command: sh -c "composer install --no-dev --optimize-autoloader && apache2-foreground"
 
   front:
-    build: ./webapp/front
+    build:
+      context: ./webapp/front
+      args:
+        - VITE_API_URL=${VITE_API_URL:-}
+        - VITE_WS_URL=${VITE_WS_URL:-}
+        - VITE_API_BASE_URL=${VITE_API_BASE_URL:-}
     ports:
-      - "80:5173"
-    volumes:
-      - ./webapp/front:/app
-      - /app/node_modules
+      - "80:80"
     depends_on:
       - api
     networks:
       - kairoscope-net
-    command: sh -c "npm install && npm run dev -- --host"
 
 networks:
   kairoscope-net:
