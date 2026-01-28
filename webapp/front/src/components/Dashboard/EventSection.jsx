@@ -1,102 +1,101 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CalendarDays, MapPin } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CalendarDays, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { fetchWithAuth } from '@/lib/api';
 
-const EventSection = () => {
-    const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/events/upcoming`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setEvents(data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch events:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchEvents();
-    }, []);
+const EventSection = ({ events = [] }) => {
+    const navigate = useNavigate();
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return new Intl.DateTimeFormat('fr-FR', {
-            weekday: 'long',
+            weekday: 'short',
             day: 'numeric',
-            month: 'long',
+            month: 'short',
             hour: '2-digit',
             minute: '2-digit'
         }).format(date);
     };
 
-    const navigate = useNavigate();
+    // Filter to show only future events
+    const now = new Date();
+    const futureEvents = events.filter(event => {
+        // Construct event date object
+        // Event has 'date' (from prediction payload) or 'date_event' (from API)
+        const dateStr = event.date || event.date_event;
+        if (!dateStr) return false;
+
+        const eventDate = new Date(dateStr);
+
+        // If there's a time, add it
+        if (event.horaire_debut) {
+            const [hours, minutes] = event.horaire_debut.split(':');
+            eventDate.setHours(parseInt(hours), parseInt(minutes));
+        } else {
+            // If no time, assume end of day or just check date? 
+            // Let's assume valid if date is today or future.
+            // Check if date is strictly before today (ignoring time)
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (new Date(dateStr) < today) return false;
+            return true;
+        }
+
+        return eventDate > now;
+    });
+
+    const displayedEvents = futureEvents.slice(0, 10); // Show more since it's scrollable
 
     return (
-        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 h-full">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <div className="space-y-1">
-                    <CardTitle className="text-card-foreground dark:text-slate-100 flex items-center gap-2">
-                        <CalendarDays className="h-5 w-5" /> Événements à venir
+        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
+            <CardHeader className="py-3 px-4 border-b border-border dark:border-indigo-500/20 flex flex-row items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <CardTitle className="text-sm font-medium text-card-foreground dark:text-slate-100 flex items-center gap-2">
+                        <CalendarDays className="h-4 w-4" /> Événements à venir
                     </CardTitle>
-                    <CardDescription className="text-muted-foreground dark:text-slate-400">
-                        {events.length} événement(s) à venir
-                    </CardDescription>
+                    <span className="text-xs text-muted-foreground bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                        {futureEvents.length}
+                    </span>
                 </div>
+                {futureEvents.length > 0 && (
+                    <Button variant="ghost" size="sm" className="h-6 text-xs gap-1" onClick={() => navigate('/events')}>
+                        Voir tout <ArrowRight className="h-3 w-3" />
+                    </Button>
+                )}
             </CardHeader>
-            <CardContent>
-                <div className="space-y-4">
-                    {loading ? (
-                        <div className="flex justify-center p-4">
-                            <span className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
-                        </div>
-                    ) : events.length === 0 ? (
-                        <p className="text-sm text-muted-foreground dark:text-slate-500 italic">
+            <CardContent className="p-4">
+                {displayedEvents.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-24 text-center">
+                        <p className="text-xs text-muted-foreground dark:text-slate-500 italic">
                             Aucun événement prévu.
                         </p>
-                    ) : (
-                        events.map((event) => (
-                            <div key={event.id} className="group flex items-start justify-between gap-4 p-3 rounded-lg border border-border/50 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-colors">
-                                <div className="flex items-start gap-3">
-                                    <div className="mt-1 p-2 rounded-lg bg-primary/10 text-primary">
-                                        <CalendarDays className="h-4 w-4" />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <h4 className="text-sm font-semibold leading-none text-foreground dark:text-slate-200">
-                                            {event.nom}
-                                        </h4>
-                                        <div className="flex flex-col gap-1 text-xs text-muted-foreground dark:text-slate-400">
-                                            <div className="flex items-center gap-2">
-                                                <span className="capitalize">{formatDate(event.date_event)}</span>
-                                                {event.horaire_debut && <span>à {event.horaire_debut}</span>}
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                {event.categorie && <span className="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">{event.categorie}</span>}
-                                                {event.distance_metres && (
-                                                    <span className="flex items-center gap-1">
-                                                        <MapPin className="h-3 w-3" /> {event.distance_metres}m
-                                                    </span>
-                                                )}
-                                                {event.affluence_estimee && <span>(~{event.affluence_estimee} pers.)</span>}
-                                            </div>
-                                        </div>
-                                    </div>
+                    </div>
+                ) : (
+                    <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/50">
+                        {displayedEvents.map((event, index) => (
+                            <div key={index} className="flex-shrink-0 w-[280px] p-3 rounded-lg border border-border/50 bg-slate-50/50 dark:bg-slate-900/30 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-colors">
+                                <div className="flex justify-between items-start mb-2">
+                                    <span className="text-xs font-bold text-primary dark:text-indigo-400 bg-primary/10 px-2 py-0.5 rounded">
+                                        {event.horaire_debut || "--:--"}
+                                    </span>
+                                    {event.categorie && (
+                                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground border border-border px-1.5 rounded">
+                                            {event.categorie}
+                                        </span>
+                                    )}
+                                </div>
+                                <h4 className="text-sm font-semibold leading-tight text-foreground dark:text-slate-200 mb-1 truncate" title={event.nom}>
+                                    {event.nom}
+                                </h4>
+                                <div className="flex items-center gap-2 text-[10px] text-muted-foreground dark:text-slate-400">
+                                    <span>{formatDate(event.date || event.date_event)}</span>
+                                    {event.affluence_estimee_personnes && <span>• ~{event.affluence_estimee_personnes} pers.</span>}
                                 </div>
                             </div>
-                        ))
-                    )}
-                    <Button variant="ghost" className="w-full text-xs h-8 hover:bg-transparent hover:text-primary transition-colors" onClick={() => navigate('/events')}>
-                        Voir tous les événements →
-                    </Button>
-                </div>
+                        ))}
+                    </div>
+                )}
             </CardContent>
         </Card>
     );

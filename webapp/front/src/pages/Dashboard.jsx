@@ -9,50 +9,41 @@ import { fetchWithAuth } from '@/lib/api';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  // notificationsData removed as we removed the sidebar
-
-  const [todayAffluence, setTodayAffluence] = useState(null);
-
-
+  const [predictions, setPredictions] = useState([]);
 
   const handleDataLoaded = (data) => {
     if (data && data.length > 0) {
-      setTodayAffluence(data[0].predicted_affluence);
+      setPredictions(data);
     }
   };
 
+  // Extract events from predictions for the side list
+  // We only want future events, and predictions start from "today"
+  const upcomingEvents = predictions.flatMap(p =>
+    p.events ? p.events.map(e => ({ ...e, date: p.date })) : []
+  );
+
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6 mt-14">
-      <div className="flex items-center justify-between space-y-2">
+    <div className="flex-1 p-8 pt-10 mt-20 h-[calc(100vh-5rem)] flex flex-col overflow-hidden">
+      <div className="flex items-center justify-between space-y-2 mb-8 shrink-0">
         <h2 className="text-3xl font-bold tracking-tight text-primary dark:bg-gradient-to-br dark:from-[#22d3ee] dark:to-[#60a5fa] dark:bg-clip-text dark:text-transparent">
           Tableau de Bord
         </h2>
       </div>
 
-      <div className="flex flex-col gap-4 h-full">
-        {/* Top Row: Events & Affluence Card */}
-        <div className="grid gap-4 md:grid-cols-2 h-1/2">
-          <EventSection />
-
-          <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20 flex flex-col justify-center items-center text-center">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xl md:text-2xl font-semibold text-foreground dark:text-slate-100">
-                Affluence prévue aujourd'hui
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-5xl font-bold text-primary dark:text-[#22d3ee]">
-                {todayAffluence !== null ? todayAffluence : '-'}
-              </div>
-              <p className="text-sm text-muted-foreground mt-2">
-                Personnes attendues
-              </p>
-            </CardContent>
-          </Card>
+      <div className="flex flex-col gap-8 flex-1 min-h-0 pb-4">
+        {/* Top Row: Key Metrics */}
+        <div className="shrink-0">
+          <DashboardStats data={predictions} />
         </div>
 
-        {/* Bottom Row: Chart (Full Width) */}
-        <div className="h-1/2">
+        {/* Middle Row: Events List (Horizontal) */}
+        <div className="shrink-0">
+          <EventSection events={upcomingEvents} />
+        </div>
+
+        {/* Bottom Row: Chart (Full Width, fills remaining space) */}
+        <div className="flex-1 min-h-0 hover:shadow-lg transition-shadow duration-300">
           <RevenueChart onDataLoaded={handleDataLoaded} />
         </div>
       </div>
