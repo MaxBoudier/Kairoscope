@@ -28,8 +28,11 @@ jobs:
             git fetch origin
             git reset --hard origin/main
 
-            # Écrire le fichier .env à partir du Secret GitHub
+            # Écrire le fichier .env à partir du Secret GitHub au root pour Docker Compose
             echo "${{ secrets.PROD_ENV_FILE }}" > .env
+            
+            # Copier le .env dans le dossier api pour qu'il soit monté dans le volume du conteneur
+            cp .env webapp/api/.env
 
             # Lancer Docker Compose (Build force la reconstruction pour prendre en compte les nouveaux args)
             # --remove-orphans nettoie les conteneurs obsolètes
