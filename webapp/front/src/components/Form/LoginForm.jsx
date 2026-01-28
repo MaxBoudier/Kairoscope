@@ -85,16 +85,16 @@ const LoginForm = () => {
     if (isChecking) {
         return (
             <div className="flex items-center justify-center min-h-[80vh]">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-400 mx-auto"></div>
             </div>
         );
     }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
-            <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-white/80 dark:bg-slate-950/60 backdrop-blur-xl border border-white/20 dark:border-indigo-500/30 transform transition-all hover:scale-[1.01]">
+            <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-white/80 dark:bg-slate-950/60 backdrop-blur-xl border border-white/20 dark:border-emerald-400/30 transform transition-all hover:scale-[1.01]">
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-dark dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent">Bienvenue</h2>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] bg-clip-text text-transparent">Bienvenue</h2>
                     <p className="text-gray-500 dark:text-slate-400 mt-2 text-sm">Connectez-vous à votre espace</p>
                 </div>
 
@@ -111,7 +111,7 @@ const LoginForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700 dark:text-slate-200 ml-1">Email</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-indigo-500/20 bg-gray-50 dark:bg-slate-900/50 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-primary/20 dark:focus:ring-violet-500/40 focus:border-primary dark:focus:border-violet-500 transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-emerald-400/20 bg-gray-50 dark:bg-slate-900/50 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="email"
                             name="email"
                             placeholder="exemple@email.com"
@@ -123,7 +123,7 @@ const LoginForm = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700 dark:text-slate-200 ml-1">Mot de passe</label>
                         <input
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-indigo-500/20 bg-gray-50 dark:bg-slate-900/50 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-primary/20 dark:focus:ring-violet-500/40 focus:border-primary dark:focus:border-violet-500 transition-all duration-200 outline-none"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-emerald-400/20 bg-gray-50 dark:bg-slate-900/50 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all duration-200 outline-none"
                             type="password"
                             name="password"
                             placeholder="••••••••"
@@ -139,7 +139,7 @@ const LoginForm = () => {
                             className={`w-full py-3.5 px-4 rounded-xl font-bold text-white shadow-lg transition-all duration-300 transform
                                 ${isLoading
                                     ? 'bg-gray-400 cursor-not-allowed opacity-70'
-                                    : 'bg-gradient-to-r from-primary to-primary-dark dark:from-violet-600 dark:to-indigo-600 hover:shadow-primary/30 dark:hover:shadow-violet-500/30 hover:-translate-y-0.5 active:scale-[0.98]'
+                                    : 'bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] hover:shadow-emerald-400/30 hover:-translate-y-0.5 active:scale-[0.98] text-slate-900 dark:text-slate-900'
                                 }`}
                         >
                             {isLoading ? (
