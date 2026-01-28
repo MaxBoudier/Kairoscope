@@ -27,7 +27,7 @@ def get_jours_ferie_data(year=2025):
         return pd.DataFrame()
 
 # --- 2. School Vacations (Vacances Scolaires) ---
-def get_vacances_scolaires_data(date_start, date_end, academie=settings.ACADEMIE_SCOLAIRE):
+def get_vacances_scolaires_data(date_start, date_end, academie="Dijon"):
     """
     Returns a list of vacation dictionaries.
     """
@@ -65,7 +65,7 @@ def get_vacances_scolaires_data(date_start, date_end, academie=settings.ACADEMIE
         return []
 
 # --- 3. Weather (Météo) ---
-def get_historical_weather(date_start, date_end, ville=settings.VILLE_CIBLE):
+def get_historical_weather(date_start, date_end, ville):
     '''
     Fetch historical weather data using Open-Meteo API.
     '''
@@ -117,7 +117,7 @@ def get_historical_weather(date_start, date_end, ville=settings.VILLE_CIBLE):
         print(f"[ERROR] Error fetching meteo data: {e}")
         return pd.DataFrame()
 
-def get_weather_forecast(start_date, end_date, lat=settings.LATITUDE, lon=settings.LONGITUDE):
+def get_weather_forecast(start_date, end_date, lat, lon):
     """Récupère les données météo prévisionnelles via OpenMeteo pour l'intervalle."""
     try:
         url = "https://api.open-meteo.com/v1/forecast"
@@ -145,7 +145,7 @@ def get_weather_forecast(start_date, end_date, lat=settings.LATITUDE, lon=settin
                 "code": codes[i],
                 "temp_max": temps_max[i],
                 "temp_min": temps_min[i],
-                "desc": settings.WMO_DESC.get(codes[i] if 'WMO_DESC' in dir(settings) else codes[i], "Météo") # Using raw code if mapping issue
+                "desc": settings.WMO_DESC.get(codes[i], "Météo")
             }
         return weather_map
 

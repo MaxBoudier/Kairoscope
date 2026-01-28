@@ -63,12 +63,12 @@ class DatasetManager:
         df['sip'] = df['sip_base'] + df['sip_event']
         return df
 
-    def create_dataset(self, date_start=settings.DEFAULT_DATE_START, date_end=settings.DEFAULT_DATE_END):
+    def create_dataset(self, date_start=settings.DEFAULT_DATE_START, date_end=settings.DEFAULT_DATE_END, location="Chalon-sur-Saône"):
         """
         Creates the base DPD dataset merging Holidays, Vacations, and Weather.
         Returns a DataFrame.
         """
-        print(f"--- Creating Dataset ({date_start} to {date_end}) ---")
+        print(f"--- Creating Dataset ({date_start} to {date_end}) for {location} ---")
         
         # 1. Master Date Index
         dates = pd.date_range(start=date_start, end=date_end)
@@ -82,8 +82,8 @@ class DatasetManager:
         print("Fetching School Vacations...")
         vacations_list = data_providers.get_vacances_scolaires_data(date_start, date_end)
         
-        print("Fetching Weather...")
-        df_meteo = data_providers.get_historical_weather(date_start, date_end)
+        print(f"Fetching Weather for {location}...")
+        df_meteo = data_providers.get_historical_weather(date_start, date_end, location)
 
         # 3. Merge Data
         
@@ -250,59 +250,20 @@ class DatasetManager:
 
     def load_history_from_db(self, restaurant_id):
         """
-        Loads history data directly from the PostgreSQL database.
-        Returns a DataFrame formatted for the model.
+        Loads history data using database_service and adds SIP features.
+        Returns a DataFrame for the model.
         """
-        print(f"--- Loading History from DB for Restaurant {restaurant_id} ---")
-
-        # DB Config from env or defaults
-        db_host = os.environ.get("DB_HOST", "localhost")
-        db_port = os.environ.get("DB_PORT", "5432")
-        db_name = os.environ.get("DB_NAME", "emergency_db")
-        db_user = os.environ.get("DB_USER", "admin")
-        db_password = os.environ.get("DB_PASSWORD", "admin")
-
-        try:
-            conn = psycopg2.connect(
-                host=db_host,
-                port=db_port,
-                dbname=db_name,
-                user=db_user,
-                password=db_password
-            )
-        except Exception as e:
-            print(f"Error connecting to database: {e}")
-            sys.exit(1)
-
-        query = f"""
-            SELECT date_historique, holiday_name, is_holiday, is_school_vacations, vacation_name,
-                   weather_code, tmax, tmin, prcp, wspd, day_of_week, is_weekend,
-                   affluence,  occupancy_rate,  is_full, restaurant_id
-            FROM historique_affluence
-            WHERE restaurant_id = {restaurant_id}
-            ORDER BY date_historique ASC
-        """
+        import database_service
         
-        df = pd.read_sql_query(query, conn)
-        conn.close()
-
-        # Post-processing to match expected format
-        df['date'] = pd.to_datetime(df['date_historique'])
-        df = df.set_index('date')
-        df.drop(columns=['date_historique'], inplace=True)
+        # 1. Load Raw Data from DB
+        df = database_service.service.load_history_from_db(restaurant_id)
         
-        # Ensure unique index (handle existing duplicates in DB)
-        df = df[~df.index.duplicated(keep='last')]
-        
-        # Reset index to allow it to be a column again if needed by caller, 
-        # BUT wait, the model expects 'date' column.
-        # Let's RETURN it with 'date' as a column, not index.
-        df.reset_index(inplace=True)
-
-        # Calculate SIP features (not in DB)
+        if df.empty:
+            return df
+            
+        # 2. Add SIP features (calculate_sip logic)
         df = self.add_sip_features(df)
-
-        print(f"Loaded {len(df)} rows from database.")
+        
         return df
 
 # Singleton

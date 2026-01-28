@@ -13,26 +13,24 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # API Keys
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
-# Context
-VILLE_CIBLE = "Chalon-sur-Saône"
-ADRESSE_CLIENT = "Rue aux Fèvres, 71100 Chalon-sur-Saône"
-CONTEXTE_URBAIN = "MOYEN"  # DENSE, MOYEN, PERIURBAIN
-TYPE_RESTAURANT = "BRASSERIE"
-# Coordonnées approximatives pour Chalon-sur-Saône
-LATITUDE = 46.7833
-LONGITUDE = 4.85
+# # Context
+# VILLE_CIBLE = "Chalon-sur-Saône"
+# ADRESSE_CLIENT = "Rue aux Fèvres, 71100 Chalon-sur-Saône"
+# CONTEXTE_URBAIN = "MOYEN"  # DENSE, MOYEN, PERIURBAIN
+# TYPE_RESTAURANT = "BRASSERIE"
+# # Coordonnées approximatives pour Chalon-sur-Saône
+# LATITUDE = 46.7833
+# LONGITUDE = 4.85
 
-# School Academy
-ACADEMIE_SCOLAIRE = "Dijon"
+# # School Academy
+# ACADEMIE_SCOLAIRE = "Dijon"
 
 # Simulation Defaults
 DEFAULT_MAX_COVERS = 80
 DEFAULT_BASE_OCCUPANCY = 0.6
 DEFAULT_WEATHER_WEIGHT = 0.3
-
-# Date Defaults (for dataset creation)
-DEFAULT_DATE_START = "2025-01-01"
-DEFAULT_DATE_END = "2025-12-31"
+DEFAULT_DATE_START = "2024-01-01"
+DEFAULT_DATE_END = "2026-01-31"
 
 WMO_DESC = {
     0: "Ciel dégagé",

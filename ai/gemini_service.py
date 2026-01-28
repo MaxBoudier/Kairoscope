@@ -21,19 +21,19 @@ class GeminiService:
             print(f"Error configuring Gemini client: {e}")
             return None
 
-    def get_future_data_with_sip(self, date_debut, date_fin):
+    def get_future_data_with_sip(self, date_debut, date_fin, restaurant_config):
         """
         Executes the SIP pipeline: Weather -> Gemini Analysis -> SIP Calculation
         """
         if not self.client:
             print("Gemini Client not initialized (Missing Key?). Returning basic weather data.")
-            # We could fallback to just weather, but for now let's just return empty lists or handle it gracefully
-            # Logic will be similar to original script fallback
             
         # 1. Fetch Forecast
         weather_data = data_providers.get_weather_forecast(
             start_date=date_debut, 
-            end_date=date_fin
+            end_date=date_fin,
+            lat=restaurant_config.get("latitude", 46.7833),
+            lon=restaurant_config.get("longitude", 4.85)
         )
         
         # 2. Build Prompt Context
@@ -69,7 +69,7 @@ class GeminiService:
             current_date_obj += timedelta(days=1)
 
         # 3. Call Gemini
-        global_results = self._call_gemini_batch(prompt_days_context, days_list)
+        global_results = self._call_gemini_batch(prompt_days_context, days_list, restaurant_config)
 
         # 4. Post-Process with SIP Engine
         final_output = []
@@ -94,8 +94,8 @@ class GeminiService:
                 
                 if "Valentin" in nom or "Mère" in nom: cat = "SPECIAL"
 
-                base_ratio = sip_engine.get_impact_base(cat, 'soir_pre', settings.CONTEXTE_URBAIN, settings.TYPE_RESTAURANT)
-                impact_dist = sip_engine.calcul_impact_distance(base_ratio, dist, settings.CONTEXTE_URBAIN)
+                base_ratio = sip_engine.get_impact_base(cat, 'soir_pre', restaurant_config.get("urban_context", "MOYEN"), restaurant_config.get("type_restaurant", "BRASSERIE"))
+                impact_dist = sip_engine.calcul_impact_distance(base_ratio, dist, restaurant_config.get("urban_context", "MOYEN"))
                 weather_mod = sip_engine.get_weather_event_modifier(w_code, lieu)
                 impact_final = impact_dist * weather_mod
                 
@@ -118,7 +118,7 @@ class GeminiService:
             
         return final_output
 
-    def _call_gemini_batch(self, days_context, days_list_fallback):
+    def _call_gemini_batch(self, days_context, days_list_fallback, restaurant_config):
         if not self.client:
             return self._fallback_results(days_list_fallback)
         
@@ -156,8 +156,8 @@ class GeminiService:
         """
 
         USER_PROMPT = f"""
-        Adresse : {settings.ADRESSE_CLIENT}
-        Contexte : {settings.CONTEXTE_URBAIN}, {settings.TYPE_RESTAURANT}
+        Adresse : {restaurant_config.get("full_address", "Aucune adresse")}
+        Contexte : {restaurant_config.get("urban_context", "MOYEN")}, {restaurant_config.get("type_restaurant", "BRASSERIE")}
         Dates :
         {days_context}
         """
@@ -201,5 +201,5 @@ class GeminiService:
 # Singleton instance
 service = GeminiService()
 
-def get_future_data(date_debut, date_fin):
-    return service.get_future_data_with_sip(date_debut, date_fin)
+def get_future_data(date_debut, date_fin, restaurant_config):
+    return service.get_future_data_with_sip(date_debut, date_fin, restaurant_config)

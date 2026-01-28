@@ -80,25 +80,72 @@ def export_to_db(df, restaurant_id):
 
 from datetime import datetime
 
+def get_valid_input(prompt, default_val, type_func=str):
+    """Helper to get input with a default value and type conversion."""
+    user_input = input(f"{prompt} [{default_val}]: ").strip()
+    if not user_input:
+        return default_val
+    try:
+        return type_func(user_input)
+    except ValueError:
+        print("Invalid input. Using default.")
+        return default_val
+
 def main():
     parser = argparse.ArgumentParser(description="Generate and export restaurant history.")
-    parser.add_argument("--restaurant_id", type=int, required=True, help="ID of the restaurant")
-    parser.add_argument("--start_date", type=str, required=True, help="Start date (YYYY-MM-DD)")
-    parser.add_argument("--end_date", type=str, required=False, help="End date (YYYY-MM-DD). Defaults to today if not provided.")
+    # Make arguments optional so we can prompt if missing
+    parser.add_argument("--restaurant_id", type=int, help="ID of the restaurant")
+    parser.add_argument("--start_date", type=str, help="Start date (YYYY-MM-DD)")
+    parser.add_argument("--end_date", type=str, help="End date (YYYY-MM-DD)")
+    parser.add_argument("--location", type=str, help="Location for weather data")
+    parser.add_argument("--max_covers", type=int, help="Maximum number of covers (restaurant size)")
+    parser.add_argument("--base_occupancy", type=float, help="Base occupancy rate (0.0 - 1.0)")
+    parser.add_argument("--weather_weight", type=float, help="Impact of weather (0.0 - 1.0)")
 
     args = parser.parse_args()
 
-    # Default end_date to today if not provided
-    end_date = args.end_date
-    if not end_date:
-        end_date = datetime.now().strftime("%Y-%m-%d")
-        print(f"No end_date provided. Using today's date: {end_date}")
+    # defaults
+    default_end_date = datetime.now().strftime("%Y-%m-%d")
+    
+    # 1. Gather Parameters (Interactive if CLI args missing)
+    if args.restaurant_id is None:
+        print("\n--- Configuration Interactive ---")
+        restaurant_id = get_valid_input("Restaurant ID", 1, int)
+        start_date = get_valid_input("Start Date (YYYY-MM-DD)", "2023-01-01")
+        end_date = get_valid_input("End Date (YYYY-MM-DD)", default_end_date)
+        location = get_valid_input("Location (City)", "Chalon-sur-Saône")
+        max_covers = get_valid_input("Max Covers (Size)", settings.DEFAULT_MAX_COVERS, int)
+        base_occupancy = get_valid_input("Base Occupancy (0.0-1.0)", settings.DEFAULT_BASE_OCCUPANCY, float)
+        weather_weight = get_valid_input("Weather Weight (0.0-1.0)", settings.DEFAULT_WEATHER_WEIGHT, float)
+    else:
+        # Use provided args or defaults
+        restaurant_id = args.restaurant_id
+        start_date = args.start_date if args.start_date else "2023-01-01"
+        end_date = args.end_date if args.end_date else default_end_date
+        location = args.location if args.location else "Chalon-sur-Saône"
+        max_covers = args.max_covers if args.max_covers else settings.DEFAULT_MAX_COVERS
+        base_occupancy = args.base_occupancy if args.base_occupancy else settings.DEFAULT_BASE_OCCUPANCY
+        weather_weight = args.weather_weight if args.weather_weight else settings.DEFAULT_WEATHER_WEIGHT
+
+    print(f"\n--- Generation Parameters ---")
+    print(f"Restaurant ID: {restaurant_id}")
+    print(f"Period: {start_date} to {end_date}")
+    print(f"Location: {location}")
+    print(f"Size: {max_covers} covers")
+    print(f"Occupancy Base: {base_occupancy}")
+    print(f"Weather Weight: {weather_weight}")
+    print("-----------------------------\n")
 
     # 1. Create Base Dataset
-    df_base = manager.create_dataset(date_start=args.start_date, date_end=end_date)
+    df_base = manager.create_dataset(date_start=start_date, date_end=end_date, location=location)
     
     # 2. Add Affluence
-    df_result = manager.calculate_affluence(df_input=df_base)
+    df_result = manager.calculate_affluence(
+        df_input=df_base, 
+        max_covers=max_covers,
+        base_occupancy=base_occupancy,
+        weather_weight=weather_weight
+    )
     
     if df_result is None or df_result.empty:
         print("Error: calculate_affluence returned empty or None.")
@@ -109,15 +156,15 @@ def main():
         df_result.set_index('date', inplace=True)
     
     # Filter valid range just in case
-    df_result = df_result.loc[args.start_date:end_date]
+    df_result = df_result.loc[start_date:end_date]
 
     # Export to CSV before DB
-    csv_filename = f"history_{args.restaurant_id}_{args.start_date}_{end_date}.csv"
+    csv_filename = f"history_{restaurant_id}_{start_date}_{end_date}.csv"
     # Save in the same directory as the script or where it's running
     print(f"Exporting history to CSV: {csv_filename}")
     df_result.to_csv(csv_filename)
 
-    # export_to_db(df_result, args.restaurant_id)
+    # export_to_db(df_result, restaurant_id)
 
 if __name__ == "__main__":
     main()

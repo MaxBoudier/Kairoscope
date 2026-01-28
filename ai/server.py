@@ -22,8 +22,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ws://localhost:8000/ws/predict?restaurantId=1
+# ws://localhost:8000/ws/predict?restaurantId=1
 @app.websocket("/ws/predict")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, restaurantId: int):
     """
     Websocket endpoint that:
     1. Accepts a connection
@@ -48,7 +50,7 @@ async def websocket_endpoint(websocket: WebSocket):
         epochs = 30 # Default or could be parsed from initial message
         
         # Iterate through the pipeline steps
-        for step in run_prediction_pipeline(epochs=epochs):
+        for step in run_prediction_pipeline(epochs=epochs, restaurant_id=restaurantId):
             # Send each step as a JSON message to the frontend
             await websocket.send_json(step)
             

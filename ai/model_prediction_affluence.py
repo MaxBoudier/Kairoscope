@@ -174,7 +174,7 @@ def train_tft_model(data=None, max_epochs=30, metrics_callback=None):
     return tft, training
 
 
-def predict_future(model, training_dataset, history_df=None, status_callback=None):
+def predict_future(model, training_dataset, history_df=None, status_callback=None, restaurant_config=None):
     """
     Uses the trained model to predict the next 16 days.
     Fetches future features via Gemini/Weather.
@@ -201,7 +201,12 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
         })
     
     # USE NEW SERVICE
-    future_list = gemini_service.get_future_data(date_debut=start_future, date_fin=end_future)
+    if restaurant_config is None:
+        # Fallback if somehow not provided (though main.py should provide it)
+        # This prevents hard crash but might lead to poor results if defaults aren't enough
+        restaurant_config = {"latitude": 46.7833, "longitude": 4.85}
+
+    future_list = gemini_service.get_future_data(date_debut=start_future, date_fin=end_future, restaurant_config=restaurant_config)
 
     if not future_list:
         print("[ERROR] No future data returned.")
