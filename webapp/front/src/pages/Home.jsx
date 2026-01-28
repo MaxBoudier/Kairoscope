@@ -31,7 +31,7 @@ const Home = () => {
       list: [
         "Configuration : adresse du commerce + import CSV des ventes.",
         "Tableau de bord prédictif avec comparaison et annotations.",
-        "Flux “KairOS” listant météo, événements et actualités."
+        "Flux “Kairos” listant météo, événements et actualités."
       ]
     }
   ];
@@ -58,37 +58,38 @@ const Home = () => {
       <section className="relative z-[2] mx-auto max-w-[1280px] px-6 pb-[60px] pt-5 md:px-20 md:pb-20 md:pt-6">
 
         {/* Hero Section */}
+        <h1 className="mt-10 mb-6 font-['Funnel_Display'] font-bold text-[clamp(32px,5vw,56px)] leading-[1.05] text-slate-900 dark:text-white">
+          Prédire l’affluence, expliquer le pourquoi.
+          <span className="mt-3.5 block text-[clamp(16px,2vw,22px)] text-slate-500 dark:text-[#b0b8c5]">
+            OSINT et séries temporelles pour un modèle prédictif personnalisé.
+          </span>
+        </h1>
         <header className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] items-center gap-[30px] scroll-mt-[120px]" id="projet">
           <div className="hero-content">
-            <h1 className="my-3 font-['Funnel_Display'] text-[clamp(32px,5vw,56px)] leading-[1.05] text-slate-900 dark:text-white">
-              Prédire l’affluence, expliquer le pourquoi.
-              <span className="mt-3.5 block text-[clamp(16px,2vw,22px)] text-slate-500 dark:text-[#b0b8c5]">OSINT + séries temporelles pour une décision proactive.</span>
-            </h1>
-            <p className="max-w-[520px] text-lg leading-relaxed text-slate-600 dark:text-[#b0b8c5]">
+            <p className="max-w-[520px] mt-5 text-lg leading-relaxed text-slate-600 dark:text-[#b0b8c5]">
               Kairoscope intègre des données externes (actualités, événements
-              locaux, météo, réseaux sociaux) aux historiques internes pour
-              améliorer la prédiction de l’affluence. Un tableau de bord simple
-              compare la prévision classique à la prévision Kairoscope et explique
-              l’écart.
+              locaux, météo, réseaux sociaux) via une recherche OSINT consolidée en un flux exploitable.
+              Ainsi que l'historique de l'affluence pour améliorer la prédiction générée par le modèle Temporal Fusion Transformer.
+              Un tableau de bord simple compare la prévision classique à la prévision Kairoscope et explique l’écart.
             </p>
             <p className="mt-3.5 max-w-[520px] text-[15px] leading-relaxed text-slate-500 dark:text-[#b0b8c5]">
               Objectif : permettre aux commerces de proximité d’anticiper stocks,
-              personnel, promotions et trésorerie. Projet porté par Maxime
+              personnel, promotions et trésorerie. <br /> Projet porté par Maxime
               Boudier, étudiant CNAM ingénieur BDIA (2e année).
             </p>
             <div className="my-7 flex flex-wrap gap-3">
             </div>
             <div className="flex flex-wrap gap-6">
               <div>
-                <strong className="block text-[22px] font-semibold text-slate-900 dark:text-white">J+1 → J+14</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">J+1 → J+14</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Horizon de prédiction</span>
               </div>
               <div>
-                <strong className="block text-[22px] font-semibold text-slate-900 dark:text-white">Double courbe</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Double courbe</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Classique vs Kairoscope</span>
               </div>
               <div>
-                <strong className="block text-[22px] font-semibold text-slate-900 dark:text-white">Alertes</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Alertes</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Notifications temps réel</span>
               </div>
             </div>
@@ -102,21 +103,21 @@ const Home = () => {
             </div>
             <div className="grid gap-4">
               <div className="grid grid-cols-[20px_1fr] items-start gap-3">
-                <div className="mt-1 h-3 w-3 rounded-full bg-gradient-to-br from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]"></div>
+                <div className="mt-1 h-3 w-3 rounded-full bg-linear-to-br from-emerald-400 to-lime-400 dark:from-[#7fffd4] dark:to-[#e8ff6a]"></div>
                 <div>
                   <h3 className="mb-1 text-base m-0 text-slate-900 dark:text-white">Prévision enrichie</h3>
                   <p className="m-0 text-sm text-slate-500 dark:text-[#b0b8c5]">OSINT intégré aux séries temporelles.</p>
                 </div>
               </div>
               <div className="grid grid-cols-[20px_1fr] items-start gap-3">
-                <div className="mt-1 h-3 w-3 rounded-full bg-gradient-to-br from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]"></div>
+                <div className="mt-1 h-3 w-3 rounded-full bg-linear-to-br from-emerald-400 to-lime-400 dark:from-[#7fffd4] dark:to-[#e8ff6a]"></div>
                 <div>
                   <h3 className="mb-1 text-base m-0 text-slate-900 dark:text-white">Annotations claires</h3>
                   <p className="m-0 text-sm text-slate-500 dark:text-[#b0b8c5]">Comprendre les pics et creux d’activité.</p>
                 </div>
               </div>
               <div className="grid grid-cols-[20px_1fr] items-start gap-3">
-                <div className="mt-1 h-3 w-3 rounded-full bg-gradient-to-br from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]"></div>
+                <div className="mt-1 h-3 w-3 rounded-full bg-linear-to-br from-emerald-400 to-lime-400 dark:from-[#7fffd4] dark:to-[#e8ff6a]"></div>
                 <div>
                   <h3 className="mb-1 text-base m-0 text-slate-900 dark:text-white">Actions guidées</h3>
                   <p className="m-0 text-sm text-slate-500 dark:text-[#b0b8c5]">Notifier l’équipe au moment opportun.</p>
@@ -184,21 +185,79 @@ const Home = () => {
         {/* Team Grid */}
         <section className="mt-[90px] grid scroll-mt-[120px] grid-cols-1 md:grid-cols-2 gap-6" id="membres">
           {[
-            { title: " Vision & Pilotage", desc: "Maxime Boudier — Chef de projet / OSINT. Étudiant ingénieur BDIA au CNAM (2e année), Maxime porte la vision globale de Kairoscope et pilote l’intégration des données OSINT.", tasks: ["Définition de la vision produit", "Intégration des données externes (OSINT)", "Cadrage du PoC et roadmap", "Coordination de l’équipe"] },
-            { title: "Développement & Data", desc: "Arthur Cielsar — Développeur full-stack. Étudiant en Licence Informatique Générale au CNAM (3e année), Arthur est en charge du développement front-end et back-end de l’application Kairoscope.", tasks: ["Développement de l’interface utilisateur", "Architecture back-end", "Connexion aux sources de données", "Mise en place des premières briques IA"] },
-            { title: "Stratégie, marché & produit", desc: "Mahé Joninon — Étude de marché, pitch & produit. Étudiant en Licence Informatique Générale au CNAM, Mahé travaille sur la structuration du projet côté marché, communication et expérience utilisateur.", tasks: ["Étude de marché & positionnement", "Préparation des pitchs jury / investisseurs", "Rédaction des supports (PDF, slides, scripts)", "Conception et développement de la landing page", "Branding & image du projet"] },
-            { title: "Business & terrain", desc: "Julie — Analyse marché & retours terrain (EGC). Étudiante à l’EGC, Julie apporte une vision business au projet et travaille sur la validation terrain de Kairoscope auprès des restaurateurs.", tasks: ["Étude de marché & segmentation clients", "Interviews de restaurateurs", "Tests d’usage en conditions réelles", "Analyse de la valeur perçue", "Recommandations business"] }
-          ].map((card, index) => (
-            <article key={index} className="rounded-[20px] border border-slate-200 bg-white/80 p-[26px] shadow-lg backdrop-blur-[12px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl dark:border-white/12 dark:bg-[rgba(16,20,28,0.75)] dark:shadow-[0_20px_50px_rgba(3,5,8,0.4)] dark:hover:border-[#e8ff6a]/35 dark:hover:shadow-[0_28px_70px_rgba(3,5,8,0.55)]">
-              <h2 className="mt-0 font-['Funnel_Display'] text-2xl font-bold text-slate-900 dark:text-white">{card.title}</h2>
-              <p className="leading-relaxed text-slate-600 dark:text-[#b0b8c5]">
-                {card.desc}
+            {
+              name: "Maxime Boudier",
+              role: "Chef de projet - Data Engineer",
+              school: "Ingénieur Sciences des Données et IA au CNAM (2e année)",
+              desc: "Maxime porte la vision globale de Kairoscope et pilote l’intégration de l'intelligence artificielle ainsi que l'OSINT au sein de la solution.",
+              tasks: ["Définition de la vision produit", "Intégration des données externes (OSINT)", "Cadrage du PoC et roadmap", "Coordination de l’équipe"],
+              linkedin: "https://www.linkedin.com/in/maxime-boudier/"
+            },
+            {
+              name: "Arthur Cielsar",
+              role: "Développeur full-stack",
+              school: "Licence Informatique Générale au CNAM (3e année)",
+              desc: "Arthur est en charge du développement front-end et back-end de l’application Kairoscope.",
+              tasks: ["Développement de l’interface utilisateur", "Architecture back-end", "Connexion aux sources de données", "Mise en place des premières briques IA"],
+              linkedin: "#"
+            },
+            {
+              name: "Mahé Joninon",
+              role: "Étude de marché, pitch & produit",
+              school: "Licence Informatique Générale au CNAM",
+              desc: "Mahé travaille sur la structuration du projet côté marché, communication et expérience utilisateur.",
+              tasks: ["Étude de marché & positionnement", "Préparation des pitchs jury / investisseurs", "Rédaction des supports (PDF, slides, scripts)", "Conception et développement de la landing page", "Branding & image du projet"],
+              linkedin: "#"
+            },
+            {
+              name: "Julie Demetriadis",
+              role: "Analyse marché & retours terrain",
+              school: "Étudiante à l’EGC",
+              desc: "Julie apporte une vision business au projet et travaille sur la validation terrain de Kairoscope auprès des restaurateurs.",
+              tasks: ["Étude de marché & segmentation clients", "Interviews de restaurateurs", "Tests d’usage en conditions réelles", "Analyse de la valeur perçue", "Recommandations business"],
+              linkedin: "#"
+            }
+          ].map((member, index) => (
+            <article key={index} className="flex flex-col rounded-[20px] border border-slate-200 bg-white/80 p-[26px] shadow-lg backdrop-blur-[12px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl dark:border-white/12 dark:bg-[rgba(16,20,28,0.75)] dark:shadow-[0_20px_50px_rgba(3,5,8,0.4)] dark:hover:border-[#e8ff6a]/35 dark:hover:shadow-[0_28px_70px_rgba(3,5,8,0.55)]">
+
+              <div className="mb-4">
+                <h2 className="m-0 font-['Funnel_Display'] text-2xl font-bold text-slate-900 dark:text-white">
+                  {member.name}
+                </h2>
+                <div className="mt-1 text-[15px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-600 to-emerald-600 dark:from-[#e8ff6a] dark:to-[#7fffd4]">
+                  {member.role}
+                </div>
+                <div className="mt-0.5 text-sm text-slate-500 dark:text-[#b0b8c5] italic">
+                  {member.school}
+                </div>
+              </div>
+
+              <p className="mb-6 leading-relaxed text-slate-600 dark:text-[#b0b8c5]">
+                {member.desc}
               </p>
-              <ul className="mt-4 list-none space-y-2.5 p-0">
-                {card.tasks.map((task, i) => (
-                  <li key={i} className="relative pl-[18px] text-sm text-slate-600 dark:text-[#b0b8c5] leading-relaxed before:absolute before:left-0 before:top-[0.45em] before:h-2 before:w-2 before:rounded-full before:bg-gradient-to-br before:from-lime-400 before:to-emerald-400 dark:before:from-[#e8ff6a] dark:before:to-[#7fffd4]">{task}</li>
+
+              <ul className="mb-8 list-none space-y-2.5 p-0 flex-grow">
+                {member.tasks.map((task, i) => (
+                  <li key={i} className="relative pl-[18px] text-sm text-slate-600 dark:text-[#b0b8c5] leading-relaxed before:absolute before:left-0 before:top-[0.45em] before:h-2 before:w-2 before:rounded-full before:bg-linear-to-br before:from-emerald-400 before:to-lime-400 dark:before:from-[#7fffd4] dark:before:to-[#e8ff6a]">
+                    {task}
+                  </li>
                 ))}
               </ul>
+
+              <div className="mt-auto pt-4 border-t border-slate-100 dark:border-white/5">
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-[#0077b5] dark:text-slate-500 dark:hover:text-[#0a66c2] transition-colors"
+                  aria-label={`LinkedIn de ${member.name}`}
+                >
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </a>
+              </div>
+
             </article>
           ))}
         </section>
