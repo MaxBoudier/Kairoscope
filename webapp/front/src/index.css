@@ -126,9 +126,9 @@
   --popover: 222.2 47.4% 11.2%;
   --popover-foreground: 210 40% 98%;
 
-  /* Revert Primary to Indigo 600 (#4F46E5) for Dark Mode */
-  --primary: 243.4 75.4% 58.6%;
-  --primary-foreground: 210 40% 98%;
+  /* Revert Primary to Cyan/Blue for Dark Mode (was Indigo) */
+  --primary: 199 89% 48%;
+  --primary-foreground: 0 0% 100%;
 
   --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
@@ -184,4 +184,11 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px hsl(var(--background)) inset;
   -webkit-text-fill-color: hsl(var(--foreground));
   transition: background-color 5000s ease-in-out 0s;
+}
+
+@layer base {
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
 }
