@@ -39,9 +39,9 @@ services:
       DATABASE_URL: "postgresql://admin:admin@database:5432/emergency_db?serverVersion=15&charset=utf8"
       APP_ENV: prod
       APP_DEBUG: 0
-      CORS_ALLOW_ORIGIN: '^https?://(localhost|kairoscope\.maxboudier\.fr)(:[0-9]+)?$'
+      CORS_ALLOW_ORIGIN: '^http?://(localhost|kairoscope\.maxboudier\.fr)(:[0-9]+)?$'
       SYMFONY_TRUSTED_HOSTS: '^(localhost|127\.0\.0\.1|kairoscope\.maxboudier\.fr)$'
-      DEFAULT_URI: "https://kairoscope.maxboudier.fr"
+      DEFAULT_URI: "http://kairoscope.maxboudier.fr"
       REGISTRATION_SECRET: "LaSecuriteCEstVraimentImportantTMTC"
     volumes:
       - ./webapp/api:/var/www/html
