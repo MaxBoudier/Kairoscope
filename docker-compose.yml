@@ -48,7 +48,7 @@ services:
       - database
     networks:
       - kairoscope-net
-    command: sh -c "[ -f .env ] && chmod 644 .env; composer install --no-dev --optimize-autoloader --no-scripts && apache2-foreground"
+    command: sh -c "[ -f .env ] && chmod 644 .env; mkdir -p var && chmod -R 777 var; composer install --no-dev --optimize-autoloader --no-scripts && apache2-foreground"
 
   front:
     build:
