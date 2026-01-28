@@ -94,7 +94,7 @@ const PinProtection = ({ onSuccess }) => {
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-2">
                         <Button
-                            className="w-full bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] text-slate-900 hover:shadow-emerald-400/30 hover:shadow-lg border-0"
+                            className="w-full bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4] text-slate-900 hover:shadow-emerald-400/30 hover:shadow-lg border-0"
                             type="submit"
                             disabled={!singlePin || isLoading}
                         >

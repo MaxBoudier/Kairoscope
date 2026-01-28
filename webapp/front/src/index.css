@@ -89,8 +89,8 @@
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 0%;
 
-  /* User's Primary: Blue 600 (#2563EB) */
-  --primary: 221.2 83.2% 53.3%;
+  /* User's Primary: Emerald 500 */
+  --primary: 160 84% 39%;
   --primary-foreground: 210 40% 98%;
 
   --secondary: 210 40% 96.1%;
@@ -109,7 +109,7 @@
   --input: 214.3 31.8% 91.4%;
 
   /* Ring matches Primary */
-  --ring: 221.2 83.2% 53.3%;
+  --ring: 160 84% 39%;
 
   --radius: 0.5rem;
 }
@@ -126,8 +126,8 @@
   --popover: 222.2 47.4% 11.2%;
   --popover-foreground: 210 40% 98%;
 
-  /* Revert Primary to Cyan/Blue for Dark Mode (was Indigo) */
-  --primary: 199 89% 48%;
+  /* Revert Primary to Emerald 400 for Dark Mode */
+  --primary: 158 64% 52%;
   --primary-foreground: 0 0% 100%;
 
   --secondary: 217.2 32.6% 17.5%;
@@ -145,7 +145,7 @@
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
 
-  --ring: 199 89% 48%;
+  --ring: 158 64% 52%;
 }
 
 @utility container {

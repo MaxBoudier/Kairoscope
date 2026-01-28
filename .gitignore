@@ -50,13 +50,8 @@ build/
 *.lightning_logs/
 
 # Docker
-.docker/
-Dockerfile*
-docker-compose.yml
-
-
-# Docker
-docker-compose.yml
+docker-compose.override.yml
+# Note: docker-compose.yml should be committed for production
 
 # Generated files by generate_history.py
 history*.csv

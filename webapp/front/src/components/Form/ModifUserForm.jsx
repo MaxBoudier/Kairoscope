@@ -186,7 +186,7 @@ const ModifUserForm = ({ initialData }) => {
                         <Button
                             type="submit"
                             disabled={isLoading || !initialData}
-                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 px-6 rounded-lg shadow-md transition-all hover:scale-105 dark:bg-gradient-to-r dark:from-blue-600 dark:to-cyan-600 dark:hover:from-blue-500 dark:hover:to-cyan-500 dark:text-white dark:shadow-primary/20"
+                            className="bg-linear-to-r from-emerald-400 to-lime-400 hover:brightness-110 text-white dark:text-slate-900 font-bold py-2 px-6 rounded-lg shadow-md transition-all hover:scale-105 dark:from-[#7fffd4] dark:to-[#e8ff6a] dark:shadow-emerald-400/20"
                         >
                             {isLoading ? "Mise à jour..." : (
                                 <span className="flex items-center gap-2">

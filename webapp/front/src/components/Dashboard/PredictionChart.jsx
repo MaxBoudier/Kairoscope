@@ -9,6 +9,27 @@ import { Button } from "@/components/ui/button";
  * Uses WebSocket to fetch data from AI service.
  * Implements persistence via localStorage and manual refresh.
  */
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-[#1e293b] border border-slate-800 p-3 rounded-lg shadow-xl">
+                <p className="text-slate-400 text-xs mb-2">{label}</p>
+                {payload.map((entry, index) => {
+                    const isKairo = entry.dataKey === 'predicted_affluence';
+                    return (
+                        <div key={index} className="flex items-center gap-2 mb-1 last:mb-0">
+                            <span className={`text-sm font-bold ${isKairo ? 'text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-lime-400' : 'text-slate-400'}`}>
+                                {isKairo ? 'Prévision Kairoscope' : 'Prévision Classique'} : {entry.value}
+                            </span>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+    return null;
+};
+
 const RevenueChart = ({ onDataLoaded }) => {
     const [socketStatus, setSocketStatus] = useState('disconnected');
     const [progress, setProgress] = useState({ step: 0, total: 0, message: '', step_name: '', showSpinner: false });
@@ -180,10 +201,10 @@ const RevenueChart = ({ onDataLoaded }) => {
     };
 
     return (
-        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
+        <Card className="w-full border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-emerald-500/20">
             <CardHeader className="flex flex-row items-center justify-between">
                 <div>
-                    <CardTitle className="text-card-foreground dark:text-slate-100">Courbe de prédiction Kairoscope</CardTitle>
+                    <CardTitle className="text-card-foreground dark:text-slate-100">Courbe de prédiction <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-lime-400 dark:from-[#7fffd4] dark:to-[#e8ff6a]">Kairoscope</span></CardTitle>
                     <CardDescription className="text-muted-foreground dark:text-slate-400">
                         Prédictions d'affluence pour les prochains jours.
                     </CardDescription>
@@ -216,7 +237,7 @@ const RevenueChart = ({ onDataLoaded }) => {
                             <>
                                 {progress.showSpinner ? (
                                     <div className="flex flex-col items-center gap-3">
-                                        <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                                        <Loader2 className="h-8 w-8 text-emerald-500 dark:text-[#7fffd4] animate-spin" />
                                         <p className="text-sm text-muted-foreground animate-pulse text-center px-4">
                                             {progress.message || "Traitement en cours..."}
                                         </p>
@@ -225,7 +246,7 @@ const RevenueChart = ({ onDataLoaded }) => {
                                     <>
                                         <div className="w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                             <div
-                                                className="bg-primary h-2 rounded-full transition-all duration-300 ease-out"
+                                                className="bg-linear-to-r from-emerald-400 to-lime-400 dark:from-[#7fffd4] dark:to-[#e8ff6a] h-2 rounded-full transition-all duration-300 ease-out"
                                                 style={{ width: `${progress.total ? (progress.step / progress.total) * 100 : 0}%` }}
                                             ></div>
                                         </div>
@@ -245,12 +266,16 @@ const RevenueChart = ({ onDataLoaded }) => {
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={predictions}>
                                 <defs>
+                                    <linearGradient id="strokeGradient" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stopColor="#34d399" />
+                                        <stop offset="100%" stopColor="#a3e635" />
+                                    </linearGradient>
                                     <linearGradient id="colorAffluence" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#22d3ee" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#22d3ee" stopOpacity={0} />
+                                        <stop offset="5%" stopColor="#34d399" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#34d399" stopOpacity={0} />
                                     </linearGradient>
                                     <linearGradient id="colorNoKairo" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.3} />
+                                        <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.15} />
                                         <stop offset="95%" stopColor="#94a3b8" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
@@ -272,26 +297,13 @@ const RevenueChart = ({ onDataLoaded }) => {
                                     label={{ value: 'Personnes', angle: -90, position: 'insideLeft', style: { fill: '#94a3b8', fontSize: '10px' } }}
                                 />
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(100,100,100,0.1)" />
-                                <Tooltip
-                                    contentStyle={{
-                                        backgroundColor: '#1e293b',
-                                        borderColor: 'transparent',
-                                        color: '#fff',
-                                        borderRadius: '8px'
-                                    }}
-                                    itemStyle={{ color: '#fff' }}
-                                    labelStyle={{ color: '#94a3b8' }}
-                                    formatter={(value, name) => {
-                                        if (name === 'predicted_affluence') return [value, 'Prévision Kairoscope'];
-                                        if (name === 'predicted_affluence_no_kairo') return [value, 'Prévision Classique'];
-                                        return [value, name];
-                                    }}
-                                />
+                                <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(148, 163, 184, 0.2)', strokeWidth: 1 }} />
                                 <Area
                                     type="monotone"
                                     dataKey="predicted_affluence_no_kairo"
                                     stroke="#94a3b8"
                                     strokeWidth={2}
+                                    strokeOpacity={0.4}
                                     fillOpacity={1}
                                     fill="url(#colorNoKairo)"
                                     animationDuration={1500}
@@ -299,8 +311,8 @@ const RevenueChart = ({ onDataLoaded }) => {
                                 <Area
                                     type="monotone"
                                     dataKey="predicted_affluence"
-                                    stroke="#22d3ee"
-                                    strokeWidth={2}
+                                    stroke="url(#strokeGradient)"
+                                    strokeWidth={3}
                                     fillOpacity={1}
                                     fill="url(#colorAffluence)"
                                     animationDuration={1500}

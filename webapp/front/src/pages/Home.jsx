@@ -91,15 +91,15 @@ const Home = () => {
             </div>
             <div className="flex flex-wrap gap-6">
               <div>
-                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">J+1 → J+14</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">J+1 → J+14</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Horizon de prédiction</span>
               </div>
               <div>
-                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Double courbe</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Double courbe</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Classique vs Kairoscope</span>
               </div>
               <div>
-                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Alertes</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Alertes</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Notifications temps réel</span>
               </div>
             </div>
@@ -243,7 +243,7 @@ const Home = () => {
                 <h2 className="m-0 font-['Funnel_Display'] text-2xl font-bold text-slate-900 dark:text-white">
                   {member.name}
                 </h2>
-                <div className="mt-1 text-[15px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-lime-600 to-emerald-600 dark:from-[#e8ff6a] dark:to-[#7fffd4]">
+                <div className="mt-1 text-[15px] font-semibold text-transparent bg-clip-text bg-linear-to-r from-lime-600 to-emerald-600 dark:from-[#e8ff6a] dark:to-[#7fffd4]">
                   {member.role}
                 </div>
                 <div className="mt-0.5 text-sm text-slate-500 dark:text-[#b0b8c5] italic">
