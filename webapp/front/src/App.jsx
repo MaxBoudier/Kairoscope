@@ -40,7 +40,7 @@ function App() {
           <Route path="*" element={<h1>404 - Page non trouvée</h1>} />
         </Routes>
         <div className="p-4">
-          <BackendStatus />
+          {/* <BackendStatus /> */}
         </div>
       </div>
     </>

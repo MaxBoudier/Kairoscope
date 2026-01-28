@@ -1,70 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DashboardStats from '@/components/Dashboard/DashboardStats';
 import RevenueChart from '@/components/Dashboard/PredictionChart';
-import NotificationSidebar from '@/components/Dashboard/NotificationSidebar';
 import EventSection from '@/components/Dashboard/EventSection';
 import { fetchWithAuth } from '@/lib/api';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [notificationsData, setNotificationsData] = useState(null);
+  const [predictions, setPredictions] = useState([]);
 
-  useEffect(() => {
-    const fetchNotificationsData = async () => {
-      try {
-        const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/notifications`);
-
-        if (response.ok) {
-          const data = await response.json();
-          setNotificationsData(data);
-        }
-      } catch (error) {
-        if (error.message !== "Unauthorized") {
-          console.error("Erreur lors de la récupération :", error);
-        }
-        setNotificationsData([]);
-      }
-    };
-
-    fetchNotificationsData();
-  }, []);
-
-  const handleDeleteNotification = async (id) => {
-    try {
-      const response = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/notifications/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        setNotificationsData((prev) => prev.filter((n) => n.id !== id));
-      } else {
-        console.error("Failed to delete notification");
-      }
-    } catch (error) {
-      console.error("Error deleting notification:", error);
+  const handleDataLoaded = (data) => {
+    if (data && data.length > 0) {
+      setPredictions(data);
     }
   };
 
+  // Extract events from predictions for the side list
+  // We only want future events, and predictions start from "today"
+  const upcomingEvents = predictions.flatMap(p =>
+    p.events ? p.events.map(e => ({ ...e, date: p.date })) : []
+  );
+
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-primary dark:bg-gradient-to-r dark:from-violet-400 dark:to-indigo-400 dark:bg-clip-text dark:text-transparent">
+    <div className="flex-1 p-8 pt-10 mt-20 h-[calc(100vh-5rem)] flex flex-col overflow-hidden">
+      <div className="flex items-center justify-between space-y-2 mb-8 shrink-0">
+        <h2 className="text-3xl font-bold tracking-tight text-primary dark:bg-gradient-to-br dark:from-[#22d3ee] dark:to-[#60a5fa] dark:bg-clip-text dark:text-transparent">
           Tableau de Bord
         </h2>
       </div>
 
-      <div className="flex flex-col gap-4 h-full">
-        {/* Top Row: Events & Notifications */}
-        <div className="grid gap-4 md:grid-cols-2 h-1/2">
-          <EventSection />
-          <NotificationSidebar notificationsData={notificationsData} onDelete={handleDeleteNotification} />
+      <div className="flex flex-col gap-8 flex-1 min-h-0 pb-4">
+        {/* Top Row: Key Metrics */}
+        <div className="shrink-0">
+          <DashboardStats data={predictions} />
         </div>
 
-        {/* Bottom Row: Chart (Full Width) */}
-        <div className="h-1/2">
-          <RevenueChart />
+        {/* Middle Row: Events List (Horizontal) */}
+        <div className="shrink-0">
+          <EventSection events={upcomingEvents} />
+        </div>
+
+        {/* Bottom Row: Chart (Full Width, fills remaining space) */}
+        <div className="flex-1 min-h-0 hover:shadow-lg transition-shadow duration-300">
+          <RevenueChart onDataLoaded={handleDataLoaded} />
         </div>
       </div>
     </div>

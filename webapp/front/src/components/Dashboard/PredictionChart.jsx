@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
  * Uses WebSocket to fetch data from AI service.
  * Implements persistence via localStorage and manual refresh.
  */
-const RevenueChart = () => {
+const RevenueChart = ({ onDataLoaded }) => {
     const [socketStatus, setSocketStatus] = useState('disconnected');
     const [progress, setProgress] = useState({ step: 0, total: 0, message: '', step_name: '', showSpinner: false });
     const [predictions, setPredictions] = useState([]);
@@ -120,6 +120,11 @@ const RevenueChart = () => {
                             });
                             setPredictions(formattedData);
 
+                            // Pass data up to parent
+                            if (onDataLoaded) {
+                                onDataLoaded(formattedData);
+                            }
+
                             // Cache the data
                             localStorage.setItem('kairoscope_predictions', JSON.stringify(formattedData));
                         }
@@ -153,6 +158,9 @@ const RevenueChart = () => {
                 // But standard caching behaviour implies we might see old state.
                 // Let's trust the cache for now as "last known state".
                 setPredictions(parsedData);
+                if (onDataLoaded) {
+                    onDataLoaded(parsedData);
+                }
                 setSocketStatus('disconnected'); // We have data, no need to connect live immediately
                 return;
             } catch (e) {
@@ -238,8 +246,8 @@ const RevenueChart = () => {
                             <AreaChart data={predictions}>
                                 <defs>
                                     <linearGradient id="colorAffluence" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                                        <stop offset="5%" stopColor="#22d3ee" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#22d3ee" stopOpacity={0} />
                                     </linearGradient>
                                     <linearGradient id="colorNoKairo" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.3} />
@@ -291,7 +299,7 @@ const RevenueChart = () => {
                                 <Area
                                     type="monotone"
                                     dataKey="predicted_affluence"
-                                    stroke="#8b5cf6"
+                                    stroke="#22d3ee"
                                     strokeWidth={2}
                                     fillOpacity={1}
                                     fill="url(#colorAffluence)"
