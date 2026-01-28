@@ -79,7 +79,7 @@ class SecurityController extends AbstractController
 
         // Validation du code de sécurité secret (défini dans .env.local)
         // Si la variable n'est pas définie, on bloque par sécurité
-        $expectedSecret = $_ENV['REGISTRATION_SECRET'] ?? null;
+        $expectedSecret = $_SERVER['REGISTRATION_SECRET'] ?? $_ENV['REGISTRATION_SECRET'] ?? getenv('REGISTRATION_SECRET') ?? null;
         
         if (!$expectedSecret || $registrationCode !== $expectedSecret) {
             return $this->json(['error' => 'Code de sécurité invalide ou non configuré.'], 403);
