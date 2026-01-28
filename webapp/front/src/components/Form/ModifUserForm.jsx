@@ -73,7 +73,7 @@ const ModifUserForm = ({ initialData }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Card className="border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-indigo-500/20">
+            <Card className="border-border bg-card shadow-sm dark:bg-slate-950/50 dark:backdrop-blur-sm dark:border-primary/20">
                 <CardHeader>
                     <CardTitle className="text-2xl text-card-foreground dark:text-slate-100">Modifier mon profil</CardTitle>
                     <CardDescription className="text-muted-foreground dark:text-slate-400">
@@ -92,7 +92,7 @@ const ModifUserForm = ({ initialData }) => {
                                     name="pseudo"
                                     value={credentials.pseudo}
                                     onChange={handleChange}
-                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-primary/20 dark:focus-visible:ring-primary/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                                 />
                             )}
                         </div>
@@ -110,7 +110,7 @@ const ModifUserForm = ({ initialData }) => {
                                     placeholder="••••"
                                     value={credentials.code_settings}
                                     onChange={handleChange}
-                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-primary/20 dark:focus-visible:ring-primary/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                                 />
                             )}
                         </div>
@@ -126,7 +126,7 @@ const ModifUserForm = ({ initialData }) => {
                                     value={credentials.nom_gerant}
                                     onChange={handleChange}
                                     required
-                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-primary/20 dark:focus-visible:ring-primary/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                                 />
                             )}
                         </div>
@@ -142,7 +142,7 @@ const ModifUserForm = ({ initialData }) => {
                                     value={credentials.prenom_gerant}
                                     onChange={handleChange}
                                     required
-                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                    className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-primary/20 dark:focus-visible:ring-primary/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                                 />
                             )}
                         </div>
@@ -160,12 +160,12 @@ const ModifUserForm = ({ initialData }) => {
                                 value={credentials.email}
                                 onChange={handleChange}
                                 required
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-primary/20 dark:focus-visible:ring-primary/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                             />
                         )}
                     </div>
 
-                    <div className="space-y-2 border-t pt-4 border-border dark:border-indigo-500/20">
+                    <div className="space-y-2 border-t pt-4 border-border dark:border-primary/20">
                         <Label htmlFor="password" className="text-foreground dark:text-slate-200">Nouveau mot de passe</Label>
                         {!initialData ? (
                             <Skeleton className="w-full h-10 rounded-md" />
@@ -177,7 +177,7 @@ const ModifUserForm = ({ initialData }) => {
                                 placeholder="Laisser vide pour ne pas changer"
                                 value={credentials.password}
                                 onChange={handleChange}
-                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-indigo-500/20 dark:focus-visible:ring-violet-500/50 dark:text-slate-100 dark:placeholder:text-slate-600"
+                                className="bg-background border-input focus-visible:ring-ring text-foreground placeholder:text-muted-foreground dark:bg-slate-900/50 dark:border-primary/20 dark:focus-visible:ring-primary/50 dark:text-slate-100 dark:placeholder:text-slate-600"
                             />
                         )}
                     </div>
@@ -186,7 +186,7 @@ const ModifUserForm = ({ initialData }) => {
                         <Button
                             type="submit"
                             disabled={isLoading || !initialData}
-                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 px-6 rounded-lg shadow-md transition-all hover:scale-105 dark:bg-gradient-to-r dark:from-violet-600 dark:to-indigo-600 dark:hover:from-violet-500 dark:hover:to-indigo-500 dark:text-white dark:shadow-violet-500/20"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 px-6 rounded-lg shadow-md transition-all hover:scale-105 dark:bg-gradient-to-r dark:from-blue-600 dark:to-cyan-600 dark:hover:from-blue-500 dark:hover:to-cyan-500 dark:text-white dark:shadow-primary/20"
                         >
                             {isLoading ? "Mise à jour..." : (
                                 <span className="flex items-center gap-2">
