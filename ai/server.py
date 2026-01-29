@@ -51,6 +51,11 @@ async def websocket_endpoint(websocket: WebSocket, restaurantId: int):
         
         # Iterate through the pipeline steps
         for step in run_prediction_pipeline(epochs=epochs, restaurant_id=restaurantId):
+            # Handle heartbeat (empty queue) from generator
+            if step is None:
+                await asyncio.sleep(0.1)
+                continue
+
             # Send each step as a JSON message to the frontend
             await websocket.send_json(step)
             

@@ -94,6 +94,9 @@ def run_prediction_pipeline(epochs=30, restaurant_id=1):
         except queue.Empty:
             if not t.is_alive():
                 break
+            # Yield None to allow the caller (server.py) to await asyncio.sleep
+            # This prevents blocking the event loop during long training steps
+            yield None
     
     t.join()
 
