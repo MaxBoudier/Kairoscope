@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { User, Settings, LogOut, ChevronDown, LayoutDashboard, Moon, Sun } from 'lucide-react';
+import { User, Settings, LogOut, ChevronDown, LayoutDashboard, Moon, Sun, Menu } from 'lucide-react';
 import { useTheme } from "@/components/ThemeProvider"
 import { Button } from "@/components/ui/button"
 import {
@@ -45,21 +45,53 @@ const Navbar = () => {
         return (
             <div>
                 <nav className="sticky top-0 z-50 flex w-full items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-6 py-3 backdrop-blur-md font-['Space_Grotesk'] dark:border-white/12 dark:bg-[#080b10]/90 shadow-sm dark:shadow-none transition-colors duration-300 md:px-10">
-                    <div className="flex items-center gap-4">
-                        <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl text-[#111] font-bold text-lg bg-slate-100 dark:bg-transparent">
-                            <img src="/Images/logo.png" alt="Logo Kairoscope" className="block h-[70%] w-[70%] object-contain" />
-                        </div>
-                        <div className="">
-                            <span className="block font-['Funnel_Display'] text-lg tracking-[0.5px] text-slate-900 dark:text-[#f5f7fb]">Kairoscope</span>
-                            <small className="text-slate-500 text-xs uppercase tracking-[1.2px] dark:text-[#b0b8c5]">Le 6e sens de votre commerce</small>
+                    {/* Mobile Menu (Burger) - Left */}
+                    <div className="flex md:hidden flex-1 justify-start">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="text-slate-500 dark:text-[#b0b8c5]">
+                                    <Menu size={24} />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-[200px] mt-2">
+                                <DropdownMenuItem asChild>
+                                    <a href="#projet" className="w-full cursor-pointer">Projet</a>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <a href="#fonctionnement" className="w-full cursor-pointer">Vidéo et Fonctionnement</a>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <a href="#membres" className="w-full cursor-pointer">Equipe</a>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+
+                    {/* Logo Section - Center on mobile, Left on desktop */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0 md:flex md:items-center md:gap-4 md:flex-initial">
+                        <div className="flex flex-col items-center md:flex-row md:items-center md:gap-4">
+                            {/* Logo Image */}
+                            <div className="grid h-10 w-10 md:h-10 md:w-10 place-items-center overflow-hidden rounded-xl text-[#111] font-bold text-lg bg-slate-100 dark:bg-transparent">
+                                <img src="/Images/logo.png" alt="Logo Kairoscope" className="block h-[70%] w-[70%] object-contain" />
+                            </div>
+
+                            {/* Title & Subtitle */}
+                            <div className="text-center md:text-left mt-1 md:mt-0">
+                                <span className="block font-['Funnel_Display'] text-lg tracking-[0.5px] text-slate-900 dark:text-[#f5f7fb]">Kairoscope</span>
+                                <small className="block text-slate-500 text-[10px] sm:text-xs uppercase tracking-[1.2px] dark:text-[#b0b8c5]">Le 6e sens de votre commerce</small>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap gap-3.5 text-sm text-slate-500 dark:text-[#b0b8c5]">
+
+                    {/* Desktop Links - Hidden on Mobile */}
+                    <div className="hidden md:flex flex-wrap gap-3.5 text-sm text-slate-500 dark:text-[#b0b8c5]">
                         <a href="#projet" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Projet</a>
                         <a href="#fonctionnement" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Vidéo et Fonctionnement</a>
                         <a href="#membres" className="relative cursor-pointer font-medium tracking-wide text-inherit no-underline transition-all hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-emerald-400 hover:to-lime-400 dark:hover:from-[#7fffd4] dark:hover:to-[#e8ff6a] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-emerald-400 after:to-lime-400 dark:after:from-[#7fffd4] dark:after:to-[#e8ff6a] after:transition-[width] after:duration-300 hover:after:w-full">Equipe</a>
                     </div>
-                    <div className="flex items-center gap-4">
+
+                    {/* Right Section: Theme Toggle & User Profile */}
+                    <div className="flex flex-1 justify-end items-center gap-2 md:gap-4 md:flex-initial">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full text-slate-500 dark:text-[#b0b8c5] hover:text-emerald-600 dark:hover:text-[#7fffd4] hover:bg-transparent dark:hover:border-[#7fffd4] border border-transparent transition-all">
@@ -84,8 +116,9 @@ const Navbar = () => {
                         <div className="relative" ref={dropdownRef}>
                             {user ? (
                                 <>
+                                    {/* Desktop User Button */}
                                     <div
-                                        className="flex items-center gap-3 px-4 py-1.5 rounded-full cursor-pointer bg-gray-50 dark:bg-neutral-800 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-neutral-700"
+                                        className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full cursor-pointer bg-gray-50 dark:bg-neutral-800 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-neutral-700"
                                         onClick={() => setIsOpen(!isOpen)}
                                     >
                                         <div className="w-[35px] h-[35px] bg-emerald-50 dark:bg-slate-700 rounded-full flex justify-center items-center border border-gray-200 dark:border-neutral-600 text-emerald-600 dark:text-emerald-400">
@@ -98,6 +131,14 @@ const Navbar = () => {
                                             size={16}
                                             className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
                                         />
+                                    </div>
+
+                                    {/* Mobile User Button (Icon Only) */}
+                                    <div
+                                        className="flex md:hidden w-[35px] h-[35px] bg-emerald-50 dark:bg-slate-700 rounded-full justify-center items-center border border-gray-200 dark:border-neutral-600 text-emerald-600 dark:text-emerald-400 cursor-pointer"
+                                        onClick={() => setIsOpen(!isOpen)}
+                                    >
+                                        <User size={20} />
                                     </div>
 
                                     {isOpen && (
