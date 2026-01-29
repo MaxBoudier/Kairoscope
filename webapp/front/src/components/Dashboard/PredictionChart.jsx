@@ -77,7 +77,16 @@ const RevenueChart = ({ onDataLoaded }) => {
                 }
             }
 
-            const wsUrl = `${import.meta.env.VITE_WS_URL}/predict${restaurantId ? `?restaurantId=${restaurantId}` : ''}`;
+            let baseUrl = import.meta.env.VITE_WS_URL;
+            // If VITE_WS_URL is not defined or is a relative path (starts with /), construct full URL
+            if (!baseUrl || baseUrl.startsWith('/')) {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const host = window.location.host; // includes port
+                const path = baseUrl || '/api';
+                baseUrl = `${protocol}//${host}${path}`;
+            }
+
+            const wsUrl = `${baseUrl}/predict${restaurantId ? `?restaurantId=${restaurantId}` : ''}`;
             const ws = new WebSocket(wsUrl);
             socketRef.current = ws;
 
@@ -264,7 +273,7 @@ const RevenueChart = ({ onDataLoaded }) => {
                 ) : (
                     <div className="h-[250px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={predictions}>
+                            <AreaChart data={predictions} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="strokeGradient" x1="0" y1="0" x2="1" y2="0">
                                         <stop offset="0%" stopColor="#34d399" />
@@ -285,6 +294,8 @@ const RevenueChart = ({ onDataLoaded }) => {
                                     fontSize={12}
                                     tickLine={false}
                                     axisLine={false}
+                                    interval="preserveStartEnd"
+                                    padding={{ left: 20, right: 20 }}
                                     className="dark:text-slate-400"
                                 />
                                 <YAxis
