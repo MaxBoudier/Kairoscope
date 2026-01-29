@@ -115,6 +115,7 @@ def train_tft_model(data=None, max_epochs=30, metrics_callback=None):
         static_categoricals=["restaurant_id"],
         time_varying_known_categoricals=["day_of_week", "is_holiday", "is_school_vacations"],
         categorical_encoders={
+            "restaurant_id": NaNLabelEncoder(add_nan=True),
             "is_holiday": NaNLabelEncoder(add_nan=True),
             "is_school_vacations": NaNLabelEncoder(add_nan=True),
         },
@@ -217,7 +218,12 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
     
     future_df["date"] = pd.to_datetime(future_df["date"])
     future_df["time_idx"] = (future_df["date"] - min_date).dt.days
-    future_df["restaurant_id"] = "1"
+    
+    # Dynamically set restaurant_id from history (assumes single restaurant context)
+    # history["restaurant_id"] expects to be matching string or needed type
+    # In train_tft_model we cast to str. Here we should do same for consistency.
+    current_restaurant_id = str(history["restaurant_id"].iloc[0]) 
+    future_df["restaurant_id"] = current_restaurant_id
     future_df["affluence"] = 0.0 
     
     # Map Day of Week Gemini (French) -> English
