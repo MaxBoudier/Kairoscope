@@ -40,9 +40,10 @@ class DatabaseService:
         try:
             cur = conn.cursor()
             query = """
-                SELECT id, nom, ville, adresse, code_postal, type_restaurant 
-                FROM restaurant 
-                WHERE id = %s
+                SELECT r.id, r.nom, r.ville, r.adresse, r.code_postal, r.type_restaurant, rd.max_nb_couvert
+                FROM restaurant r
+                LEFT JOIN restaurant_data rd ON r.id = rd.restaurant_id
+                WHERE r.id = %s
             """
             cur.execute(query, (restaurant_id,))
             row = cur.fetchone()
@@ -50,7 +51,8 @@ class DatabaseService:
             if not row:
                 print(f"Restaurant {restaurant_id} not found.")
                 return None
-                
+            
+            import settings
             config = {
                 "id": row[0],
                 "name": row[1],
@@ -58,6 +60,7 @@ class DatabaseService:
                 "address_street": row[3],
                 "zip_code": row[4],
                 "type_restaurant": row[5] or "BRASSERIE", # Default if null
+                "max_covers": row[6] if row[6] is not None else settings.DEFAULT_MAX_COVERS
             }
             
             # Derived fields

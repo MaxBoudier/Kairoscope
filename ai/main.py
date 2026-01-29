@@ -17,7 +17,7 @@ import threading
 import queue
 import time
 
-def run_prediction_pipeline(epochs=30, restaurant_id=1):
+def run_prediction_pipeline(epochs=30, restaurant_id=-1):
     """
     Generator that yields status updates during the prediction process.
     Yields dicts with keys: 'status', 'message', 'data'

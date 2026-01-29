@@ -61,7 +61,7 @@ def get_vacances_scolaires_data(date_start, date_end, academie="Dijon"):
         return vacations
 
     except Exception as e:
-        print(f"[ERROR] Error fetching school holidays: {e}")
+        print(f"[WARNING] School holidays API unavailable, skipping holiday data. Details: {e}")
         return []
 
 # --- 3. Weather (Météo) ---

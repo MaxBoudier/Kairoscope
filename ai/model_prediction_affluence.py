@@ -226,6 +226,9 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
     future_df["restaurant_id"] = current_restaurant_id
     future_df["affluence"] = 0.0 
     
+    # Get max_covers from config or default
+    max_covers = restaurant_config.get("max_covers", 80)
+    
     # Map Day of Week Gemini (French) -> English
     day_map = {
         "LUNDI": "monday", "MARDI": "tuesday", "MERCREDI": "wednesday",
@@ -312,11 +315,10 @@ def predict_future(model, training_dataset, history_df=None, status_callback=Non
     results_df["conf_low_no_kairo"] = lower_preds_no_kairo
     results_df["conf_high_no_kairo"] = upper_preds_no_kairo
     
-    # Clip confidence bounds to 0
-    results_df["conf_low"] = results_df["conf_low"].clip(lower=0)
-    results_df["conf_high"] = results_df["conf_high"].clip(lower=0)
-    results_df["conf_low_no_kairo"] = results_df["conf_low_no_kairo"].clip(lower=0)
-    results_df["conf_high_no_kairo"] = results_df["conf_high_no_kairo"].clip(lower=0)
+    # Clip to max_covers
+    for col in ["predicted_affluence", "conf_low", "conf_high", "predicted_affluence_no_kairo", "conf_low_no_kairo", "conf_high_no_kairo"]:
+        results_df[col] = results_df[col].clip(lower=0, upper=max_covers)
+    
     
     # Calculate Uncertainty Metrics (based on Kairoscope prediction)
     results_df["uncertainty_range"] = results_df["conf_high"] - results_df["conf_low"]
