@@ -24,6 +24,7 @@ services:
       - DB_PASSWORD=admin
       - DB_NAME=emergency_db
       - DB_PORT=5432
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - database
     volumes:
