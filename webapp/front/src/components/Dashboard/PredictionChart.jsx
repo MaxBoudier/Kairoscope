@@ -117,11 +117,6 @@ const RevenueChart = ({ onDataLoaded }) => {
                         if (data.payload) {
                             const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
                             // Sync events to backend
-                            // Use fetchWithAuth if imported, or fetch with credentials
-                            // Since fetchWithAuth is in lib/api.js, let's try to import it or use fetch directly with token/session
-                            // We need to import fetchWithAuth, but I cannot easily add top-level import without replacing the whole file header.
-                            // I will use fetch directly with credentials: 'include'.
-
                             fetch(`${API_URL}/events/sync`, {
                                 method: 'POST',
                                 headers: {
@@ -155,8 +150,12 @@ const RevenueChart = ({ onDataLoaded }) => {
                                 onDataLoaded(formattedData);
                             }
 
-                            // Cache the data
-                            localStorage.setItem('kairoscope_predictions', JSON.stringify(formattedData));
+                            // Cache the data with restaurantId
+                            localStorage.setItem('kairoscope_predictions', JSON.stringify({
+                                restaurantId: restaurantId,
+                                data: formattedData,
+                                timestamp: Date.now()
+                            }));
                         }
                     }
                 } catch (e) {
@@ -174,33 +173,57 @@ const RevenueChart = ({ onDataLoaded }) => {
     };
 
     useEffect(() => {
-        // Check cache on mount
-        const cachedData = localStorage.getItem('kairoscope_predictions');
-        if (cachedData) {
-            try {
-                const parsedData = JSON.parse(cachedData);
-                // Optional: Re-calculate displayDate if we want "today" to roll over?
-                // If cached data is from yesterday, "Monday" might mean something else?
-                // Ideally we check timestamp. simpler: just use cached data as is for now, 
-                // or re-apply date logic if we stored raw payload. 
-                // We stored formattedData with displayDate baked in. 
-                // If the user refreshes next day, the labels might be stale if we rely on "index".
-                // But standard caching behaviour implies we might see old state.
-                // Let's trust the cache for now as "last known state".
-                setPredictions(parsedData);
-                if (onDataLoaded) {
-                    onDataLoaded(parsedData);
-                }
-                setSocketStatus('disconnected'); // We have data, no need to connect live immediately
-                return;
-            } catch (e) {
-                console.error("Cache parse error", e);
-                localStorage.removeItem('kairoscope_predictions');
-            }
-        }
+        const checkCache = () => {
+            const cachedData = localStorage.getItem('kairoscope_predictions');
+            const currentRestaurantId = localStorage.getItem('restaurantId');
 
-        // If no cache, connect
-        connectWebSocket();
+            if (cachedData) {
+                try {
+                    const parsedCache = JSON.parse(cachedData);
+
+                    // Check if cache format is new ({ restaurantId, data }) or old (Array)
+                    // And if it matches current restaurant
+                    let isValidCache = false;
+                    let predictionsData = [];
+
+                    if (Array.isArray(parsedCache)) {
+                        // Old format - we don't know the restaurant, so we must assume it might be wrong
+                        // unless we didn't have a restaurantId to begin with? 
+                        // Safer to invalidate if we are strict, but for migration maybe we just clear it.
+                        // User problem was exactly this: old data showing up. So REJECT old array format if we care about correctness.
+                        isValidCache = false;
+                    } else if (parsedCache.data && parsedCache.restaurantId) {
+                        // New format
+                        if (String(parsedCache.restaurantId) === String(currentRestaurantId)) {
+                            isValidCache = true;
+                            predictionsData = parsedCache.data;
+                        }
+                    }
+
+                    if (isValidCache) {
+                        setPredictions(predictionsData);
+                        if (onDataLoaded) {
+                            onDataLoaded(predictionsData);
+                        }
+                        setSocketStatus('disconnected');
+                        return true; // Cache used
+                    } else {
+                        // Cache invalid or mismatch
+                        localStorage.removeItem('kairoscope_predictions');
+                    }
+                } catch (e) {
+                    console.error("Cache parse error", e);
+                    localStorage.removeItem('kairoscope_predictions');
+                }
+            }
+            return false; // Cache not used
+        };
+
+        const cacheUsed = checkCache();
+
+        if (!cacheUsed) {
+            connectWebSocket();
+        }
 
         return () => socketRef.current?.close();
     }, []);
