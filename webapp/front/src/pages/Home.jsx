@@ -6,6 +6,39 @@ const Home = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  // Swipe configuration
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    }
+    if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
+  // Handlers wrapper to pass to elements
+  const handleTouchStart = onTouchStart;
+  const handleTouchMove = onTouchMove;
+  const handleTouchEnd = onTouchEnd;
   const carouselSlides = [
     {
       title: "Présentation",
@@ -139,7 +172,12 @@ const Home = () => {
 
         {/* Carousel */}
         <section className="group relative mt-[90px] scroll-mt-[120px]" id="fonctionnement">
-          <div className="relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-[22px] shadow-lg dark:border-white/12 dark:bg-[rgba(17,22,32,0.95)]">
+          <div
+            className="relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-[22px] shadow-lg dark:border-white/12 dark:bg-[rgba(17,22,32,0.95)]"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-100 shadow-xl dark:border-white/12 dark:bg-[#0b0f14] dark:shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
               <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                 {carouselSlides.map((slide, i) => (
@@ -176,13 +214,13 @@ const Home = () => {
             {/* Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-6 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white/90 text-slate-700 opacity-0 transition-all hover:-translate-y-[calc(50%+2px)] hover:border-cyan-500 hover:text-cyan-600 group-hover:opacity-100 cursor-pointer shadow-md dark:border-white/12 dark:bg-[rgba(10,12,16,0.8)] dark:text-[#f5f7fb] dark:hover:border-[#22d3ee] dark:hover:text-[#22d3ee]"
+              className="absolute left-6 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white/90 text-slate-700 opacity-100 md:opacity-0 transition-all hover:-translate-y-[calc(50%+2px)] hover:border-cyan-500 hover:text-cyan-600 md:group-hover:opacity-100 cursor-pointer shadow-md dark:border-white/12 dark:bg-[rgba(10,12,16,0.8)] dark:text-[#f5f7fb] dark:hover:border-[#22d3ee] dark:hover:text-[#22d3ee]"
             >
               &#8592;
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-6 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white/90 text-slate-700 opacity-0 transition-all hover:-translate-y-[calc(50%+2px)] hover:border-cyan-500 hover:text-cyan-600 group-hover:opacity-100 cursor-pointer shadow-md dark:border-white/12 dark:bg-[rgba(10,12,16,0.8)] dark:text-[#f5f7fb] dark:hover:border-[#22d3ee] dark:hover:text-[#22d3ee]"
+              className="absolute right-6 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white/90 text-slate-700 opacity-100 md:opacity-0 transition-all hover:-translate-y-[calc(50%+2px)] hover:border-cyan-500 hover:text-cyan-600 md:group-hover:opacity-100 cursor-pointer shadow-md dark:border-white/12 dark:bg-[rgba(10,12,16,0.8)] dark:text-[#f5f7fb] dark:hover:border-[#22d3ee] dark:hover:text-[#22d3ee]"
             >
               &#8594;
             </button>
