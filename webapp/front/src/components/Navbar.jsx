@@ -69,16 +69,16 @@ const Navbar = () => {
 
                     {/* Logo Section - Center on mobile, Left on desktop */}
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0 md:flex md:items-center md:gap-4 md:flex-initial">
-                        <div className="flex flex-col items-center md:flex-row md:items-center md:gap-4">
+                        <div className="flex items-center gap-2 md:gap-4">
                             {/* Logo Image */}
-                            <div className="grid h-10 w-10 md:h-10 md:w-10 place-items-center overflow-hidden rounded-xl text-[#111] font-bold text-lg bg-slate-100 dark:bg-transparent">
+                            <div className="grid h-8 w-8 md:h-10 md:w-10 place-items-center overflow-hidden rounded-xl text-[#111] font-bold text-lg bg-slate-100 dark:bg-transparent">
                                 <img src="/Images/logo.png" alt="Logo Kairoscope" className="block h-[70%] w-[70%] object-contain" />
                             </div>
 
                             {/* Title & Subtitle */}
-                            <div className="text-center md:text-left mt-1 md:mt-0">
-                                <span className="block font-['Funnel_Display'] text-lg tracking-[0.5px] text-slate-900 dark:text-[#f5f7fb]">Kairoscope</span>
-                                <small className="block text-slate-500 text-[10px] sm:text-xs uppercase tracking-[1.2px] dark:text-[#b0b8c5]">Le 6e sens de votre commerce</small>
+                            <div className="text-left mt-0">
+                                <span className="block font-['Funnel_Display'] text-base md:text-lg tracking-[0.5px] text-slate-900 dark:text-[#f5f7fb]">Kairoscope</span>
+                                <small className="block text-slate-500 text-[10px] sm:text-xs uppercase tracking-[1.2px] leading-tight dark:text-[#b0b8c5]">Le 6e sens de votre commerce</small>
                             </div>
                         </div>
                     </div>
