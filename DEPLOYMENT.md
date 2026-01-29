@@ -39,6 +39,42 @@ docker-compose up -d --build
     - Accessible at `YOUR_VPS_IP:5432` (As requested).
     - **Warning**: Ensure you have a strong password and consider using a firewall (UFW) to limit access to this port if possible.
 
+## 🔒 VPS Nginx Configuration (HTTPS)
+
+Since you are running Nginx on the host for HTTPS (Port 443), you need to configure it to proxy requests to your Docker container which is now running on port **8080**.
+
+1.  **Edit your Nginx credentials site config** (usually `/etc/nginx/sites-available/default` or `/etc/nginx/sites-available/your-domain`).
+2.  **Update the `location /` block** inside your `server { listen 443 ssl ... }` block:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name kairoscope.maxboudier.fr; # or your domain
+
+    # Key/Cert paths managed by Certbot...
+    # ssl_certificate ...
+    # ssl_certificate_key ...
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+3.  **Restart Nginx**:
+    ```bash
+    sudo systemctl restart nginx
+    ```
+
+**Important**: make sure you updated `docker-compose.yml` to map port `8080:80` (I have done this for you in the codebase).
+
 ## 🛠 Troubleshooting
 
 **1. "I want to run Prod mode locally to test"**
