@@ -107,8 +107,8 @@ const Home = () => {
             OSINT et séries temporelles pour un modèle prédictif personnalisé.
           </span>
         </h1>
-        <div className="mt-6 text-center text-sm font-medium text-slate-600 dark:text-[#b0b8c5] max-w-2xl mx-auto px-4">
-          ( Si vous avez aimé <button onClick={() => setShowVideo(true)} className="underline decoration-emerald-400 decoration-2 underline-offset-2 hover:text-emerald-500 transition-colors cursor-pointer bg-transparent border-none p-0 font-medium text-inherit">la vidéo</button> et/ou l'avez trouvée trop rapide, n'hésitez pas à venir au stand pour des explications ! ;) )
+        <div className="mt-6 text-left text-[15px] font-semibold text-slate-800 dark:text-slate-200 max-w-[600px] leading-relaxed">
+          Si vous avez aimé <button onClick={() => setShowVideo(true)} className="underline decoration-emerald-400 decoration-2 underline-offset-2 hover:text-emerald-500 transition-colors cursor-pointer bg-transparent border-none p-0 font-bold text-inherit">la vidéo</button> et/ou l'avez trouvée trop rapide, n'hésitez pas à venir au stand pour des explications ! ;)
         </div>
         <header className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] items-center gap-[30px] scroll-mt-[120px]" id="projet">
           <div className="hero-content">
