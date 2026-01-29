@@ -43,7 +43,7 @@ services:
       CORS_ALLOW_ORIGIN: '^http?://(localhost|kairoscope\.maxboudier\.fr)(:[0-9]+)?$'
       SYMFONY_TRUSTED_HOSTS: '^(localhost|127\.0\.0\.1|kairoscope\.maxboudier\.fr)$'
       DEFAULT_URI: "http://kairoscope.maxboudier.fr"
-      REGISTRATION_SECRET: "LaSecuriteCEstVraimentImportantTMTC"
+      REGISTRATION_SECRET: ${REGISTRATION_SECRET}
     volumes:
       - ./webapp/api:/var/www/html
       - vendor_data:/var/www/html/vendor
