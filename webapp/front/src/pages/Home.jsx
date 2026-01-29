@@ -91,7 +91,7 @@ const Home = () => {
             </div>
             <div className="flex flex-wrap gap-6">
               <div>
-                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">J+1 → J+14</strong>
+                <strong className="block text-[22px] font-semibold text-transparent bg-clip-text bg-linear-to-r from-lime-400 to-emerald-400 dark:from-[#e8ff6a] dark:to-[#7fffd4]">Jusqu'à J+14</strong>
                 <span className="text-[13px] text-slate-500 dark:text-[#b0b8c5]">Horizon de prédiction</span>
               </div>
               <div>
