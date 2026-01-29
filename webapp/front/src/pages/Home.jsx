@@ -63,7 +63,7 @@ const Home = () => {
       <div className="pointer-events-none fixed inset-0 z-[1] hidden dark:block bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.2),transparent_45%),radial-gradient(circle_at_20%_60%,rgba(56,189,248,0.12),transparent_50%)] opacity-70"></div>
 
       {/* Banner Image */}
-      <div className="pointer-events-none fixed inset-0 z-0 scale-[1.03] transform bg-[url('/Images/banner.png')] bg-contain bg-[center_top] bg-no-repeat blur-[2px] opacity-90 dark:opacity-60 transition-opacity duration-300"></div>
+      <div className="hidden md:block pointer-events-none fixed inset-0 z-0 scale-[1.03] transform bg-[url('/Images/banner.png')] bg-contain bg-[center_top] bg-no-repeat blur-[2px] opacity-90 dark:opacity-60 transition-opacity duration-300"></div>
 
       <section className="relative z-[2] mx-auto max-w-[1280px] px-6 pb-[60px] pt-5 md:px-20 md:pb-20 md:pt-6">
 
