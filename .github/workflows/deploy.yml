@@ -33,6 +33,7 @@ jobs:
             
             # Copier le .env dans le dossier api pour qu'il soit monté dans le volume du conteneur
             cp .env webapp/api/.env
+            cp .env ai/.env
 
             # Lancer Docker Compose (Build force la reconstruction pour prendre en compte les nouveaux args)
             # --remove-orphans nettoie les conteneurs obsolètes
