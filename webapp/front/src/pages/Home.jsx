@@ -256,8 +256,8 @@ const Home = () => {
               name: "Arthur Cielsar",
               role: "Développeur full-stack",
               school: "Licence Informatique Générale au CNAM (3e année)",
-              desc: "Arthur est en charge du développement front-end et back-end de l’application Kairoscope. Il est également en charge de la mise en place de la base de données et de la gestion des utilisateurs.",
-              tasks: ["Développement de l’interface utilisateur", "Architecture back-end", "Connexion aux sources de données", "Mise en place des premières briques IA"],
+              desc: "Arthur est en charge du développement front-end et back-end de l’application Kairoscope. Il est également en charge de la mise en place de la base de données, de la gestion des utilisateurs et du montage de la vidéo de présentation.",
+              tasks: ["Développement de l’interface utilisateur", "Architecture back-end", "Connexion aux sources de données", "Mise en place des premières briques IA", "Montage de la vidéo de présentation"],
               linkedin: "https://www.linkedin.com/in/arthur-cieslar-9246792aa/"
             },
             {
