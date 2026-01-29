@@ -143,7 +143,7 @@ const RevenueChart = ({ onDataLoaded }) => {
 
                                 return {
                                     ...item,
-                                    predicted_affluence: Math.round(item.predicted_affluence),
+                                    predicted_affluence: Math.round(item.predicted_affluence || 0),
                                     predicted_affluence_no_kairo: Math.round(item.predicted_affluence_no_kairo || 0),
                                     displayDate: date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric" })
                                 };
@@ -294,7 +294,7 @@ const RevenueChart = ({ onDataLoaded }) => {
                                     fontSize={12}
                                     tickLine={false}
                                     axisLine={false}
-                                    interval="preserveStartEnd"
+                                    interval={0}
                                     padding={{ left: 20, right: 20 }}
                                     className="dark:text-slate-400"
                                 />
