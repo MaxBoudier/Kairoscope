@@ -306,25 +306,14 @@ const Home = () => {
               >
                 <X className="h-6 w-6" />
               </button>
-              <div className="aspect-video w-full flex items-center justify-center bg-slate-900 text-slate-500">
-                {/* Placeholder for video */}
-                <div className="text-center">
-                  <Play className="mx-auto h-16 w-16 opacity-20 mb-4" />
-                  <p>La vidéo sera intégrée ici prochainement.</p>
-                </div>
-                {/* 
-                Example usage when video is ready:
-                <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src="VIDEO_URL" 
-                    title="Kairoscope Demo" 
-                    frameBorder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen
-                ></iframe>
-                */}
-              </div>
+              <video
+                className="w-full h-full object-contain"
+                controls
+                autoPlay
+                src="/Kairoscope-Trailer.mp4"
+              >
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
             </div>
           </div>
         )
