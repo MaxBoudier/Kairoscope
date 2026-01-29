@@ -236,6 +236,9 @@ const Home = () => {
               ))}
             </div>
           </div>
+          <div className="mt-6 text-center text-sm font-medium text-slate-600 dark:text-[#b0b8c5] max-w-2xl mx-auto px-4">
+            Si vous avez aimé <button onClick={() => setShowVideo(true)} className="underline decoration-emerald-400 decoration-2 underline-offset-2 hover:text-emerald-500 transition-colors cursor-pointer bg-transparent border-none p-0 font-medium text-inherit">la vidéo</button> et/ou l'avez trouvée trop rapide, n'hésitez pas à venir au stand pour des explications ! ;)
+          </div>
         </section>
 
 
