@@ -1,0 +1,130 @@
+# Deploiement production sur le VPS, pilote par Coolify.
+#
+# A ne pas confondre avec docker-compose.yml (dev/legacy). Trois differences
+# importantes :
+#
+#  1. Aucun port publie sur l'hote. L'ancien fichier exposait Postgres sur
+#     5432 en 0.0.0.0 avec le couple admin/admin : la base etait ouverte a
+#     Internet. Ici seul `front` est joignable, via le proxy Traefik de
+#     Coolify, qui termine le TLS.
+#  2. Aucun bind mount de code. Les images embarquent leur code et leurs
+#     dependances, donc un redemarrage ne relance pas `composer install` et
+#     l'image est reproductible.
+#  3. Aucun secret en dur. Tout vient des variables d'environnement definies
+#     dans Coolify, et le deploiement echoue si l'une manque.
+#
+# `front` sert le frontend React et proxifie deja /api vers l'API Symfony et
+# /api/predict vers le WebSocket du service IA (cf. webapp/front/nginx.conf).
+# C'est donc le seul service a porter un domaine.
+
+services:
+  database:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      # L'utilisateur doit rester `admin` : webapp/init.sql contient des
+      # directives ALTER TABLE ... OWNER TO admin qui echouent sinon.
+      POSTGRES_USER: admin
+      POSTGRES_DB: emergency_db
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD manquant}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # Joue uniquement au tout premier demarrage, quand le volume est vide.
+      - ./webapp/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d emergency_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    mem_limit: 512m
+    cpus: 0.5
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+  ai:
+    build:
+      context: ./ai
+    restart: unless-stopped
+    expose:
+      - "8000"
+    environment:
+      DATABASE_URL: postgresql://admin:${POSTGRES_PASSWORD}@database:5432/emergency_db
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: emergency_db
+      DB_USER: admin
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD manquant}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:?GEMINI_API_KEY manquant}
+    depends_on:
+      database:
+        condition: service_healthy
+    # PyTorch et pytorch-forecasting sont gourmands au chargement du modele :
+    # c'est le service le mieux dote des quatre.
+    mem_limit: 2g
+    cpus: 1.5
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+  api:
+    build:
+      context: ./webapp/api
+      dockerfile: Dockerfile.coolify
+    restart: unless-stopped
+    expose:
+      - "80"
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: 0
+      APP_SECRET: ${APP_SECRET:?APP_SECRET manquant}
+      DATABASE_URL: "postgresql://admin:${POSTGRES_PASSWORD}@database:5432/emergency_db?serverVersion=15&charset=utf8"
+      CORS_ALLOW_ORIGIN: '^https?://(localhost|kairoscope\.maxboudier\.fr)(:[0-9]+)?$$'
+      SYMFONY_TRUSTED_HOSTS: '^(localhost|127\.0\.0\.1|api|kairoscope\.maxboudier\.fr)$$'
+      # Plages privees Docker : indispensable pour que Symfony voie la requete
+      # comme HTTPS derriere le proxy (cf. config/packages/trusted_proxies.yaml).
+      SYMFONY_TRUSTED_PROXIES: '10.0.0.0/8,172.16.0.0/12,192.168.0.0/16'
+      DEFAULT_URI: "https://kairoscope.maxboudier.fr"
+      REGISTRATION_SECRET: ${REGISTRATION_SECRET:?REGISTRATION_SECRET manquant}
+    depends_on:
+      database:
+        condition: service_healthy
+    mem_limit: 512m
+    cpus: 1.0
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+  front:
+    build:
+      context: ./webapp/front
+      args:
+        # Chemins relatifs : le navigateur tape la meme origine que la page,
+        # nginx route ensuite en interne. Pas de CORS, et l'image reste
+        # valable quel que soit le domaine.
+        - VITE_API_URL=/api
+        - VITE_API_BASE_URL=/api
+        # Le WebSocket a besoin d'une URL absolue : le code concatene
+        # "/predict", ce qui donne wss://kairoscope.maxboudier.fr/api/predict,
+        # proxifie par nginx vers ai:8000/ws/predict.
+        - VITE_WS_URL=wss://kairoscope.maxboudier.fr/api
+    restart: unless-stopped
+    expose:
+      - "80"
+    environment:
+      # Designe le service porteur du domaine public pour Coolify.
+      - SERVICE_FQDN_FRONT_80
+    depends_on:
+      api:
+        condition: service_started
+      ai:
+        condition: service_started
+    mem_limit: 128m
+    cpus: 0.25
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+volumes:
+  db_data:

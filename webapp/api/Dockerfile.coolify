@@ -1,0 +1,59 @@
+# API Symfony - image autonome pour la production.
+#
+# Difference avec le Dockerfile de developpement : celui-ci COPIE le code et
+# installe les dependances au BUILD. Le Dockerfile de dev n'embarque aucun
+# code, il compte sur le bind mount `./webapp/api:/var/www/html` du compose et
+# lance `composer install` a chaque demarrage du conteneur. Pratique en local,
+# mais en production cela rend le demarrage lent, dependant du reseau, et
+# l'image non reproductible.
+
+FROM php:8.4-apache
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        git unzip curl libzip-dev libicu-dev libpq-dev \
+    && docker-php-ext-install pdo_pgsql zip intl opcache \
+    && a2enmod rewrite headers \
+    # La racine web de Symfony est public/, pas la racine du projet.
+    && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+RUN { \
+      echo 'opcache.enable=1'; \
+      echo 'opcache.validate_timestamps=0'; \
+      echo 'opcache.max_accelerated_files=20000'; \
+      echo 'opcache.memory_consumption=192'; \
+    } > "$PHP_INI_DIR/conf.d/opcache-prod.ini"
+
+WORKDIR /var/www/html
+
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    APP_ENV=prod \
+    APP_DEBUG=0
+
+# Dependances d'abord : cette couche est mise en cache tant que composer.lock
+# ne change pas. --no-scripts evite que les recipes Symfony tentent de vider
+# le cache avant que le code ne soit copie.
+COPY composer.json composer.lock symfony.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction
+
+COPY . .
+
+# symfony/dotenv exige la presence d'un fichier .env et leve une exception
+# sinon. Le vrai .env est gitignore (il contient des secrets), on ecrit donc
+# un squelette vide : les variables d'environnement reelles du conteneur ont
+# de toute facon la priorite sur le contenu du fichier.
+RUN printf 'APP_ENV=prod\nAPP_SECRET=\nDATABASE_URL=\n' > .env \
+    && composer dump-autoload --no-dev --classmap-authoritative \
+    && mkdir -p var/cache var/log \
+    && chown -R www-data:www-data var \
+    && chmod -R 775 var
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl -fsS -o /dev/null -w '%{http_code}' http://127.0.0.1/ \
+      | grep -qE '^(2|3|40)' || exit 1
+
+EXPOSE 80
+CMD ["apache2-foreground"]

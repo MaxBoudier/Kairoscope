@@ -1,0 +1,17 @@
+# Derriere le proxy Traefik de Coolify, la requete arrive en HTTP sur le
+# conteneur meme quand le client est en HTTPS. Sans cette configuration,
+# Symfony croit la connexion non securisee : `cookie_secure: auto` n'ajoute
+# alors pas le drapeau Secure aux cookies de session, et les URLs absolues
+# generees sont en http://.
+#
+# La valeur vient de SYMFONY_TRUSTED_PROXIES (plages Docker privees en
+# production). Si la variable n'est pas definie, `default::` renvoie null et
+# aucun proxy n'est approuve — le comportement local reste inchange.
+framework:
+    trusted_proxies: '%env(default::SYMFONY_TRUSTED_PROXIES)%'
+    trusted_headers:
+        - 'x-forwarded-for'
+        - 'x-forwarded-host'
+        - 'x-forwarded-proto'
+        - 'x-forwarded-port'
+        - 'x-forwarded-prefix'
