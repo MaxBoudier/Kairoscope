@@ -1,0 +1,22 @@
+# PostgreSQL avec le schema initial embarque.
+#
+# Le compose de developpement monte ./webapp/init.sql dans
+# /docker-entrypoint-initdb.d via un bind mount. Cela ne fonctionne pas sous
+# Coolify : le clone du depot est supprime apres le build, et il ne reste que
+# le compose genere. Docker ne trouvant pas le fichier source, il cree un
+# REPERTOIRE a sa place — postgres echoue alors sur
+# « could not read from input file: Is a directory » et la base reste vide.
+#
+# En copiant le dump dans l'image, le schema voyage avec elle et ne depend
+# plus de la presence d'un fichier sur l'hote.
+#
+# Le contexte de build est ./webapp, reduit au seul init.sql par le
+# .dockerignore voisin.
+
+FROM postgres:15-alpine
+
+COPY init.sql /docker-entrypoint-initdb.d/init.sql
+
+# Rappel : les scripts de /docker-entrypoint-initdb.d ne sont joues qu'au tout
+# premier demarrage, quand le repertoire de donnees est vide. Pour rejouer le
+# schema apres coup, il faut supprimer le volume db_data.

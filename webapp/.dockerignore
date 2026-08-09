@@ -1,0 +1,8 @@
+# Contexte de build de Dockerfile.db : seul init.sql est necessaire.
+# Sans cette restriction, le contexte embarquerait webapp/front/node_modules
+# et webapp/api/vendor, soit plusieurs centaines de mega-octets.
+#
+# Ne concerne que les builds dont le contexte est ./webapp. Les services api
+# et front ont leurs propres contextes, donc leurs propres .dockerignore.
+*
+!init.sql
