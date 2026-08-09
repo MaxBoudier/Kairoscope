@@ -61,6 +61,16 @@ services:
       DB_USER: admin
       DB_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD manquant}
       GEMINI_API_KEY: ${GEMINI_API_KEY:?GEMINI_API_KEY manquant}
+    # Le service n'expose qu'un endpoint WebSocket : une sonde HTTP recevrait
+    # un 404 alors que tout va bien. On verifie donc simplement qu'uvicorn
+    # accepte les connexions. Pas de curl dans l'image python-slim, d'ou le
+    # passage par la bibliotheque standard.
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket;socket.create_connection(('127.0.0.1',8000),3).close()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
     depends_on:
       database:
         condition: service_healthy
@@ -119,6 +129,13 @@ services:
     environment:
       # Designe le service porteur du domaine public pour Coolify.
       - SERVICE_FQDN_FRONT_80
+    # Sans sonde, Coolify rapporte l'application en « running:unknown ».
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     depends_on:
       api:
         condition: service_started
